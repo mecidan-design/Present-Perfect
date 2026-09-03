@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Present Perfect Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   ESTETICA: fantasy heroica (la misma de 03-groups-6-7-8 y del
+   resto de la Present Perfect Quest). SIN SONIDO.
+   ========================================================= */
+:root{
+  --gold:#f2b632; --gold-lt:#ffd873; --gold-dk:#9d6d15;
+  --night:#120b30; --royal:#5b2ea8; --teal:#0f7a86;
+  --crimson:#b1263c; --emerald:#1c7f45;
+  --parch:#fdf6e3; --ink:#241605;
+  --head:"Cinzel",Georgia,"Times New Roman",serif;
+  --body:"Poppins","Segoe UI",Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--body); color:var(--ink); min-height:100vh; padding:24px 14px 0;
+  background:
+    radial-gradient(rgba(255,255,255,.55) 1px, transparent 1.5px) 0 0/37px 37px,
+    radial-gradient(rgba(255,216,115,.45) 1px, transparent 1.4px) 19px 23px/59px 59px,
+    radial-gradient(130% 85% at 50% 0%, rgba(255,216,115,.15), transparent 62%),
+    linear-gradient(165deg,#0d0827 0%,#221046 26%,#4a1d6e 52%,#123f52 79%,#0a2736 100%);
+  background-attachment:fixed;
+}
+.wrap{max-width:900px;margin:0 auto}
+svg.ic{width:1em;height:1em;vertical-align:-.13em;fill:currentColor}
+
+/* ---------- header ---------- */
+.hero{
+  background:linear-gradient(158deg,#1a0f3d 0%,#3b1a5e 58%,#0f3a4a 100%);
+  border:5px solid var(--gold); border-radius:22px;
+  box-shadow:0 0 0 4px #150c2f, 13px 13px 0 rgba(0,0,0,.45);
+  padding:22px 26px; margin-bottom:26px; position:relative; overflow:hidden;
+}
+.hero:before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(60% 90% at 82% 15%, rgba(255,216,115,.22), transparent 62%);
+  pointer-events:none;
+}
+.chapter{
+  font-family:var(--head); font-weight:700; font-size:.78rem; letter-spacing:3.4px;
+  color:var(--gold); text-transform:uppercase; display:block; margin-bottom:5px;
+}
+.hero h1{
+  font-family:var(--head); font-weight:900; color:#fff9e8; margin:0;
+  font-size:clamp(1.55rem,5vw,2.6rem); line-height:1.08; letter-spacing:1.4px;
+  text-shadow:0 3px 0 #6a3a00, 0 5px 14px rgba(0,0,0,.6);
+}
+.hero p{font-family:var(--body);color:#d8c7f5;margin:.6rem 0 0;font-size:.97rem;font-weight:500}
+.hero .verbline{
+  font-family:var(--head); font-weight:700; color:var(--gold-lt); font-size:.84rem;
+  letter-spacing:1.5px; margin-top:10px; text-transform:uppercase; line-height:1.6;
+}
+.homelink{
+  display:inline-flex;align-items:center;gap:7px;margin-top:14px;
+  font-family:var(--head);font-weight:700;font-size:.76rem;letter-spacing:1.6px;text-transform:uppercase;
+  color:#1a0f3d;background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:4px 14px;text-decoration:none;
+  box-shadow:4px 4px 0 #0a0620;position:relative;
+}
+.homelink:hover{filter:brightness(1.08)}
+
+/* ---------- quest bar ---------- */
+.quest{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px}
+.medal{
+  flex:1 1 165px; display:flex; align-items:center; gap:10px;
+  background:rgba(10,6,28,.72); border:3px solid #4a3a7a; border-radius:16px; padding:9px 13px;
+  transition:border-color .2s, background .2s;
+}
+.medal .mi{
+  width:34px;height:34px;flex:0 0 auto;border-radius:50%;border:3px solid #4a3a7a;
+  display:flex;align-items:center;justify-content:center;color:#7a6aa8;font-size:1rem;
+}
+.medal .mt{font-family:var(--head);font-weight:700;font-size:.8rem;letter-spacing:1px;color:#9c8ac8;line-height:1.2}
+.medal .ms{font-family:var(--head);font-weight:900;font-size:.95rem;color:#7a6aa8}
+.medal.won{border-color:var(--gold);background:rgba(60,36,6,.75)}
+.medal.won .mi{border-color:var(--gold);color:var(--gold);background:rgba(242,182,50,.16)}
+.medal.won .mt{color:var(--gold-lt)}
+.medal.won .ms{color:#fff9e8}
+
+/* ---------- cards ---------- */
+.card{
+  background:
+    radial-gradient(rgba(150,110,40,.075) 1px, transparent 1.6px) 0 0/13px 13px,
+    linear-gradient(180deg,#fdf6e3 0%,#f6e9cd 100%);
+  border:4px solid #2b1c07; border-radius:18px; padding:22px 22px 24px;
+  margin-bottom:34px; position:relative;
+}
+.card:nth-of-type(3n+1){box-shadow:10px 10px 0 var(--gold-dk); transform:rotate(-.4deg)}
+.card:nth-of-type(3n+2){box-shadow:10px 10px 0 var(--crimson); transform:rotate(.35deg)}
+.card:nth-of-type(3n+3){box-shadow:10px 10px 0 var(--teal);    transform:rotate(-.25deg)}
+/* OJO (trampa del SPECS): cualquier variante necesita DOS clases,
+   porque :nth-of-type le gana por especificidad a una clase sola. */
+.card.codex{
+  background:linear-gradient(180deg,#1a0f3d,#12283a);
+  border-color:var(--gold); box-shadow:10px 10px 0 rgba(0,0,0,.42); transform:rotate(.3deg);
+}
+.tag{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--head); font-weight:700; font-size:.75rem; letter-spacing:2px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold)); color:#2b1c07;
+  border:3px solid #2b1c07; border-radius:999px;
+  padding:3px 14px; margin-bottom:11px; text-transform:uppercase;
+}
+.card h2{font-family:var(--head);font-weight:900;font-size:1.5rem;margin:.1rem 0 .3rem;line-height:1.15;letter-spacing:.6px}
+.sub{font-size:.92rem;color:#5c4a2c;margin:0 0 18px;line-height:1.5}
+.codex h2{color:#fff9e8}
+.codex .sub{color:#c9bbe8}
+
+/* ---------- buttons ---------- */
+.btn{
+  font-family:var(--head); font-weight:700; font-size:.97rem; letter-spacing:.7px;
+  color:#2b1c07; cursor:pointer;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07; border-radius:999px; padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07; transition:transform .07s, box-shadow .07s;
+}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.btn.ghost{background:var(--parch);color:#2b1c07}
+.btn.dark{background:linear-gradient(180deg,#3b1a5e,#1a0f3d);color:#ffe9b0;border-color:var(--gold);box-shadow:5px 5px 0 #0a0620}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.scoreline{font-family:var(--head);font-weight:700;font-size:1rem;letter-spacing:.5px}
+
+/* ---------- inputs ---------- */
+input[type=text],select{
+  font-family:var(--body); font-size:1rem; font-weight:500; padding:7px 11px;
+  border:3px solid #2b1c07; border-radius:10px; background:#fffdf4; outline:none; color:var(--ink);
+}
+input[type=text]:focus,select:focus{background:#fff;box-shadow:0 0 0 4px var(--gold)}
+input.ok,select.ok{background:#e3f7e0;border-color:var(--emerald)}
+input.no,select.no{background:#fde5e9;border-color:var(--crimson)}
+input.w-s{width:150px}
+input.w-l{width:100%}
+
+/* ---------- explanation blocks ---------- */
+.exp{
+  border:3px solid #2b1c07;border-radius:13px;padding:11px 13px;margin-top:11px;
+  background:#f3ecfb;font-size:.92rem;line-height:1.5;
+}
+.exp.right{background:#eaf8e5}
+.exp.wrong{background:#fdeef1}
+.exp b.lab{
+  font-family:var(--head);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  display:inline-block;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-right:7px;
+}
+.lab.why{background:#a8e4ec}
+.lab.tip{background:var(--gold-lt)}
+.exp p{margin:0 0 7px}
+.exp p:last-child{margin-bottom:0}
+/* OJO: Cinzel dibuja las minusculas como VERSALITAS. Sirve para titulos y
+   etiquetas, pero destruye la lectura de una oracion completa. Todo lo que el
+   alumno tenga que LEER como ingles corriente va con la tipografia de cuerpo. */
+.sol{font-family:var(--body);font-weight:700;color:#3d1470}
+
+/* ---------- grammar note ---------- */
+.gnote{
+  border:4px solid #2b1c07;border-radius:15px;padding:13px 16px;margin:0 0 18px;
+  background:linear-gradient(180deg,#fffaea,#fbf0d2);box-shadow:5px 5px 0 var(--gold);
+  font-size:.95rem;line-height:1.6;
+}
+.gnotetitle{font-family:var(--head);font-weight:900;font-size:1.02rem;display:flex;align-items:center;gap:8px;margin-bottom:8px;letter-spacing:.5px}
+.gnote ul{margin:0;padding-left:20px}
+.gnote li{margin-bottom:6px}
+.gform{
+  font-family:var(--body);font-weight:600;background:#a8e4ec;
+  border:2px solid #2b1c07;border-radius:6px;padding:1px 7px;display:inline-block;
+}
+.gwarn{margin:10px 0 0;background:#fde5e9;border:2px solid #2b1c07;border-radius:10px;padding:8px 11px;font-weight:500}
+
+/* ---------- word box ---------- */
+.vaultbox{
+  border:4px dashed #2b1c07;border-radius:16px;padding:13px 15px;margin-bottom:20px;
+  background:linear-gradient(180deg,#fffaea,#f7ecd2);
+}
+.vaultbox .vt{font-family:var(--head);font-weight:900;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:#8a6a2a;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.vchips{display:flex;flex-wrap:wrap;gap:8px}
+.vchip{
+  font-family:var(--head);font-weight:700;font-size:.88rem;letter-spacing:1.5px;
+  background:#fff;border:3px solid #2b1c07;border-radius:9px;padding:4px 12px;box-shadow:3px 3px 0 var(--gold);
+}
+.vchip.used{background:#e3f7e0;box-shadow:3px 3px 0 var(--emerald);opacity:.62;text-decoration:line-through}
+.vchip.done{background:#e7e2f5;box-shadow:3px 3px 0 var(--royal);opacity:.62;text-decoration:line-through}
+
+/* ---------- items ---------- */
+.item{border:3px solid #2b1c07;border-radius:15px;padding:14px 15px;margin-bottom:16px;background:#fffdf4}
+.item.model{border-style:dashed;background:#eaf8e5}
+.sline{display:flex;align-items:flex-start;gap:9px;font-size:1.04rem;font-weight:500;line-height:2.1}
+.rn{
+  font-family:var(--head);font-size:.74rem;font-weight:700;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:22px;height:22px;flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;margin-top:8px;
+}
+.rn.zero{background:var(--emerald)}
+.prompt{display:flex;align-items:flex-start;gap:9px;font-size:1.04rem;font-weight:600;line-height:1.5;margin:0 0 10px}
+.prompt .wrong{text-decoration:line-through;text-decoration-color:var(--crimson);text-decoration-thickness:2px}
+.donetext{font-family:var(--body);font-weight:700;color:#1c7f45}
+.exampletag{
+  font-family:var(--head);font-weight:700;font-size:.68rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:#bdf0b0;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-left:8px;
+  display:inline-block;vertical-align:2px;
+}
+.hintword{
+  font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:var(--gold-lt);border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-left:8px;
+  display:inline-block;vertical-align:2px;
+}
+.matchrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:9px}
+.matchrow .mlab{font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:1.4px;text-transform:uppercase;border:2px solid #2b1c07;border-radius:999px;padding:2px 12px;background:#a8e4ec}
+
+/* ---------- conversation (underline the option) ---------- */
+.conv{border:3px solid #2b1c07;border-radius:15px;padding:14px 15px;background:#fffdf4}
+.convline{display:flex;gap:10px;margin-bottom:9px;line-height:1.9;font-size:1.02rem}
+.convline .who{font-family:var(--head);font-weight:900;letter-spacing:.6px;flex:0 0 4.4rem;color:#3d1470}
+.optgroup{display:inline-flex;flex-wrap:wrap;gap:5px;vertical-align:-3px;margin:0 3px}
+.optgroup .gn{
+  font-family:var(--head);font-weight:900;font-size:.7rem;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:19px;height:19px;
+  display:inline-flex;align-items:center;justify-content:center;align-self:center;
+}
+.pickbtn{
+  font-family:var(--body);font-size:.95rem;font-weight:600;cursor:pointer;background:#fff;
+  border:2px solid #2b1c07;border-radius:8px;padding:2px 9px;color:var(--ink);
+}
+.pickbtn:hover{background:#fff3d0}
+.pickbtn.on{background:var(--gold-lt);text-decoration:underline;text-decoration-thickness:3px}
+.pickbtn.good{background:#bdf0b0;border-color:var(--emerald)}
+.pickbtn.bad{background:#ffc7d1;border-color:var(--crimson);text-decoration:line-through}
+
+/* ---------- running text with gaps (cloze) ---------- */
+.clozetext{border:3px solid #2b1c07;border-radius:15px;padding:14px 16px;background:#fffdf4;font-size:1.02rem;line-height:2.4}
+.clozetext .gn{
+  font-family:var(--head);font-weight:900;font-size:.7rem;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:19px;height:19px;margin-right:4px;
+  display:inline-flex;align-items:center;justify-content:center;vertical-align:1px;
+}
+.clozetext input{width:130px}
+
+/* ---------- panel de explicaciones para huecos inline ---------- */
+/* REGLA DE LAYOUT DEL SPECS: si los huecos estan dentro de un texto corrido,
+   la explicacion NO va pegada a cada input (rompe la lectura del parrafo).
+   Van todas juntas, numeradas, en un panel debajo del texto completo. */
+.explist{margin-top:16px}
+.explist h3{font-family:var(--head);font-weight:900;font-size:1rem;letter-spacing:1px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.expitem{display:flex;gap:10px;margin-bottom:10px}
+.expitem .en{
+  font-family:var(--head);font-size:.74rem;font-weight:700;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:22px;height:22px;flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;margin-top:9px;
+}
+.expitem .exp{flex:1;margin-top:0}
+
+/* ---------- CODEX ---------- */
+.gbox{border:3px solid var(--gold);border-radius:14px;padding:12px 14px;margin-bottom:12px;background:rgba(255,255,255,.05)}
+.gbox h4{font-family:var(--head);font-weight:900;font-size:.92rem;letter-spacing:1.6px;color:var(--gold-lt);margin:0 0 4px;text-transform:uppercase}
+.gbox .pat{font-size:.84rem;color:#c9bbe8;margin:0 0 9px}
+.pairs{display:flex;flex-wrap:wrap;gap:7px}
+.pchip{font-family:var(--head);font-weight:700;font-size:.85rem;letter-spacing:.8px;background:var(--parch);border:2px solid #2b1c07;border-radius:8px;padding:3px 11px;color:var(--ink)}
+.pchip b{color:#8f1230}
+.hidden{display:none}
+
+/* ---------- pie ---------- */
+footer.site{
+  margin-top:10px;padding:20px 14px 26px;text-align:center;
+  font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:2.2px;
+  text-transform:uppercase;color:#9c8ac8;
+}
+
+/* ---------- mapa de la quest ---------- */
+.hero h1.big{font-size:clamp(1.9rem,7vw,3.4rem)}
+.maplead{
+  font-family:var(--head);font-weight:700;font-size:.8rem;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--gold-lt);margin:0 0 16px;display:flex;align-items:center;gap:9px;
+}
+.map{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));margin-bottom:34px}
+.stop{
+  background:
+    radial-gradient(rgba(150,110,40,.075) 1px, transparent 1.6px) 0 0/13px 13px,
+    linear-gradient(180deg,#fdf6e3 0%,#f6e9cd 100%);
+  border:4px solid #2b1c07;border-radius:18px;padding:20px 20px 22px;
+  display:flex;flex-direction:column;gap:11px;position:relative;
+}
+.stop:nth-of-type(4n+1){box-shadow:10px 10px 0 var(--gold-dk);transform:rotate(-.4deg)}
+.stop:nth-of-type(4n+2){box-shadow:10px 10px 0 var(--crimson);transform:rotate(.35deg)}
+.stop:nth-of-type(4n+3){box-shadow:10px 10px 0 var(--teal);transform:rotate(-.3deg)}
+.stop:nth-of-type(4n+4){box-shadow:10px 10px 0 var(--royal);transform:rotate(.3deg)}
+.stop h2{font-family:var(--head);font-weight:900;font-size:1.35rem;margin:0;line-height:1.15;letter-spacing:.6px}
+.stop p{margin:0;font-size:.93rem;line-height:1.55;color:#4a3a1d;flex:1}
+.stop .what{
+  display:flex;flex-wrap:wrap;gap:7px;margin:0;
+}
+.stop .what span{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.1px;text-transform:uppercase;
+  background:#fff;border:2px solid #2b1c07;border-radius:999px;padding:2px 10px;
+}
+a.enter{
+  align-self:flex-start;text-decoration:none;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:9px 22px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.enter:hover{filter:brightness(1.07)}
+a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+/* La puerta que todavia no existe. Necesita DOS clases: .stop:nth-of-type()
+   tiene la misma especificidad, asi que este bloque va despues para ganar. */
+.stop.locked{
+  background:linear-gradient(180deg,#1a0f3d,#12283a);
+  border:4px dashed var(--gold);box-shadow:8px 8px 0 rgba(0,0,0,.42);transform:rotate(.25deg);
+}
+.stop.locked h2{color:#fff9e8}
+.stop.locked p{color:#c9bbe8}
+.stop.locked .what span{background:rgba(255,255,255,.06);color:#ffe9b0;border-color:var(--gold)}
+.stop.locked .num{background:var(--parch);color:#2b1c07;border-color:#2b1c07}
+.soon{
+  align-self:flex-start;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#c9bbe8;
+  background:transparent;border:3px dashed var(--gold);border-radius:999px;padding:9px 22px;
+}
+.stop .num{
+  position:absolute;top:-15px;right:18px;
+  font-family:var(--head);font-weight:900;font-size:.8rem;letter-spacing:1.6px;text-transform:uppercase;
+  background:linear-gradient(180deg,#3b1a5e,#1a0f3d);color:#ffe9b0;
+  border:3px solid var(--gold);border-radius:999px;padding:3px 13px;
+}
+
+/* ---------- estante del profesor ---------- */
+.shelf{margin-top:6px}
+.shelf a{
+  display:inline-block;text-decoration:none;margin:0 7px 9px 0;
+  font-family:var(--head);font-weight:700;font-size:.85rem;letter-spacing:.8px;
+  background:var(--parch);border:2px solid #2b1c07;border-radius:8px;padding:5px 12px;color:var(--ink);
+}
+.shelf a:hover{background:#fff3d0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="chapter">Prepare Second Edition Level 3 &middot; Units 13 and 14</span>
+    <h1 class="big">Present Perfect Quest</h1>
+    <p>Four stops, one grammar: <b>have</b> or <b>has</b> plus the past participle. Start with the rules, cross the two Grammar: Plus worksheets, and train the irregular verbs in the vault until they are yours.</p>
+    <div class="verbline">ever &middot; never &middot; just &middot; already &middot; yet</div>
+  </div>
+
+  <p class="maplead"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7.5l4 3.2L12 4l5 6.7 4-3.2-1.9 11.3H4.9z"/></svg> The map of the quest</p>
+
+  <div class="map">
+
+    <section class="stop">
+      <span class="num">Stop I</span>
+      <h2>The Hall of Ever and Never</h2>
+      <p>The grammar of Unit 13 first: the four forms of the present perfect, the seven rules of the book, and then three trials. Write the past participles, build statements with <b>never</b>, and ask questions with <b>ever</b>.</p>
+      <div class="what"><span>Unit 13</span><span>Grammar reference</span><span>3 trials</span></div>
+      <a class="enter" href="present-perfect-ever-never-unit13.html">Enter</a>
+    </section>
+
+    <section class="stop">
+      <span class="num">Stop II</span>
+      <h2>The Trials of Ever and Never</h2>
+      <p>The Grammar: Plus worksheet of Unit 13, with all five written exercises. Choose between <b>ever</b> and <b>never</b>, turn loose words into sentences, use the verb box, hunt the mistakes, and finish the camping conversation.</p>
+      <div class="what"><span>Unit 13</span><span>Grammar Plus</span><span>5 trials</span></div>
+      <a class="enter" href="unit13-grammar-plus.html">Enter</a>
+    </section>
+
+    <section class="stop">
+      <span class="num">Stop III</span>
+      <h2>The Market of Just, Already and Yet</h2>
+      <p>The Grammar: Plus worksheet of Unit 14. Three new words join the present perfect and each one has its own place in the sentence. Rewrite, build, match, correct and complete Henry's text.</p>
+      <div class="what"><span>Unit 14</span><span>Grammar Plus</span><span>5 trials</span></div>
+      <a class="enter" href="unit14-grammar-plus.html">Enter</a>
+    </section>
+
+    <section class="stop">
+      <span class="num">Stop IV</span>
+      <h2>The Vault of Irregular Verbs</h2>
+      <p>A game, not a worksheet. Twenty-nine irregular verbs from these two units, one at a time and against the clock. Choose the past participle, keep your streak alive, and beat your own best run.</p>
+      <div class="what"><span>Units 13 and 14</span><span>Speed run</span><span>29 verbs</span></div>
+      <a class="enter" href="speed-run-irregular-participles.html">Enter</a>
+    </section>
+
+    <!-- ================================================================
+         PARA AGREGAR LA PROXIMA PAGINA:
+         copiar este bloque, pegarlo ARRIBA de la puerta cerrada, y cambiar
+         el numero, el titulo, el texto, las etiquetas y el href.
+         Los colores de sombra rotan solos segun la posicion (4n+1..4n+4),
+         asi que no hay que tocar nada de CSS.
+
+         <section class="stop">
+           <span class="num">Stop V</span>
+           <h2>Title of the new page</h2>
+           <p>Two or three lines telling the student what this stop trains.</p>
+           <div class="what"><span>Unit</span><span>Kind</span><span>How many</span></div>
+           <a class="enter" href="file-name.html">Enter</a>
+         </section>
+
+         Acordate del nombre del archivo: todo en minuscula, con guiones,
+         sin espacios, sin tildes y sin apostrofes.
+         ================================================================ -->
+
+    <section class="stop locked">
+      <span class="num">Stop V</span>
+      <h2>The Next Door</h2>
+      <p>This door is still closed. More trials of the present perfect are being written, and they will appear here as soon as they are ready.</p>
+      <div class="what"><span>Coming soon</span></div>
+      <span class="soon">Locked</span>
+    </section>
+
+  </div>
+
+
+</div>
+
+<footer class="site">Copyright Prof Dan M. Mecikovsky</footer>
+</body>
+</html>
