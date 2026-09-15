@@ -354,6 +354,12 @@ input.w-xs{width:5.5rem}
 
 .starter{font-weight:600;color:#3d1470}
 .gapline .hintword{margin-left:.2em}
+
+.markword{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:#d7b6ff;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-left:.4em;
+  display:inline-block;vertical-align:2px;
+}
 </style>
 </head>
 <body>
@@ -693,6 +699,17 @@ function renderTable(st, t){
 
 /* ---------- gap ---------- */
 function renderGap(st, t){
+  if(t.box){
+    var vb = el("div", "vaultbox");
+    var vt = el("div", "vt");
+    vt.appendChild(icon("scroll"));
+    vt.appendChild(document.createTextNode(" Verb box"));
+    vb.appendChild(vt);
+    var chips = el("div", "vchips");
+    for(var b = 0; b < t.box.length; b++) chips.appendChild(el("span", "vchip", t.box[b]));
+    vb.appendChild(chips);
+    st.body.appendChild(vb);
+  }
   for(var i = 0; i < t.items.length; i++){
     var d = t.items[i];
     var id = REG.push({ data: d }) - 1;
@@ -718,6 +735,7 @@ function renderGap(st, t){
       }
     }
     line.appendChild(el("span", "hintword", d.verb));
+    if(d.marker) line.appendChild(el("span", "markword", d.marker));
     item.appendChild(line);
     st.body.appendChild(item);
     st.entries.push({ kind: "input", inputs: fields, data: d, holder: item, exp: item });
