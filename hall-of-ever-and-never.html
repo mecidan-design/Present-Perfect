@@ -719,6 +719,27 @@ codex: [
 (function(){
 "use strict";
 
+/* ===== donde cae la respuesta correcta =====
+   Las opciones estaban escritas a mano y la correcta caia casi siempre en el
+   mismo boton. Aca se sortean una vez por sesion y se recalcula el indice,
+   asi el alumno lee las tres formas en vez de aprenderse el lugar. */
+function barajarOpciones(lista){
+  var i, j, k, t;
+  for(i = 0; i < lista.length; i++){
+    var d = lista[i];
+    if(!d || !d.options || d.options.length < 2) continue;
+    var buena = d.options[d.correct];
+    var o = d.options.slice();
+    for(j = o.length - 1; j > 0; j--){
+      k = Math.floor(Math.random() * (j + 1));
+      t = o[j]; o[j] = o[k]; o[k] = t;
+    }
+    d.options = o;
+    d.correct = o.indexOf(buena);
+  }
+}
+barajarOpciones(DATA.speedrun);
+
 /* ===== registries: el DOM guarda SOLO un indice numerico ===== */
 var REG = { sr: [], vault: [], gate: [] };
 

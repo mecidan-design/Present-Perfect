@@ -1269,7 +1269,9 @@ document.getElementById("codeBtn").addEventListener("click", function(){
     qbox.innerHTML = "";
     qbox.appendChild(el("p", "gq", d.q.replace("___", "............")));
     var opts = el("div", "opts");
-    for(var i = 0; i < d.options.length; i++){
+    /* Mismo motivo que en el reloj: el lugar de la respuesta cambia siempre. */
+    var orden = shuffle(d.options.slice());
+    for(var i = 0; i < orden.length; i++){
       (function(word){
         var b = el("button", "opt", word);
         b.type = "button";
@@ -1288,7 +1290,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
           setTimeout(afterMove, 900);
         });
         opts.appendChild(b);
-      })(d.options[i]);
+      })(orden[i]);
     }
     qbox.appendChild(opts);
   }
@@ -1338,7 +1340,11 @@ document.getElementById("codeBtn").addEventListener("click", function(){
     box.innerHTML = "";
     box.appendChild(el("p", "gq", d.q.replace("___", "............")));
     var opts = el("div", "opts");
-    for(var i = 0; i < d.options.length; i++){
+    /* Las opciones se barajan en cada pregunta: si no, la respuesta correcta
+       cae siempre en el mismo lugar y el alumno aprende la posicion, no el
+       ingles. */
+    var orden = shuffle(d.options.slice());
+    for(var i = 0; i < orden.length; i++){
       (function(word){
         var b = el("button", "opt", word);
         b.type = "button";
@@ -1355,7 +1361,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
           box.appendChild(flash);
         });
         opts.appendChild(b);
-      })(d.options[i]);
+      })(orden[i]);
     }
     box.appendChild(opts);
   }
