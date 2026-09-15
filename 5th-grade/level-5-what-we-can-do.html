@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What We Can Do - Level 5</title>
+<style>
+/* =========================================================
+   ESTETICA: pixel art 8-bit, juego de aventura. Paleta PICO-8.
+   Sin fuentes externas y SIN SONIDO de ninguna clase.
+   ========================================================= */
+:root{
+  --negro:#000000; --noche:#1D2B53; --vino:#7E2553; --bosque:#008751;
+  --tierra:#AB5236; --piedra:#5F574F; --gris:#C2C3C7; --hueso:#FFF1E8;
+  --rojo:#FF004D; --naranja:#FFA300; --amarillo:#FFEC27; --verde:#00E436;
+  --cielo:#29ADFF; --lila:#83769C; --rosa:#FF77A8; --durazno:#FFCCAA;
+  --mono:ui-monospace,"Cascadia Mono","Consolas","DejaVu Sans Mono","Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--mono); color:var(--hueso); min-height:100vh;
+  padding:18px 12px 0; line-height:1.55;
+  background:
+    repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 2px,transparent 2px 4px),
+    radial-gradient(var(--lila) 1px,transparent 1.5px) 0 0/48px 48px,
+    radial-gradient(var(--cielo) 1px,transparent 1.5px) 24px 24px/72px 72px,
+    linear-gradient(180deg,#0b1430 0%,var(--noche) 45%,#2a1042 100%);
+  background-attachment:fixed;
+  image-rendering:pixelated;
+}
+.wrap{max-width:900px;margin:0 auto}
+
+/* ---------- fuente pixel dibujada en SVG ----------
+   Se fija la ALTURA, no el ancho: si se fijara el ancho, un titulo corto
+   ("LEVEL 4") saldria con pixeles enormes y uno largo ("MY WEEK AND THE
+   CLOCK") con pixeles diminutos, y la pantalla queda despareja. Con la altura
+   fija todos tienen el mismo pixel, y max-width lo achica solo si no entra. */
+svg.pxt{display:block;width:auto;max-width:100%;fill:currentColor}
+/* Las alturas son multiplos exactos de los 7px del glifo: a 2x, 3x o 4x el
+   borde queda duro. A 9 u 11 px el pixel cae entre medio y el texto se
+   emborrona, que es justo lo contrario de lo que busca el 8-bit. */
+.pxt-h1{height:clamp(28px,7vw,56px)}   /* 4x a 8x */
+.pxt-h2{height:28px}                   /* 4x */
+.pxt-h3{height:21px}                   /* 3x */
+.pxt-tag{height:14px}                  /* 2x */
+.pxt-btn{height:14px}                  /* 2x */
+.pxt-mini{height:14px}                 /* 2x */
+
+/* ---------- marco general ---------- */
+.hero{
+  background:linear-gradient(180deg,var(--vino) 0%,#3a1140 100%);
+  border:4px solid var(--hueso);
+  box-shadow:0 0 0 4px var(--negro), 10px 10px 0 rgba(0,0,0,.55);
+  padding:18px 18px 20px; margin-bottom:22px;
+}
+.hero .tag{color:var(--amarillo);display:block;margin-bottom:12px}
+.hero h1{margin:0 0 10px;color:var(--hueso)}
+.hero .goal{
+  color:var(--durazno); font-size:.86rem; margin:0;
+  border-left:4px solid var(--naranja); padding-left:10px;
+}
+
+/* ---------- barra de progreso segmentada ---------- */
+.hud{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  border:4px solid var(--negro); background:rgba(0,0,0,.45);
+  padding:9px 11px; margin-bottom:20px;
+}
+.hud .hudlab{color:var(--amarillo)}
+.segbar{display:flex; gap:3px; flex:1 1 180px; min-width:140px}
+.seg{
+  flex:1 1 0; height:14px; background:var(--piedra);
+  border:2px solid var(--negro); min-width:8px;
+}
+.seg.on{background:var(--verde)}
+.seg.part{background:var(--naranja)}
+.hud .hudscore{color:var(--hueso); font-size:.8rem}
+
+/* ---------- tarjetas ---------- */
+.card{
+  background:linear-gradient(180deg,#141d3e 0%,#0d1430 100%);
+  border:4px solid var(--cielo);
+  box-shadow:0 0 0 4px var(--negro), 8px 8px 0 rgba(0,0,0,.5);
+  padding:16px 16px 18px; margin:0 0 22px;
+}
+.card.partA{border-color:var(--cielo)}
+.card.partB{border-color:var(--rosa)}
+.card.partC{border-color:var(--verde)}
+.card.partR{border-color:var(--naranja)}
+.card.partX{border-color:var(--amarillo)}
+.card .tag{color:var(--amarillo); display:block; margin-bottom:8px}
+.card h2{margin:0 0 6px; color:var(--hueso)}
+.card h3{margin:16px 0 8px; color:var(--durazno);
+  display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+.icon{
+  display:inline-block; border:2px solid var(--negro); background:var(--negro);
+  padding:1px 5px; margin-right:7px; font-size:.95rem; vertical-align:middle;
+}
+.sub{color:var(--gris); font-size:.86rem; margin:.1rem 0 .9rem}
+
+/* ---------- tablas del libro (vocabulario / patrones) ---------- */
+.booktable{
+  width:100%; border-collapse:collapse; margin:10px 0 4px; font-size:.86rem;
+}
+.booktable th,.booktable td{
+  border:3px solid var(--negro); padding:7px 9px; text-align:left;
+  background:rgba(255,241,232,.07);
+}
+.booktable th{background:var(--vino); color:var(--amarillo); font-weight:700}
+.patternbox{
+  border:3px dashed var(--amarillo); background:rgba(255,236,39,.08);
+  padding:10px 12px; margin:10px 0;
+}
+.patternbox p{margin:.25rem 0; font-size:.88rem; color:var(--hueso)}
+.patternbox .hl{color:var(--amarillo); font-weight:700}
+
+/* ---------- imagenes del booklet ---------- */
+.shot{
+  border:4px solid var(--negro); background:var(--hueso);
+  padding:6px; margin:12px 0; text-align:center;
+}
+.shot img{max-width:100%; height:auto; display:block; margin:0 auto}
+.shot figcaption{
+  color:var(--noche); font-size:.72rem; margin-top:5px; font-weight:700;
+}
+
+/* ---------- items ---------- */
+.item{
+  border-left:4px solid var(--piedra); padding:8px 0 8px 11px; margin:9px 0;
+}
+.item.done{border-left-color:var(--verde)}
+.item.failed{border-left-color:var(--rojo)}
+.sline{display:flex; gap:9px; align-items:flex-start; flex-wrap:wrap}
+.rn{
+  background:var(--lila); color:var(--negro); border:2px solid var(--negro);
+  min-width:22px; text-align:center; font-weight:700; font-size:.78rem;
+  padding:1px 4px; flex:0 0 auto;
+}
+.stext{flex:1 1 220px; font-size:.92rem}
+.hintword{
+  display:inline-block; background:var(--piedra); border:2px solid var(--negro);
+  color:var(--amarillo); padding:0 5px; margin-left:6px; font-size:.78rem;
+}
+
+/* ---------- inputs ---------- */
+input[type=text]{
+  font-family:var(--mono); font-size:.9rem; color:var(--negro);
+  background:var(--hueso); border:3px solid var(--negro);
+  padding:4px 7px; outline:none;
+}
+input[type=text]:focus{border-color:var(--cielo); background:#fff}
+input.w-s{width:130px}
+input.w-m{width:210px}
+input.w-l{width:100%; margin-top:6px}
+input.ok{background:#bdf5c8; border-color:var(--bosque)}
+input.no{background:#ffc9d6; border-color:var(--rojo)}
+select{
+  font-family:var(--mono); font-size:.86rem; color:var(--negro);
+  background:var(--hueso); border:3px solid var(--negro); padding:4px 6px;
+}
+select.ok{background:#bdf5c8; border-color:var(--bosque)}
+select.no{background:#ffc9d6; border-color:var(--rojo)}
+textarea{
+  font-family:var(--mono); font-size:.9rem; color:var(--negro); width:100%;
+  background:var(--hueso); border:3px solid var(--negro); padding:7px;
+  outline:none; resize:vertical; line-height:1.6;
+}
+textarea:focus{border-color:var(--cielo)}
+
+/* ---------- botones de opcion ---------- */
+.optgroup{display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle}
+.pickbtn{
+  font-family:var(--mono); font-size:.85rem; cursor:pointer;
+  background:var(--piedra); color:var(--hueso); border:3px solid var(--negro);
+  box-shadow:3px 3px 0 rgba(0,0,0,.55); padding:3px 9px;
+}
+.pickbtn:hover{background:var(--lila)}
+.pickbtn.on{background:var(--cielo); color:var(--negro)}
+.pickbtn.good{background:var(--verde); color:var(--negro)}
+.pickbtn.bad{background:var(--rojo); color:var(--hueso)}
+.pickbtn[disabled]{cursor:default}
+
+/* ---------- botones ---------- */
+.btnrow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:16px}
+.btn{
+  font-family:var(--mono); cursor:pointer; color:var(--negro);
+  background:var(--amarillo); border:4px solid var(--negro);
+  box-shadow:5px 5px 0 rgba(0,0,0,.6); padding:7px 13px;
+  display:inline-flex; align-items:center;
+}
+.btn:hover{background:var(--naranja)}
+.btn:active{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(0,0,0,.6)}
+.btn.ghost{background:var(--piedra); color:var(--hueso)}
+.btn.ghost:hover{background:var(--lila); color:var(--negro)}
+.btn[disabled]{background:var(--piedra); color:var(--gris); cursor:default;
+  box-shadow:none; transform:none}
+.scoreline{color:var(--amarillo); font-size:.86rem}
+
+/* ---------- explicaciones ---------- */
+.exp{
+  border:3px solid var(--bosque); background:rgba(0,228,70,.09);
+  padding:9px 11px; margin:9px 0 2px;
+}
+.exp.wrong{border-color:var(--rojo); background:rgba(255,0,77,.10)}
+.exp p{margin:.22rem 0; font-size:.83rem}
+.exp .sol{color:var(--amarillo); font-weight:700}
+.exp .lab{
+  display:inline-block; background:var(--negro); color:var(--amarillo);
+  border:2px solid var(--negro); padding:0 5px; margin-right:7px; font-size:.72rem;
+}
+.exp .lab.tip{color:var(--cielo)}
+.explist{margin-top:14px; border-top:3px dashed var(--piedra); padding-top:12px}
+.expitem{display:flex; gap:9px; align-items:flex-start; margin-bottom:8px}
+.en{
+  background:var(--naranja); color:var(--negro); border:2px solid var(--negro);
+  min-width:22px; text-align:center; font-weight:700; font-size:.78rem;
+  padding:1px 4px; flex:0 0 auto;
+}
+.expitem .exp{flex:1 1 auto; margin:0}
+
+/* ---------- escritura libre (sin correccion) ---------- */
+.freebox{border:3px solid var(--lila); background:rgba(131,118,156,.14); padding:11px 12px; margin:10px 0}
+.freebox .fprompt{margin:0 0 8px; font-size:.9rem; color:var(--hueso)}
+.freebox .fnote{
+  margin:8px 0 0; font-size:.78rem; color:var(--durazno);
+  border-top:2px dashed var(--piedra); padding-top:7px;
+}
+.starter{color:var(--amarillo); font-weight:700; margin-right:6px}
+.wordcount{color:var(--gris); font-size:.76rem; margin-top:6px}
+
+/* ---------- autoevaluacion ---------- */
+.selftable{width:100%; border-collapse:collapse; margin-top:8px; font-size:.85rem}
+.selftable td{border:3px solid var(--negro); padding:7px 9px;
+  background:rgba(255,241,232,.07)}
+.selftable td.pickcell{width:210px; white-space:nowrap}
+
+/* ---------- la tilde de cierre de cada modulo ---------- */
+.finishbox{
+  display:flex; gap:10px; align-items:center; margin-top:14px;
+  border:3px solid var(--amarillo); background:rgba(255,236,39,.09); padding:10px 12px;
+}
+.finishbox .tick{color:var(--amarillo); font-weight:700; font-size:1.05rem}
+
+/* ---------- mapa del home ---------- */
+.map{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.zone{
+  display:block; text-decoration:none; color:var(--hueso);
+  background:linear-gradient(180deg,#152046 0%,#0b1230 100%);
+  border:4px solid var(--cielo);
+  box-shadow:0 0 0 4px var(--negro), 8px 8px 0 rgba(0,0,0,.55);
+  padding:14px 15px 16px;
+}
+.zone:hover{transform:translate(-2px,-2px); box-shadow:0 0 0 4px var(--negro), 11px 11px 0 rgba(0,0,0,.6)}
+.zone .znum{color:var(--amarillo); display:block; margin-bottom:8px}
+.zone .zt{color:var(--hueso); margin-bottom:9px}
+.zone .zd{color:var(--gris); font-size:.83rem; margin:0}
+.zone.arcade{border-color:var(--rosa)}
+.zone.locked{border-color:var(--piedra); opacity:.75; cursor:default}
+.zone.locked .znum{color:var(--gris)}
+
+/* la pantalla de titulo parpadea en steps(), como un arcade */
+.press{color:var(--amarillo); text-align:center; margin:22px 0 4px;
+  animation:blink 1.1s steps(1,end) infinite}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.press svg{margin:0 auto}
+
+/* ---------- juegos ---------- */
+.gamecard{margin-bottom:26px}
+.gmeta{display:flex; gap:12px; flex-wrap:wrap; color:var(--amarillo); font-size:.82rem; margin:8px 0 12px}
+.sentence{font-size:1rem; line-height:2.1; margin:10px 0}
+.word{
+  display:inline-block; cursor:pointer; background:var(--piedra);
+  border:3px solid var(--negro); padding:2px 7px; margin:2px 3px;
+}
+.word:hover{background:var(--lila)}
+.word.bad{background:var(--rojo); color:var(--hueso)}
+.word.good{background:var(--verde); color:var(--negro)}
+.word.dead{cursor:default}
+.dots{display:flex; gap:5px; margin:9px 0}
+.dot{width:13px; height:13px; background:var(--piedra); border:2px solid var(--negro)}
+.dot.y{background:var(--verde)} .dot.n{background:var(--rojo)}
+.dot.now{border-color:var(--amarillo)}
+.gq{font-size:.96rem; margin:6px 0 10px}
+.opts{display:flex; gap:8px; flex-wrap:wrap}
+.opt{
+  font-family:var(--mono); font-size:.9rem; cursor:pointer; color:var(--negro);
+  background:var(--durazno); border:3px solid var(--negro);
+  box-shadow:3px 3px 0 rgba(0,0,0,.55); padding:5px 12px;
+}
+.opt:hover{background:var(--amarillo)}
+.opt.good{background:var(--verde)} .opt.bad{background:var(--rojo); color:var(--hueso)}
+.opt[disabled]{cursor:default; box-shadow:none}
+.fixline{color:var(--amarillo); font-size:.86rem; margin:9px 0 0}
+.keyhint{color:var(--gris); font-size:.8rem; margin:8px 0 0}
+.final{text-align:center; padding:12px 0}
+.final .big{color:var(--amarillo); font-size:2.3rem; font-weight:700; line-height:1.1; margin:8px 0}
+.final .msg{color:var(--hueso); font-size:.9rem}
+.qbox{border:3px solid var(--lila); padding:11px; margin-top:12px}
+.qbox.hidden{display:none}
+.grid{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:270px; margin:10px 0}
+.sq{
+  aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  background:var(--piedra); border:4px solid var(--negro); cursor:pointer;
+  font-size:1.9rem; font-weight:700; color:var(--hueso);
+}
+.sq.me{background:var(--cielo); color:var(--negro)}
+.sq.cpu{background:var(--rosa); color:var(--negro)}
+.sq.win{border-color:var(--amarillo)}
+.clock{
+  font-size:2.1rem; font-weight:700; color:var(--verde);
+  border:4px solid var(--negro); background:rgba(0,0,0,.45);
+  display:inline-block; padding:2px 14px; min-width:88px; text-align:center;
+}
+.clock.low{color:var(--rojo)}
+.bartrack{height:16px; background:var(--piedra); border:3px solid var(--negro); margin:9px 0}
+.barfill{height:100%; background:var(--verde); width:100%}
+.wrow{display:flex; gap:5px; margin-bottom:5px}
+.tile{
+  width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+  border:3px solid var(--negro); background:var(--piedra); font-weight:700;
+}
+.tile.hit{background:var(--verde); color:var(--negro)}
+.tile.near{background:var(--amarillo); color:var(--negro)}
+.tile.miss{background:var(--vino)}
+.flash{font-size:.82rem; color:var(--verde); margin:8px 0 0}
+.flash.no{color:var(--rosa)}
+.tokens{display:flex; gap:7px; flex-wrap:wrap; margin:10px 0}
+.token{
+  font-family:var(--mono); font-size:.9rem; cursor:pointer; color:var(--negro);
+  background:var(--durazno); border:3px solid var(--negro);
+  box-shadow:3px 3px 0 rgba(0,0,0,.55); padding:4px 10px;
+}
+.token:hover{background:var(--amarillo)}
+.token.used{background:var(--piedra); color:var(--gris); cursor:default; box-shadow:none}
+.builtline{
+  border:3px dashed var(--amarillo); background:rgba(0,0,0,.35);
+  min-height:44px; padding:8px 10px; margin:8px 0; font-size:.95rem;
+}
+.seals{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 0}
+.seal{
+  border:3px solid var(--negro); background:var(--piedra); color:var(--gris);
+  padding:4px 9px; font-size:.78rem;
+}
+.seal.won{background:var(--amarillo); color:var(--negro)}
+
+/* ---------- navegacion y pie ---------- */
+.nav{display:flex; gap:10px; flex-wrap:wrap; margin:6px 0 24px}
+.nav a{text-decoration:none}
+footer.cr{
+  border-top:4px solid var(--negro); margin-top:30px; padding:16px 0 22px;
+  text-align:center; color:var(--gris); font-size:.8rem;
+}
+@media (max-width:560px){
+  .hero{padding:14px 13px 16px}
+  .card{padding:13px 12px 15px}
+  input.w-s{width:100px}
+  input.w-m{width:150px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+<span class="tag" id="heroTag"></span>
+<h1 id="heroTitle"></h1>
+<p class="goal" id="heroGoal"></p>
+</div>
+<div class="hud">
+<span class="hudlab" id="hudLab"></span>
+<div class="segbar" id="hudBar"></div>
+<span class="hudscore" id="hudScore"></span>
+</div>
+<div class="nav"><a class="btn ghost" href="index.html" data-nav="World map">World map</a><a class="btn ghost" href="level-4-the-animal-world.html" data-nav="Level 4">Level 4</a><a class="btn" href="level-6-my-week-and-the-clock.html" data-nav="Level 6">Level 6</a><a class="btn ghost" href="arcade.html" data-nav="Arcade">The Arcade</a></div>
+<div id="parts"></div>
+<div class="nav"><a class="btn ghost" href="index.html" data-nav="World map">World map</a><a class="btn ghost" href="level-4-the-animal-world.html" data-nav="Level 4">Level 4</a><a class="btn" href="level-6-my-week-and-the-clock.html" data-nav="Level 6">Level 6</a><a class="btn ghost" href="arcade.html" data-nav="Arcade">The Arcade</a></div>
+<script id="assets-block">
+var IMAGES = {
+ "abilities": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjAAAAB6CAMAAACWc5l+AAAAwFBMVEVfYWqbmp5ibpGqi3COcWLitpqx1edYjrEuUWnk5eE3a5QaM0r2wpx9wHzrWVFLkcT50USjssVcVTEFEiP40zunkjmFyITbpjdPNzZon26RcDQtQjjaslOEdJd+xYBTPUSAxH7heTGDPD2XfMDBv8T+/v74xqVKk8oABxYKGCb+0zrMnXKr2vHSonX900IWJDH+07CRebN6vXsxNTjp6eguOUdHSUw2RVDU19mytrnEyMolKjMFER13g4tSU1bNqJBPsyJWAAAAQHRSTlP/////////////////////////////////////////////////////////////////////////////////////73leyQAAIPJJREFUeNrtXQl72kqy7RZICGQHA97ju808E7Ud08TaF8T//1evurW1hMDayHUmqu8mMwHbGHRUdarqVDV6HmywBoaGj2CwATCDDYAZbADMYANgBhsAM9hgA2AGGwAz2ACYwQbADDYAZrABMIMNNgBmsAEwZzMXI4SwP3wQvz5gXIwlCWP3nK/hR6Guw3+6hQeE/NqA8SKicyMWNs/1IjjUIyzLMkZEHzzwLw0YFOr3/xkzuye6cabbH+sB3m636/V2u7cHxPzKgEF6MP6S2l9E353jRRQ9kAEt3LZrWx+i0i8LGKTffxEtOAtiHB2neAGTKTWfz0yvI8dyInReWvZsmr8dYHw9+PKlhBjvDK8SCXhZb8dndTHYZvSaUAL/Q5B3plfxkEUJtXrBJPqVHMy4BJgvxDgDgxmJgFnvj7IYV+n6+XuOHtpjmdkejy1dt8+RyGP4wcSwbYMAJs3fBzAmLTuYL1/u+7/9kb5fFyyoBqUPBFx3OkFGggu45/SaubLtGkf6GYIsglfBMg+vI0un+LcBjFJiMNxCp++XsYlcBIxNKu5KFzJuexzptANiIsjztgVvth4FfWdlpqPb+/RVtusx6XqL/TqAwXFEGlNCgvv7+zH/1z1p6WOnx650VAMwpgRJ/QicwrjD9bV1u/RKcEVlq2fEQF2g8AKYdkTMrwaYMaGRA5jRGVcM7lvSXs8hxyp/ByHJoGW47Cik92t+11KrfaSw11Vm9xqVJD0qQXJP6PR3Agyh4GCB/uIx4sAhbWiiFxLb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"
+};
+</script>
+<script id="data-block">
+var DATA = {
+ "meta": {
+  "tag": "Level 5",
+  "name": "What We Can Do",
+  "title": "What We Can Do - Level 5",
+  "goal": "Express abilities with \u201ccan\u201d and describe actions happening right now."
+ },
+ "parts": [
+  {
+   "key": "a",
+   "tag": "Part A",
+   "name": "Can / Can't",
+   "skin": "A",
+   "blocks": [
+    {
+     "type": "pattern",
+     "icon": "\ud83d\udc40",
+     "title": "1. Look at the Pattern",
+     "lines": [
+      "I [[can]] swim.  I [[can't]] fly.",
+      "[[Can]] you swim?  Yes, I [[can]]. / No, I [[can't]]."
+     ]
+    },
+    {
+     "type": "image",
+     "src": "abilities",
+     "alt": "Children swimming, riding a bike, singing and drawing"
+    },
+    {
+     "type": "free",
+     "icon": "\u2b55",
+     "title": "2. Ability Survey \u2014 Circle Can or Can't",
+     "docx_table": [
+      [
+       "Action",
+       "Circle one"
+      ],
+      [
+       "swim",
+       "can / can't"
+      ],
+      [
+       "ride a bike",
+       "can / can't"
+      ],
+      [
+       "jump very high",
+       "can / can't"
+      ],
+      [
+       "sing",
+       "can / can't"
+      ],
+      [
+       "draw",
+       "can / can't"
+      ]
+     ],
+     "prompt": "swim  \u2014  can / can't\nride a bike  \u2014  can / can't\njump very high  \u2014  can / can't\nsing  \u2014  can / can't\ndraw  \u2014  can / can't\n\nWrite can or can't for each action.",
+     "rows": 6,
+     "note": "This is a survey about you, so only you know the answers. The machine does not mark it."
+    },
+    {
+     "type": "match",
+     "icon": "\u2194\ufe0f",
+     "title": "3. Match the Question to the Answer",
+     "leftHead": "Question",
+     "endings": [
+      {
+       "letter": "a",
+       "text": "No, I can't."
+      },
+      {
+       "letter": "b",
+       "text": "Yes, I can."
+      },
+      {
+       "letter": "c",
+       "text": "No, it can't."
+      }
+     ],
+     "items": [
+      {
+       "n": 1,
+       "text": "Can you swim?",
+       "letter": "b",
+       "why": "The question is about you, so the answer keeps I: Yes, I can.",
+       "tip": "Can you...? is answered with I can or I can't."
+      },
+      {
+       "n": 2,
+       "text": "Can a fish fly?",
+       "letter": "c",
+       "why": "A fish is an it, and a fish cannot fly, so the answer is No, it can't.",
+       "tip": "An animal takes it in the short answer."
+      },
+      {
+       "n": 3,
+       "text": "Can you sing?",
+       "letter": "a",
+       "why": "This is the other answer with I, the one that says no.",
+       "tip": "Two questions start with Can you, so read both answers before you choose."
+      }
+     ]
+    },
+    {
+     "type": "free",
+     "icon": "\u270f\ufe0f",
+     "title": "4. Your Turn",
+     "prompt": "Write two things you can do and one thing you can't do yet.",
+     "rows": 5
+    }
+   ]
+  },
+  {
+   "key": "b",
+   "tag": "Part B",
+   "name": "Present Continuous",
+   "skin": "B",
+   "blocks": [
+    {
+     "type": "pattern",
+     "icon": "\ud83d\udc40",
+     "title": "1. Look at the Pattern",
+     "lines": [
+      "I [[am]] runn[[ing]].  She [[is]] read[[ing]].  They [[are]] play[[ing]]."
+     ]
+    },
+    {
+     "type": "gap",
+     "icon": "\ud83e\udde9",
+     "title": "2. Complete with am, is, or are + -ing",
+     "items": [
+      {
+       "n": 1,
+       "text": "I {1} (write) {2} right now.",
+       "wide": true,
+       "answers": [
+        [
+         "am",
+         "'m"
+        ],
+        [
+         "writing"
+        ]
+       ],
+       "solution": "am writing",
+       "why": "I takes am, and write plus -ing is writing.",
+       "tip": "write loses its e before -ing: writing, not writeing."
+      },
+      {
+       "n": 2,
+       "text": "She {1} (read) {2} a book.",
+       "wide": true,
+       "answers": [
+        [
+         "is",
+         "'s"
+        ],
+        [
+         "reading"
+        ]
+       ],
+       "solution": "is reading",
+       "why": "She takes is, and read plus -ing is reading.",
+       "tip": "Most verbs just add -ing with no other change."
+      },
+      {
+       "n": 3,
+       "text": "They {1} (play) {2} outside.",
+       "wide": true,
+       "answers": [
+        [
+         "are",
+         "'re"
+        ],
+        [
+         "playing"
+        ]
+       ],
+       "solution": "are playing",
+       "why": "They takes are, and play plus -ing is playing.",
+       "tip": "Two parts every time: am/is/are and then the -ing word."
+      }
+     ]
+    },
+    {
+     "type": "free",
+     "icon": "\ud83d\udc40",
+     "title": "3. Look Around the Classroom",
+     "prompt": "Write what three classmates are doing right now.",
+     "starter": "They are",
+     "rows": 4,
+     "note": "Only you can see your classroom right now, so the machine does not mark this one."
+    },
+    {
+     "type": "free",
+     "icon": "\u270f\ufe0f",
+     "title": "4. Your Turn",
+     "prompt": "Write what you are doing right now, in one sentence.",
+     "starter": "I am",
+     "rows": 3
+    }
+   ]
+  },
+  {
+   "key": "r",
+   "tag": "Reading",
+   "name": "Read and Answer",
+   "skin": "R",
+   "blocks": [
+    {
+     "type": "pattern",
+     "icon": "\ud83d\udcd6",
+     "title": "1. Read and Answer",
+     "lines": [
+      "\u201cI can swim, and I can ride a bike, but I can't sing very well. Right now, I am sitting at my desk. My friend is drawing a picture. She can draw very well.\u201d"
+     ]
+    },
+    {
+     "type": "tf",
+     "title": "Circle True or False:",
+     "items": [
+      {
+       "n": 1,
+       "text": "The writer can sing very well.",
+       "correct": false,
+       "why": "The text says I can't sing very well.",
+       "tip": "can't turns the sentence into a no."
+      },
+      {
+       "n": 2,
+       "text": "The friend is drawing.",
+       "correct": true,
+       "why": "The text says My friend is drawing a picture.",
+       "tip": "is drawing means it is happening right now."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "key": "x",
+   "tag": "Challenge",
+   "name": "Put It All Together",
+   "skin": "X",
+   "blocks": [
+    {
+     "type": "free",
+     "icon": "\u270f\ufe0f",
+     "title": "1. Put It All Together",
+     "prompt": "Write about a friend: one thing they can do, and what they are doing right now.",
+     "rows": 6
+    },
+    {
+     "type": "self",
+     "title": "How did I do?",
+     "rows": [
+      "I can use \u201ccan\u201d and \u201ccan't\u201d.",
+      "I can use the Present Continuous (am/is/are + -ing)."
+     ]
+    },
+    {
+     "type": "finish",
+     "text": "I finished Module 5"
+    }
+   ]
+  }
+ ]
+};
+</script>
+<script id="engine-block">
+(function(){
+"use strict";
+
+/* ===========================================================
+   MOTOR 8-BIT DEL BOOKLET DE 5TO.
+   Este bloque NO sabe nada del contenido: todo sale de DATA, que
+   vive en el bloque de arriba y se puede correr solo en Node.
+   =========================================================== */
+
+/* El DOM guarda SOLO un indice numerico. Serializar JSON en un
+   data-* se rompe con los apostrofes ("hasn't", "I'm"). */
+var REG = [];
+
+/* ===========================================================
+   FUENTE PIXEL 5x7 dibujada en SVG.
+   Es la misma de repaso-boy-bathroom: el material tiene que abrir
+   sin internet, asi que no se puede depender de Google Fonts.
+   =========================================================== */
+var GLYPHS = {
+"A":"01110,10001,10001,11111,10001,10001,10001",
+"B":"11110,10001,10001,11110,10001,10001,11110",
+"C":"01110,10001,10000,10000,10000,10001,01110",
+"D":"11110,10001,10001,10001,10001,10001,11110",
+"E":"11111,10000,10000,11110,10000,10000,11111",
+"F":"11111,10000,10000,11110,10000,10000,10000",
+"G":"01110,10001,10000,10111,10001,10001,01111",
+"H":"10001,10001,10001,11111,10001,10001,10001",
+"I":"11111,00100,00100,00100,00100,00100,11111",
+"J":"00111,00010,00010,00010,00010,10010,01100",
+"K":"10001,10010,10100,11000,10100,10010,10001",
+"L":"10000,10000,10000,10000,10000,10000,11111",
+"M":"10001,11011,10101,10101,10001,10001,10001",
+"N":"10001,11001,11001,10101,10011,10011,10001",
+"O":"01110,10001,10001,10001,10001,10001,01110",
+"P":"11110,10001,10001,11110,10000,10000,10000",
+"Q":"01110,10001,10001,10001,10101,10010,01101",
+"R":"11110,10001,10001,11110,10100,10010,10001",
+"S":"01111,10000,10000,01110,00001,00001,11110",
+"T":"11111,00100,00100,00100,00100,00100,00100",
+"U":"10001,10001,10001,10001,10001,10001,01110",
+"V":"10001,10001,10001,10001,10001,01010,00100",
+"W":"10001,10001,10001,10101,10101,11011,10001",
+"X":"10001,10001,01010,00100,01010,10001,10001",
+"Y":"10001,10001,01010,00100,00100,00100,00100",
+"Z":"11111,00001,00010,00100,01000,10000,11111",
+"0":"01110,10001,10011,10101,11001,10001,01110",
+"1":"00100,01100,00100,00100,00100,00100,01110",
+"2":"01110,10001,00001,00010,00100,01000,11111",
+"3":"11111,00010,00100,00010,00001,10001,01110",
+"4":"00010,00110,01010,10010,11111,00010,00010",
+"5":"11111,10000,11110,00001,00001,10001,01110",
+"6":"00110,01000,10000,11110,10001,10001,01110",
+"7":"11111,00001,00010,00100,01000,01000,01000",
+"8":"01110,10001,10001,01110,10001,10001,01110",
+"9":"01110,10001,10001,01111,00001,00010,01100",
+" ":"00000,00000,00000,00000,00000,00000,00000",
+"'":"00100,00100,01000,00000,00000,00000,00000",
+"-":"00000,00000,00000,11111,00000,00000,00000",
+".":"00000,00000,00000,00000,00000,01100,01100",
+",":"00000,00000,00000,00000,01100,01100,11000",
+":":"00000,01100,01100,00000,01100,01100,00000",
+"!":"00100,00100,00100,00100,00100,00000,00100",
+"?":"01110,10001,00001,00010,00100,00000,00100",
+"/":"00001,00010,00010,00100,01000,01000,10000",
+"(":"00010,00100,01000,01000,01000,00100,00010",
+")":"01000,00100,00010,00010,00010,00100,01000",
+"+":"00000,00100,00100,11111,00100,00100,00000",
+"=":"00000,00000,11111,00000,11111,00000,00000",
+"&":"01100,10010,10100,01000,10101,10010,01101",
+">":"10000,11000,11100,11110,11100,11000,10000"
+};
+var SVGNS = "http://www.w3.org/2000/svg";
+
+/* Dibuja `text` como pixeles. Agrupa los unos contiguos de cada fila en un
+   solo <rect> para no llenar el DOM de nodos. */
+function pixelText(text, cls){
+  text = String(text).toUpperCase();
+  var chars = [], i;
+  for(i = 0; i < text.length; i++){
+    chars.push(GLYPHS[text.charAt(i)] !== undefined ? text.charAt(i) : " ");
+  }
+  var w = chars.length * 6 - 1;
+  if(w < 1) w = 1;
+  var svg = document.createElementNS(SVGNS, "svg");
+  svg.setAttribute("viewBox", "0 0 " + w + " 7");
+  svg.setAttribute("shape-rendering", "crispEdges");
+  svg.setAttribute("preserveAspectRatio", "xMinYMid meet");
+  svg.setAttribute("focusable", "false");
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", text);
+  svg.setAttribute("class", "pxt " + (cls || "pxt-h3"));
+  for(i = 0; i < chars.length; i++){
+    var rows = GLYPHS[chars[i]].split(",");
+    for(var r = 0; r < rows.length; r++){
+      var row = rows[r], run = 0;
+      for(var c = 0; c <= row.length; c++){
+        if(row.charAt(c) === "1"){ run++; continue; }
+        if(run > 0){
+          var rect = document.createElementNS(SVGNS, "rect");
+          rect.setAttribute("x", String(i * 6 + c - run));
+          rect.setAttribute("y", String(r));
+          rect.setAttribute("width", String(run));
+          rect.setAttribute("height", "1");
+          svg.appendChild(rect);
+          run = 0;
+        }
+      }
+    }
+  }
+  return svg;
+}
+function setPixel(node, text, cls){
+  while(node.firstChild) node.removeChild(node.firstChild);
+  node.appendChild(pixelText(text, cls));
+}
+
+/* ===========================================================
+   AZAR
+   shuffle: Fisher-Yates, el de toda la vida.
+   arrange: EL UNICO lugar donde se decide en que orden salen las
+   opciones de cualquier ejercicio o juego. Todo lo que muestre
+   opciones pasa por aca, y el verificador de azar mide esta misma
+   funcion. Devuelve una copia: los datos quedan intactos.
+   =========================================================== */
+function shuffle(a){
+  for(var i = a.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function arrange(options, correct){
+  var idx = [], i;
+  for(i = 0; i < options.length; i++) idx.push(i);
+  shuffle(idx);
+  var opts = [], nuevo = -1;
+  for(i = 0; i < idx.length; i++){
+    opts.push(options[idx[i]]);
+    if(idx[i] === correct) nuevo = i;
+  }
+  return { options: opts, correct: nuevo };
+}
+
+/* ===========================================================
+   COMPARACION DE RESPUESTAS
+   normalize: minusculas, comillas curvas y el acento agudo pasan a
+   apostrofo recto, saca acentos por NFD y puntuacion, conserva el
+   apostrofo. loose: ademas saca el apostrofo, asi "dont" o "hasnt"
+   pasan como tipeo. A esta edad la falta del apostrofo es un error de
+   tecleo, no de gramatica.
+   =========================================================== */
+function normalize(s){
+  return String(s).toLowerCase()
+    .replace(/[\u2018\u2019\u02bc\u00b4\u0060]/g, "'")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9' ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+function loose(s){ return normalize(s).replace(/'/g, ""); }
+function matches(given, list){
+  var g = normalize(given);
+  if(g === "") return false;
+  var gl = loose(given);
+  for(var i = 0; i < list.length; i++){
+    if(normalize(list[i]) === g) return true;
+    if(loose(list[i]) === gl) return true;
+  }
+  return false;
+}
+
+/* ===========================================================
+   HELPERS DE DOM
+   =========================================================== */
+function el(tag, cls, txt){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(txt !== undefined && txt !== null) n.textContent = txt;
+  return n;
+}
+function clear(n){ while(n.firstChild) n.removeChild(n.firstChild); }
+function pixNode(tag, cls, text, pcls){
+  var n = el(tag, cls);
+  n.appendChild(pixelText(text, pcls));
+  return n;
+}
+function pixBtn(cls, text){
+  var b = el("button", cls);
+  b.type = "button";
+  b.appendChild(pixelText(text, "pxt-btn"));
+  return b;
+}
+function setBtnText(b, text){
+  clear(b);
+  b.appendChild(pixelText(text, "pxt-btn"));
+}
+function mkInput(cls, ph){
+  var i = document.createElement("input");
+  i.type = "text";
+  if(cls) i.className = cls;
+  i.setAttribute("autocomplete", "off");
+  i.setAttribute("autocapitalize", "off");
+  i.setAttribute("spellcheck", "false");
+  if(ph) i.setAttribute("placeholder", ph);
+  return i;
+}
+/* Corta un texto por los marcadores {1}, {2}... Los indices impares
+   del array que vuelve son el numero del hueco. */
+function splitMarks(text){ return String(text).split(/\{(\d+)\}/); }
+
+/* Caja Why + Hero tip. Se muestra SIEMPRE, este bien o mal. */
+function explainBox(ok, answerText, why, tip){
+  var box = el("div", "exp " + (ok ? "right" : "wrong"));
+  if(answerText){
+    var p0 = el("p");
+    p0.appendChild(el("span", "sol", "Answer: " + answerText));
+    box.appendChild(p0);
+  }
+  var p1 = el("p");
+  p1.appendChild(el("b", "lab", "Why"));
+  p1.appendChild(document.createTextNode(why));
+  box.appendChild(p1);
+  var p2 = el("p");
+  p2.appendChild(el("b", "lab tip", "Hero tip"));
+  p2.appendChild(document.createTextNode(tip));
+  box.appendChild(p2);
+  return box;
+}
+
+/* ===========================================================
+   CABECERA
+   =========================================================== */
+document.title = DATA.meta.title;
+setPixel(document.getElementById("heroTag"), DATA.meta.tag, "pxt-tag");
+setPixel(document.getElementById("heroTitle"), DATA.meta.name, "pxt-h1");
+document.getElementById("heroGoal").textContent = DATA.meta.goal;
+
+/* ===========================================================
+   HUD: barra segmentada, un segmento por parte que se corrige
+   =========================================================== */
+var hudBar = document.getElementById("hudBar");
+var hudScore = document.getElementById("hudScore");
+setPixel(document.getElementById("hudLab"), "Progress", "pxt-mini");
+var segs = {}, ORDER = [];
+
+/* ===========================================================
+   BLOQUES
+   Cada parte es una tarjeta; adentro van bloques de distinto tipo.
+   Los que se corrigen dejan "entries" en la parte.
+     vocab / pattern / image / say   -> solo se miran
+     gap    -> hueco corto dentro de una oracion
+     choice -> botones de opcion (a/b/c, o dos palabras para elegir)
+     tf     -> True / False
+     match  -> elegir la letra que corresponde
+     order  -> armar la oracion tocando las palabras
+     free   -> escritura libre, NO se corrige
+     self   -> autoevaluacion, NO se corrige
+   =========================================================== */
+var partsHost = document.getElementById("parts");
+var PT = {};
+
+function blockTitle(host, b){
+  if(!b.title) return;
+  var h = el("h3");
+  if(b.icon){
+    var ic = el("span", "icon", b.icon);
+    ic.setAttribute("aria-hidden", "true");
+    h.appendChild(ic);
+  }
+  h.appendChild(pixelText(b.title, "pxt-h3"));
+  host.appendChild(h);
+  if(b.sub) host.appendChild(el("p", "sub", b.sub));
+}
+
+/* ---------- solo para mirar ---------- */
+function renderVocab(host, b){
+  var t = el("table", "booktable"), i, j;
+  if(b.head){
+    var tr = el("tr");
+    for(i = 0; i < b.head.length; i++) tr.appendChild(el("th", null, b.head[i]));
+    t.appendChild(tr);
+  }
+  for(i = 0; i < b.rows.length; i++){
+    var r = el("tr");
+    for(j = 0; j < b.rows[i].length; j++) r.appendChild(el("td", null, b.rows[i][j]));
+    t.appendChild(r);
+  }
+  host.appendChild(t);
+}
+function renderPattern(host, b){
+  var box = el("div", "patternbox");
+  for(var i = 0; i < b.lines.length; i++){
+    var p = el("p");
+    var parts = String(b.lines[i]).split(/\[\[(.*?)\]\]/);
+    for(var k = 0; k < parts.length; k++){
+      if(k % 2 === 0){ if(parts[k]) p.appendChild(document.createTextNode(parts[k])); }
+      else p.appendChild(el("span", "hl", parts[k]));
+    }
+    box.appendChild(p);
+  }
+  host.appendChild(box);
+}
+function renderImage(host, b){
+  var fig = el("figure", "shot");
+  var img = document.createElement("img");
+  img.src = IMAGES[b.src];
+  img.alt = b.alt;
+  fig.appendChild(img);
+  if(b.caption) fig.appendChild(el("figcaption", null, b.caption));
+  host.appendChild(fig);
+}
+
+/* ---------- gap ---------- */
+function renderGap(st, host, b){
+  for(var i = 0; i < b.items.length; i++){
+    var d = b.items[i];
+    var id = REG.push({ data: d }) - 1;
+    var item = el("div", "item");
+    item.setAttribute("data-id", String(id));
+    var line = el("div", "sline");
+    line.appendChild(el("span", "rn", String(d.n)));
+    var txt = el("span", "stext");
+    var parts = splitMarks(d.text);
+    var fields = [];
+    for(var k = 0; k < parts.length; k++){
+      if(k % 2 === 0){
+        if(parts[k]) txt.appendChild(document.createTextNode(parts[k]));
+      }else{
+        var w = parseInt(parts[k], 10) - 1;
+        var inp = mkInput(d.wide ? "w-m" : "w-s");
+        txt.appendChild(inp);
+        fields.push({ el: inp, answers: d.answers[w] });
+      }
+    }
+    if(d.hint) txt.appendChild(el("span", "hintword", d.hint));
+    line.appendChild(txt);
+    item.appendChild(line);
+    host.appendChild(item);
+    st.entries.push({ kind: "input", inputs: fields, data: d, exp: item, item: item });
+  }
+}
+
+/* ---------- choice ---------- */
+function renderChoice(st, host, b){
+  for(var i = 0; i < b.items.length; i++){
+    var d = b.items[i];
+    /* El orden se sortea en CADA carga de pagina, sin excepcion. */
+    var a = arrange(d.options, d.correct);
+    var id = REG.push({ data: d, view: a }) - 1;
+    var item = el("div", "item");
+    item.setAttribute("data-id", String(id));
+    var line = el("div", "sline");
+    line.appendChild(el("span", "rn", String(d.n)));
+    var txt = el("span", "stext");
+    var parts = splitMarks(d.text);
+    var group = null, btns = [];
+    for(var k = 0; k < parts.length; k++){
+      if(k % 2 === 0){
+        if(parts[k]) txt.appendChild(document.createTextNode(parts[k]));
+      }else{
+        group = el("span", "optgroup");
+        group.setAttribute("data-sel", "-1");
+        for(var j = 0; j < a.options.length; j++){
+          var bt = el("button", "pickbtn", a.options[j]);
+          bt.type = "button";
+          bt.setAttribute("data-opt", String(j));
+          bt.addEventListener("click", onPick);
+          group.appendChild(bt);
+          btns.push(bt);
+        }
+        txt.appendChild(group);
+      }
+    }
+    line.appendChild(txt);
+    item.appendChild(line);
+    host.appendChild(item);
+    st.entries.push({ kind: "pick", group: group, btns: btns, data: d, view: a, exp: item, item: item });
+  }
+}
+function onPick(ev){
+  var b = ev.currentTarget, g = b.parentNode, i;
+  var kids = g.querySelectorAll(".pickbtn");
+  for(i = 0; i < kids.length; i++) kids[i].classList.remove("on");
+  b.classList.add("on");
+  g.setAttribute("data-sel", b.getAttribute("data-opt"));
+}
+
+/* ---------- True / False ----------
+   Tambien se barajan: si "True" estuviera siempre primero, el chico
+   aprende el lugar del boton. */
+function renderTF(st, host, b){
+  var items = [];
+  for(var i = 0; i < b.items.length; i++){
+    var d = b.items[i];
+    items.push({ n: d.n, text: d.text + " {1}", options: ["True", "False"],
+                 correct: d.correct ? 0 : 1, why: d.why, tip: d.tip });
+  }
+  renderChoice(st, host, { items: items });
+}
+
+/* ---------- match ---------- */
+function renderMatch(st, host, b){
+  var i, j;
+  var lista = el("table", "booktable");
+  var hr = el("tr");
+  hr.appendChild(el("th", null, b.leftHead));
+  hr.appendChild(el("th", null, "Your answer"));
+  lista.appendChild(hr);
+  for(i = 0; i < b.items.length; i++){
+    var d = b.items[i];
+    /* cada fila sortea el orden de su propio desplegable */
+    var correcta = -1;
+    for(j = 0; j < b.endings.length; j++) if(b.endings[j].letter === d.letter) correcta = j;
+    var a = arrange(b.endings, correcta);
+    var id = REG.push({ data: d, view: a }) - 1;
+    var tr = el("tr");
+    tr.setAttribute("data-id", String(id));
+    var c1 = el("td");
+    c1.appendChild(el("span", "rn", String(d.n)));
+    c1.appendChild(document.createTextNode(" " + d.text));
+    tr.appendChild(c1);
+    var c2 = el("td");
+    var sel = document.createElement("select");
+    var op0 = document.createElement("option");
+    op0.value = ""; op0.textContent = "choose...";
+    sel.appendChild(op0);
+    for(j = 0; j < a.options.length; j++){
+      var op = document.createElement("option");
+      op.value = a.options[j].letter;
+      op.textContent = a.options[j].letter + ")  " + a.options[j].text;
+      sel.appendChild(op);
+    }
+    c2.appendChild(sel);
+    tr.appendChild(c2);
+    lista.appendChild(tr);
+    st.entries.push({ kind: "match", select: sel, data: d, view: a, exp: null, item: tr });
+  }
+  host.appendChild(lista);
+  var panel = el("div", "explist");
+  panel.hidden = true;
+  host.appendChild(panel);
+  st.panels.push(panel);
+  for(i = st.entries.length - b.items.length; i < st.entries.length; i++) st.entries[i].panel = panel;
+}
+
+/* ---------- order: armar la oracion tocando las palabras ---------- */
+function renderOrder(st, host, b){
+  for(var i = 0; i < b.items.length; i++){
+    (function(d){
+      var id = REG.push({ data: d }) - 1;
+      var item = el("div", "item");
+      item.setAttribute("data-id", String(id));
+      var line = el("div", "sline");
+      line.appendChild(el("span", "rn", String(d.n)));
+      line.appendChild(el("span", "stext", d.prompt));
+      item.appendChild(line);
+      var built = el("div", "builtline");
+      var bank = el("div", "tokens");
+      var chosen = [];
+      /* las palabras salen desordenadas en cada carga */
+      var words = shuffle(d.words.slice());
+      function repaint(){
+        clear(built);
+        if(!chosen.length){
+          built.appendChild(el("span", "keyhint", "Tap the words in the right order."));
+        }else{
+          built.appendChild(document.createTextNode(chosen.map(function(c){ return c.w; }).join(" ")));
+        }
+      }
+      for(var j = 0; j < words.length; j++){
+        (function(w){
+          var t = el("button", "token", w);
+          t.type = "button";
+          t.addEventListener("click", function(){
+            if(t.classList.contains("used")){
+              for(var z = 0; z < chosen.length; z++){
+                if(chosen[z].node === t){ chosen.splice(z, 1); break; }
+              }
+              t.classList.remove("used");
+            }else{
+              chosen.push({ w: w, node: t });
+              t.classList.add("used");
+            }
+            repaint();
+          });
+          bank.appendChild(t);
+        })(words[j]);
+      }
+      repaint();
+      item.appendChild(built);
+      item.appendChild(bank);
+      item.appendChild(el("p", "keyhint", "Tap a word again to take it out."));
+      host.appendChild(item);
+      st.entries.push({ kind: "order", get: function(){ return chosen.map(function(c){ return c.w; }).join(" "); },
+                        data: d, exp: item, item: item });
+    })(b.items[i]);
+  }
+}
+
+/* ---------- free: escritura libre, SIN correccion automatica ----------
+   No hay una sola respuesta posible, asi que no se inventa un chequeo.
+   Lo unico que hace la pagina es guardar lo escrito mientras dure la
+   pantalla y contar las palabras. */
+function renderFree(st, host, b){
+  var box = el("div", "freebox");
+  box.appendChild(el("p", "fprompt", b.prompt));
+  var ta = document.createElement("textarea");
+  ta.rows = b.rows || 3;
+  ta.setAttribute("spellcheck", "false");
+  if(b.starter){
+    /* Un arranque de una sola linea se muestra ademas como pista arriba.
+       Si el booklet da varios renglones rotulados, van directo en el cuadro. */
+    if(b.starter.indexOf(String.fromCharCode(10)) < 0){
+      var sline = el("p");
+      sline.appendChild(el("span", "starter", b.starter));
+      sline.appendChild(document.createTextNode("..."));
+      box.appendChild(sline);
+      ta.value = b.starter + " ";
+    }else{
+      ta.value = b.starter;
+    }
+  }
+  box.appendChild(ta);
+  var wc = el("p", "wordcount", "0 words");
+  ta.addEventListener("input", function(){
+    var n = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
+    wc.textContent = n + (n === 1 ? " word" : " words");
+  });
+  box.appendChild(wc);
+  box.appendChild(el("p", "fnote", b.note ||
+    "This one is yours. There is no single right answer, so the machine does not mark it: your teacher reads it."));
+  host.appendChild(box);
+}
+
+/* ---------- finish: la tilde con la que el booklet cierra cada modulo ----------
+   La marca el alumno. No se corrige nada. */
+function renderFinish(st, host, b){
+  var box = el("div", "finishbox");
+  var bt = el("button", "pickbtn", b.text);
+  bt.type = "button";
+  bt.setAttribute("aria-pressed", "false");
+  var tick = el("span", "tick", "[ ]");
+  box.appendChild(tick);
+  box.appendChild(bt);
+  bt.addEventListener("click", function(){
+    var on = bt.classList.toggle("on");
+    bt.setAttribute("aria-pressed", on ? "true" : "false");
+    tick.textContent = on ? "[x]" : "[ ]";
+  });
+  host.appendChild(box);
+}
+
+/* ---------- self: autoevaluacion, tampoco se corrige ---------- */
+function renderSelf(st, host, b){
+  var t = el("table", "selftable");
+  var hr = el("tr");
+  hr.appendChild(el("td", null, "I can..."));
+  hr.appendChild(el("td", "pickcell", "Circle one:  Great / OK / Not yet"));
+  t.appendChild(hr);
+  for(var i = 0; i < b.rows.length; i++){
+    (function(texto){
+      var tr = el("tr");
+      tr.appendChild(el("td", null, texto));
+      var cell = el("td", "pickcell");
+      var g = el("span", "optgroup");
+      var labels = ["Great", "OK", "Not yet"];
+      for(var j = 0; j < labels.length; j++){
+        (function(lab){
+          var bt = el("button", "pickbtn", lab);
+          bt.type = "button";
+          bt.addEventListener("click", function(){
+            var all = g.querySelectorAll(".pickbtn");
+            for(var k = 0; k < all.length; k++) all[k].classList.remove("on");
+            bt.classList.add("on");
+          });
+          g.appendChild(bt);
+        })(labels[j]);
+      }
+      cell.appendChild(g);
+      tr.appendChild(cell);
+      t.appendChild(tr);
+    })(b.rows[i]);
+  }
+  host.appendChild(t);
+  host.appendChild(el("p", "fnote",
+    "Nobody marks this one. It is your own honest answer."));
+}
+
+/* ===========================================================
+   ARMADO DE LAS PARTES
+   =========================================================== */
+var LETTERS = ["A", "B", "C", "D", "E"];
+function buildParts(){
+  for(var i = 0; i < DATA.parts.length; i++){
+    var p = DATA.parts[i];
+    var sec = el("section", "card part" + (p.skin || "A"));
+    sec.appendChild(pixNode("span", "tag", p.tag, "pxt-tag"));
+    sec.appendChild(pixNode("h2", null, p.name, "pxt-h2"));
+    if(p.sub) sec.appendChild(el("p", "sub", p.sub));
+    var body = el("div", "pbody");
+    sec.appendChild(body);
+    partsHost.appendChild(sec);
+    PT[p.key] = { data: p, body: body, sec: sec, entries: [], panels: [], got: 0, total: 0 };
+    renderPart(p.key);
+    addControls(p.key);
+  }
+}
+
+function renderPart(key){
+  var st = PT[key], p = st.data, i;
+  clear(st.body);
+  st.entries = [];
+  st.panels = [];
+  for(i = 0; i < p.blocks.length; i++){
+    var b = p.blocks[i];
+    blockTitle(st.body, b);
+    if(b.type === "vocab")   renderVocab(st.body, b);
+    if(b.type === "pattern") renderPattern(st.body, b);
+    if(b.type === "image")   renderImage(st.body, b);
+    if(b.type === "say")     st.body.appendChild(el("p", "sub", b.text));
+    if(b.type === "gap")     renderGap(st, st.body, b);
+    if(b.type === "choice")  renderChoice(st, st.body, b);
+    if(b.type === "tf")      renderTF(st, st.body, b);
+    if(b.type === "match")   renderMatch(st, st.body, b);
+    if(b.type === "order")   renderOrder(st, st.body, b);
+    if(b.type === "free")    renderFree(st, st.body, b);
+    if(b.type === "self")    renderSelf(st, st.body, b);
+    if(b.type === "finish")  renderFinish(st, st.body, b);
+  }
+  if(st.score) st.score.textContent = "";
+}
+
+/* La fila de botones y el segmento del HUD se crean UNA sola vez, cuando la
+   parte se arma. resetPart vuelve a dibujar el cuerpo, no los botones. */
+function addControls(key){
+  var st = PT[key];
+  if(!st.entries.length) return;
+  var row = el("div", "btnrow");
+  var checkBtn = pixBtn("btn", "Check");
+  var resetBtn = pixBtn("btn ghost", "Try again");
+  var score = el("span", "scoreline", "");
+  row.appendChild(checkBtn); row.appendChild(resetBtn); row.appendChild(score);
+  st.sec.appendChild(row);
+  st.score = score;
+  checkBtn.addEventListener("click", function(){ checkPart(key); });
+  resetBtn.addEventListener("click", function(){ resetPart(key); });
+  ORDER.push(key);
+  var seg = el("div", "seg");
+  hudBar.appendChild(seg);
+  segs[key] = seg;
+}
+
+/* ===========================================================
+   CORRECCION
+   =========================================================== */
+function markNode(node, ok){
+  node.classList.remove("ok", "no");
+  node.classList.add(ok ? "ok" : "no");
+}
+function checkPart(key){
+  var st = PT[key], i, j;
+  var got = 0, total = 0;
+
+  var old = st.sec.querySelectorAll(".exp");
+  for(i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
+  for(i = 0; i < st.panels.length; i++){ clear(st.panels[i]); st.panels[i].hidden = true; }
+
+  for(i = 0; i < st.entries.length; i++){
+    var e = st.entries[i], allOk = true, answer = null;
+
+    if(e.kind === "input"){
+      for(j = 0; j < e.inputs.length; j++){
+        var f = e.inputs[j];
+        var ok = matches(f.el.value, f.answers);
+        markNode(f.el, ok);
+        total++;
+        if(ok) got++; else allOk = false;
+      }
+      answer = e.data.solution;
+    }
+    if(e.kind === "pick"){
+      var sel = parseInt(e.group.getAttribute("data-sel"), 10);
+      for(j = 0; j < e.btns.length; j++){
+        e.btns[j].classList.remove("on", "good", "bad");
+        if(j === e.view.correct) e.btns[j].classList.add("good");
+        else if(j === sel) e.btns[j].classList.add("bad");
+      }
+      total++;
+      if(sel === e.view.correct) got++; else allOk = false;
+      answer = e.view.options[e.view.correct];
+    }
+    if(e.kind === "match"){
+      var okL = e.select.value === e.data.letter;
+      markNode(e.select, okL);
+      total++;
+      if(okL) got++; else allOk = false;
+      for(j = 0; j < e.view.options.length; j++){
+        if(e.view.options[j].letter === e.data.letter){
+          answer = e.data.letter + ")  " + e.view.options[j].text;
+        }
+      }
+    }
+    if(e.kind === "order"){
+      var mine = e.get();
+      var okO = matches(mine, e.data.answers);
+      total++;
+      if(okO) got++; else allOk = false;
+      answer = e.data.solution;
+    }
+
+    if(e.item){
+      e.item.classList.remove("done", "failed");
+      e.item.classList.add(allOk ? "done" : "failed");
+    }
+    var boxNode = explainBox(allOk, answer, e.data.why, e.data.tip);
+    if(e.exp){
+      e.exp.appendChild(boxNode);
+    }else{
+      var wrap = el("div", "expitem");
+      wrap.appendChild(el("span", "en", String(e.data.n)));
+      wrap.appendChild(boxNode);
+      e.panel.appendChild(wrap);
+      e.panel.hidden = false;
+    }
+  }
+
+  st.score.textContent = got + " / " + total + " right";
+  st.got = got; st.total = total;
+  paintHud();
+}
+function resetPart(key){
+  var st = PT[key];
+  renderPart(key);
+  st.got = 0; st.total = 0;
+  paintHud();
+}
+function paintHud(){
+  var done = 0, all = 0, k;
+  for(var i = 0; i < ORDER.length; i++){
+    k = ORDER[i];
+    var st = PT[k], seg = segs[k];
+    seg.className = "seg";
+    if(st.total){
+      if(st.got === st.total) seg.className = "seg on";
+      else seg.className = "seg part";
+      done += st.got; all += st.total;
+    }
+  }
+  hudScore.textContent = all ? done + " / " + all + " right so far" : "nothing checked yet";
+}
+
+/* ===========================================================
+   ARRANQUE
+   =========================================================== */
+buildParts();
+paintHud();
+
+})();
+</script>
+</div>
+<footer class="cr">Copyright Prof Dan M. Mecikovsky</footer>
+</body>
+</html>

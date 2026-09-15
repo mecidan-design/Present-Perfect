@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My English Booklet - 5th Grade</title>
+<style>
+/* =========================================================
+   ESTETICA: pixel art 8-bit, juego de aventura. Paleta PICO-8.
+   Sin fuentes externas y SIN SONIDO de ninguna clase.
+   ========================================================= */
+:root{
+  --negro:#000000; --noche:#1D2B53; --vino:#7E2553; --bosque:#008751;
+  --tierra:#AB5236; --piedra:#5F574F; --gris:#C2C3C7; --hueso:#FFF1E8;
+  --rojo:#FF004D; --naranja:#FFA300; --amarillo:#FFEC27; --verde:#00E436;
+  --cielo:#29ADFF; --lila:#83769C; --rosa:#FF77A8; --durazno:#FFCCAA;
+  --mono:ui-monospace,"Cascadia Mono","Consolas","DejaVu Sans Mono","Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--mono); color:var(--hueso); min-height:100vh;
+  padding:18px 12px 0; line-height:1.55;
+  background:
+    repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 2px,transparent 2px 4px),
+    radial-gradient(var(--lila) 1px,transparent 1.5px) 0 0/48px 48px,
+    radial-gradient(var(--cielo) 1px,transparent 1.5px) 24px 24px/72px 72px,
+    linear-gradient(180deg,#0b1430 0%,var(--noche) 45%,#2a1042 100%);
+  background-attachment:fixed;
+  image-rendering:pixelated;
+}
+.wrap{max-width:900px;margin:0 auto}
+
+/* ---------- fuente pixel dibujada en SVG ----------
+   Se fija la ALTURA, no el ancho: si se fijara el ancho, un titulo corto
+   ("LEVEL 4") saldria con pixeles enormes y uno largo ("MY WEEK AND THE
+   CLOCK") con pixeles diminutos, y la pantalla queda despareja. Con la altura
+   fija todos tienen el mismo pixel, y max-width lo achica solo si no entra. */
+svg.pxt{display:block;width:auto;max-width:100%;fill:currentColor}
+/* Las alturas son multiplos exactos de los 7px del glifo: a 2x, 3x o 4x el
+   borde queda duro. A 9 u 11 px el pixel cae entre medio y el texto se
+   emborrona, que es justo lo contrario de lo que busca el 8-bit. */
+.pxt-h1{height:clamp(28px,7vw,56px)}   /* 4x a 8x */
+.pxt-h2{height:28px}                   /* 4x */
+.pxt-h3{height:21px}                   /* 3x */
+.pxt-tag{height:14px}                  /* 2x */
+.pxt-btn{height:14px}                  /* 2x */
+.pxt-mini{height:14px}                 /* 2x */
+
+/* ---------- marco general ---------- */
+.hero{
+  background:linear-gradient(180deg,var(--vino) 0%,#3a1140 100%);
+  border:4px solid var(--hueso);
+  box-shadow:0 0 0 4px var(--negro), 10px 10px 0 rgba(0,0,0,.55);
+  padding:18px 18px 20px; margin-bottom:22px;
+}
+.hero .tag{color:var(--amarillo);display:block;margin-bottom:12px}
+.hero h1{margin:0 0 10px;color:var(--hueso)}
+.hero .goal{
+  color:var(--durazno); font-size:.86rem; margin:0;
+  border-left:4px solid var(--naranja); padding-left:10px;
+}
+
+/* ---------- barra de progreso segmentada ---------- */
+.hud{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  border:4px solid var(--negro); background:rgba(0,0,0,.45);
+  padding:9px 11px; margin-bottom:20px;
+}
+.hud .hudlab{color:var(--amarillo)}
+.segbar{display:flex; gap:3px; flex:1 1 180px; min-width:140px}
+.seg{
+  flex:1 1 0; height:14px; background:var(--piedra);
+  border:2px solid var(--negro); min-width:8px;
+}
+.seg.on{background:var(--verde)}
+.seg.part{background:var(--naranja)}
+.hud .hudscore{color:var(--hueso); font-size:.8rem}
+
+/* ---------- tarjetas ---------- */
+.card{
+  background:linear-gradient(180deg,#141d3e 0%,#0d1430 100%);
+  border:4px solid var(--cielo);
+  box-shadow:0 0 0 4px var(--negro), 8px 8px 0 rgba(0,0,0,.5);
+  padding:16px 16px 18px; margin:0 0 22px;
+}
+.card.partA{border-color:var(--cielo)}
+.card.partB{border-color:var(--rosa)}
+.card.partC{border-color:var(--verde)}
+.card.partR{border-color:var(--naranja)}
+.card.partX{border-color:var(--amarillo)}
+.card .tag{color:var(--amarillo); display:block; margin-bottom:8px}
+.card h2{margin:0 0 6px; color:var(--hueso)}
+.card h3{margin:16px 0 8px; color:var(--durazno);
+  display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+.icon{
+  display:inline-block; border:2px solid var(--negro); background:var(--negro);
+  padding:1px 5px; margin-right:7px; font-size:.95rem; vertical-align:middle;
+}
+.sub{color:var(--gris); font-size:.86rem; margin:.1rem 0 .9rem}
+
+/* ---------- tablas del libro (vocabulario / patrones) ---------- */
+.booktable{
+  width:100%; border-collapse:collapse; margin:10px 0 4px; font-size:.86rem;
+}
+.booktable th,.booktable td{
+  border:3px solid var(--negro); padding:7px 9px; text-align:left;
+  background:rgba(255,241,232,.07);
+}
+.booktable th{background:var(--vino); color:var(--amarillo); font-weight:700}
+.patternbox{
+  border:3px dashed var(--amarillo); background:rgba(255,236,39,.08);
+  padding:10px 12px; margin:10px 0;
+}
+.patternbox p{margin:.25rem 0; font-size:.88rem; color:var(--hueso)}
+.patternbox .hl{color:var(--amarillo); font-weight:700}
+
+/* ---------- imagenes del booklet ---------- */
+.shot{
+  border:4px solid var(--negro); background:var(--hueso);
+  padding:6px; margin:12px 0; text-align:center;
+}
+.shot img{max-width:100%; height:auto; display:block; margin:0 auto}
+.shot figcaption{
+  color:var(--noche); font-size:.72rem; margin-top:5px; font-weight:700;
+}
+
+/* ---------- items ---------- */
+.item{
+  border-left:4px solid var(--piedra); padding:8px 0 8px 11px; margin:9px 0;
+}
+.item.done{border-left-color:var(--verde)}
+.item.failed{border-left-color:var(--rojo)}
+.sline{display:flex; gap:9px; align-items:flex-start; flex-wrap:wrap}
+.rn{
+  background:var(--lila); color:var(--negro); border:2px solid var(--negro);
+  min-width:22px; text-align:center; font-weight:700; font-size:.78rem;
+  padding:1px 4px; flex:0 0 auto;
+}
+.stext{flex:1 1 220px; font-size:.92rem}
+.hintword{
+  display:inline-block; background:var(--piedra); border:2px solid var(--negro);
+  color:var(--amarillo); padding:0 5px; margin-left:6px; font-size:.78rem;
+}
+
+/* ---------- inputs ---------- */
+input[type=text]{
+  font-family:var(--mono); font-size:.9rem; color:var(--negro);
+  background:var(--hueso); border:3px solid var(--negro);
+  padding:4px 7px; outline:none;
+}
+input[type=text]:focus{border-color:var(--cielo); background:#fff}
+input.w-s{width:130px}
+input.w-m{width:210px}
+input.w-l{width:100%; margin-top:6px}
+input.ok{background:#bdf5c8; border-color:var(--bosque)}
+input.no{background:#ffc9d6; border-color:var(--rojo)}
+select{
+  font-family:var(--mono); font-size:.86rem; color:var(--negro);
+  background:var(--hueso); border:3px solid var(--negro); padding:4px 6px;
+}
+select.ok{background:#bdf5c8; border-color:var(--bosque)}
+select.no{background:#ffc9d6; border-color:var(--rojo)}
+textarea{
+  font-family:var(--mono); font-size:.9rem; color:var(--negro); width:100%;
+  background:var(--hueso); border:3px solid var(--negro); padding:7px;
+  outline:none; resize:vertical; line-height:1.6;
+}
+textarea:focus{border-color:var(--cielo)}
+
+/* ---------- botones de opcion ---------- */
+.optgroup{display:inline-flex; gap:6px; flex-wrap:wrap; vertical-align:middle}
+.pickbtn{
+  font-family:var(--mono); font-size:.85rem; cursor:pointer;
+  background:var(--piedra); color:var(--hueso); border:3px solid var(--negro);
+  box-shadow:3px 3px 0 rgba(0,0,0,.55); padding:3px 9px;
+}
+.pickbtn:hover{background:var(--lila)}
+.pickbtn.on{background:var(--cielo); color:var(--negro)}
+.pickbtn.good{background:var(--verde); color:var(--negro)}
+.pickbtn.bad{background:var(--rojo); color:var(--hueso)}
+.pickbtn[disabled]{cursor:default}
+
+/* ---------- botones ---------- */
+.btnrow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:16px}
+.btn{
+  font-family:var(--mono); cursor:pointer; color:var(--negro);
+  background:var(--amarillo); border:4px solid var(--negro);
+  box-shadow:5px 5px 0 rgba(0,0,0,.6); padding:7px 13px;
+  display:inline-flex; align-items:center;
+}
+.btn:hover{background:var(--naranja)}
+.btn:active{transform:translate(2px,2px); box-shadow:3px 3px 0 rgba(0,0,0,.6)}
+.btn.ghost{background:var(--piedra); color:var(--hueso)}
+.btn.ghost:hover{background:var(--lila); color:var(--negro)}
+.btn[disabled]{background:var(--piedra); color:var(--gris); cursor:default;
+  box-shadow:none; transform:none}
+.scoreline{color:var(--amarillo); font-size:.86rem}
+
+/* ---------- explicaciones ---------- */
+.exp{
+  border:3px solid var(--bosque); background:rgba(0,228,70,.09);
+  padding:9px 11px; margin:9px 0 2px;
+}
+.exp.wrong{border-color:var(--rojo); background:rgba(255,0,77,.10)}
+.exp p{margin:.22rem 0; font-size:.83rem}
+.exp .sol{color:var(--amarillo); font-weight:700}
+.exp .lab{
+  display:inline-block; background:var(--negro); color:var(--amarillo);
+  border:2px solid var(--negro); padding:0 5px; margin-right:7px; font-size:.72rem;
+}
+.exp .lab.tip{color:var(--cielo)}
+.explist{margin-top:14px; border-top:3px dashed var(--piedra); padding-top:12px}
+.expitem{display:flex; gap:9px; align-items:flex-start; margin-bottom:8px}
+.en{
+  background:var(--naranja); color:var(--negro); border:2px solid var(--negro);
+  min-width:22px; text-align:center; font-weight:700; font-size:.78rem;
+  padding:1px 4px; flex:0 0 auto;
+}
+.expitem .exp{flex:1 1 auto; margin:0}
+
+/* ---------- escritura libre (sin correccion) ---------- */
+.freebox{border:3px solid var(--lila); background:rgba(131,118,156,.14); padding:11px 12px; margin:10px 0}
+.freebox .fprompt{margin:0 0 8px; font-size:.9rem; color:var(--hueso)}
+.freebox .fnote{
+  margin:8px 0 0; font-size:.78rem; color:var(--durazno);
+  border-top:2px dashed var(--piedra); padding-top:7px;
+}
+.starter{color:var(--amarillo); font-weight:700; margin-right:6px}
+.wordcount{color:var(--gris); font-size:.76rem; margin-top:6px}
+
+/* ---------- autoevaluacion ---------- */
+.selftable{width:100%; border-collapse:collapse; margin-top:8px; font-size:.85rem}
+.selftable td{border:3px solid var(--negro); padding:7px 9px;
+  background:rgba(255,241,232,.07)}
+.selftable td.pickcell{width:210px; white-space:nowrap}
+
+/* ---------- la tilde de cierre de cada modulo ---------- */
+.finishbox{
+  display:flex; gap:10px; align-items:center; margin-top:14px;
+  border:3px solid var(--amarillo); background:rgba(255,236,39,.09); padding:10px 12px;
+}
+.finishbox .tick{color:var(--amarillo); font-weight:700; font-size:1.05rem}
+
+/* ---------- mapa del home ---------- */
+.map{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.zone{
+  display:block; text-decoration:none; color:var(--hueso);
+  background:linear-gradient(180deg,#152046 0%,#0b1230 100%);
+  border:4px solid var(--cielo);
+  box-shadow:0 0 0 4px var(--negro), 8px 8px 0 rgba(0,0,0,.55);
+  padding:14px 15px 16px;
+}
+.zone:hover{transform:translate(-2px,-2px); box-shadow:0 0 0 4px var(--negro), 11px 11px 0 rgba(0,0,0,.6)}
+.zone .znum{color:var(--amarillo); display:block; margin-bottom:8px}
+.zone .zt{color:var(--hueso); margin-bottom:9px}
+.zone .zd{color:var(--gris); font-size:.83rem; margin:0}
+.zone.arcade{border-color:var(--rosa)}
+.zone.locked{border-color:var(--piedra); opacity:.75; cursor:default}
+.zone.locked .znum{color:var(--gris)}
+
+/* la pantalla de titulo parpadea en steps(), como un arcade */
+.press{color:var(--amarillo); text-align:center; margin:22px 0 4px;
+  animation:blink 1.1s steps(1,end) infinite}
+@keyframes blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.press svg{margin:0 auto}
+
+/* ---------- juegos ---------- */
+.gamecard{margin-bottom:26px}
+.gmeta{display:flex; gap:12px; flex-wrap:wrap; color:var(--amarillo); font-size:.82rem; margin:8px 0 12px}
+.sentence{font-size:1rem; line-height:2.1; margin:10px 0}
+.word{
+  display:inline-block; cursor:pointer; background:var(--piedra);
+  border:3px solid var(--negro); padding:2px 7px; margin:2px 3px;
+}
+.word:hover{background:var(--lila)}
+.word.bad{background:var(--rojo); color:var(--hueso)}
+.word.good{background:var(--verde); color:var(--negro)}
+.word.dead{cursor:default}
+.dots{display:flex; gap:5px; margin:9px 0}
+.dot{width:13px; height:13px; background:var(--piedra); border:2px solid var(--negro)}
+.dot.y{background:var(--verde)} .dot.n{background:var(--rojo)}
+.dot.now{border-color:var(--amarillo)}
+.gq{font-size:.96rem; margin:6px 0 10px}
+.opts{display:flex; gap:8px; flex-wrap:wrap}
+.opt{
+  font-family:var(--mono); font-size:.9rem; cursor:pointer; color:var(--negro);
+  background:var(--durazno); border:3px solid var(--negro);
+  box-shadow:3px 3px 0 rgba(0,0,0,.55); padding:5px 12px;
+}
+.opt:hover{background:var(--amarillo)}
+.opt.good{background:var(--verde)} .opt.bad{background:var(--rojo); color:var(--hueso)}
+.opt[disabled]{cursor:default; box-shadow:none}
+.fixline{color:var(--amarillo); font-size:.86rem; margin:9px 0 0}
+.keyhint{color:var(--gris); font-size:.8rem; margin:8px 0 0}
+.final{text-align:center; padding:12px 0}
+.final .big{color:var(--amarillo); font-size:2.3rem; font-weight:700; line-height:1.1; margin:8px 0}
+.final .msg{color:var(--hueso); font-size:.9rem}
+.qbox{border:3px solid var(--lila); padding:11px; margin-top:12px}
+.qbox.hidden{display:none}
+.grid{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; max-width:270px; margin:10px 0}
+.sq{
+  aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+  background:var(--piedra); border:4px solid var(--negro); cursor:pointer;
+  font-size:1.9rem; font-weight:700; color:var(--hueso);
+}
+.sq.me{background:var(--cielo); color:var(--negro)}
+.sq.cpu{background:var(--rosa); color:var(--negro)}
+.sq.win{border-color:var(--amarillo)}
+.clock{
+  font-size:2.1rem; font-weight:700; color:var(--verde);
+  border:4px solid var(--negro); background:rgba(0,0,0,.45);
+  display:inline-block; padding:2px 14px; min-width:88px; text-align:center;
+}
+.clock.low{color:var(--rojo)}
+.bartrack{height:16px; background:var(--piedra); border:3px solid var(--negro); margin:9px 0}
+.barfill{height:100%; background:var(--verde); width:100%}
+.wrow{display:flex; gap:5px; margin-bottom:5px}
+.tile{
+  width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+  border:3px solid var(--negro); background:var(--piedra); font-weight:700;
+}
+.tile.hit{background:var(--verde); color:var(--negro)}
+.tile.near{background:var(--amarillo); color:var(--negro)}
+.tile.miss{background:var(--vino)}
+.flash{font-size:.82rem; color:var(--verde); margin:8px 0 0}
+.flash.no{color:var(--rosa)}
+.tokens{display:flex; gap:7px; flex-wrap:wrap; margin:10px 0}
+.token{
+  font-family:var(--mono); font-size:.9rem; cursor:pointer; color:var(--negro);
+  background:var(--durazno); border:3px solid var(--negro);
+  box-shadow:3px 3px 0 rgba(0,0,0,.55); padding:4px 10px;
+}
+.token:hover{background:var(--amarillo)}
+.token.used{background:var(--piedra); color:var(--gris); cursor:default; box-shadow:none}
+.builtline{
+  border:3px dashed var(--amarillo); background:rgba(0,0,0,.35);
+  min-height:44px; padding:8px 10px; margin:8px 0; font-size:.95rem;
+}
+.seals{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 0}
+.seal{
+  border:3px solid var(--negro); background:var(--piedra); color:var(--gris);
+  padding:4px 9px; font-size:.78rem;
+}
+.seal.won{background:var(--amarillo); color:var(--negro)}
+
+/* ---------- navegacion y pie ---------- */
+.nav{display:flex; gap:10px; flex-wrap:wrap; margin:6px 0 24px}
+.nav a{text-decoration:none}
+footer.cr{
+  border-top:4px solid var(--negro); margin-top:30px; padding:16px 0 22px;
+  text-align:center; color:var(--gris); font-size:.8rem;
+}
+@media (max-width:560px){
+  .hero{padding:14px 13px 16px}
+  .card{padding:13px 12px 15px}
+  input.w-s{width:100px}
+  input.w-m{width:150px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+<span class="tag" id="heroTag"></span>
+<h1 id="heroTitle"></h1>
+<p class="goal">Seven levels and one arcade. Every level has three parts, a reading and a challenge. Write, choose, match and play your way through.</p>
+<div class="press" id="press"></div>
+</div>
+<div class="map">
+<a class="zone" href="level-1-hello-who-am-i.html">
+<span class="znum" data-pix="Level 1"></span>
+<div class="zt" data-pix="Hello! Who Am I?"></div>
+<p class="zd">Say hello, say your name, and use am, is and are.</p>
+</a>
+<a class="zone" href="level-2-numbers-and-colors.html">
+<span class="znum" data-pix="Level 2"></span>
+<div class="zt" data-pix="Numbers and Colors"></div>
+<p class="zd">Count to thirty and say the color of things.</p>
+</a>
+<a class="zone" href="level-3-surviving-the-classroom.html">
+<span class="znum" data-pix="Level 3"></span>
+<div class="zt" data-pix="Surviving the Classroom"></div>
+<p class="zd">Commands, classroom objects and polite phrases.</p>
+</a>
+<a class="zone" href="level-4-the-animal-world.html">
+<span class="znum" data-pix="Level 4"></span>
+<div class="zt" data-pix="The Animal World"></div>
+<p class="zd">Has got, there is / there are, and where things are.</p>
+</a>
+<a class="zone" href="level-5-what-we-can-do.html">
+<span class="znum" data-pix="Level 5"></span>
+<div class="zt" data-pix="What We Can Do"></div>
+<p class="zd">Can and can't, and what is happening right now.</p>
+</a>
+<a class="zone" href="level-6-my-week-and-the-clock.html">
+<span class="znum" data-pix="Level 6"></span>
+<div class="zt" data-pix="My Week and the Clock"></div>
+<p class="zd">Your routine, the clock, and always / sometimes / never.</p>
+</a>
+<a class="zone" href="level-7-the-past-and-comparisons.html">
+<span class="znum" data-pix="Level 7"></span>
+<div class="zt" data-pix="The Past and Comparisons"></div>
+<p class="zd">Compare two things and talk about yesterday.</p>
+</a>
+<a class="zone arcade" href="arcade.html">
+<span class="znum" data-pix="Bonus"></span>
+<div class="zt" data-pix="The Arcade"></div>
+<p class="zd">Five machines that use everything from the seven levels.</p>
+</a>
+</div>
+<script id="engine-block">
+(function(){
+"use strict";
+
+/* Motor del home: solo dibuja los titulos con la fuente pixel.
+   No hay ejercicios aca, asi que no hay bloque de datos que auditar.
+   SIN SONIDO. */
+
+var GLYPHS = {
+"A":"01110,10001,10001,11111,10001,10001,10001",
+"B":"11110,10001,10001,11110,10001,10001,11110",
+"C":"01110,10001,10000,10000,10000,10001,01110",
+"D":"11110,10001,10001,10001,10001,10001,11110",
+"E":"11111,10000,10000,11110,10000,10000,11111",
+"F":"11111,10000,10000,11110,10000,10000,10000",
+"G":"01110,10001,10000,10111,10001,10001,01111",
+"H":"10001,10001,10001,11111,10001,10001,10001",
+"I":"11111,00100,00100,00100,00100,00100,11111",
+"J":"00111,00010,00010,00010,00010,10010,01100",
+"K":"10001,10010,10100,11000,10100,10010,10001",
+"L":"10000,10000,10000,10000,10000,10000,11111",
+"M":"10001,11011,10101,10101,10001,10001,10001",
+"N":"10001,11001,11001,10101,10011,10011,10001",
+"O":"01110,10001,10001,10001,10001,10001,01110",
+"P":"11110,10001,10001,11110,10000,10000,10000",
+"Q":"01110,10001,10001,10001,10101,10010,01101",
+"R":"11110,10001,10001,11110,10100,10010,10001",
+"S":"01111,10000,10000,01110,00001,00001,11110",
+"T":"11111,00100,00100,00100,00100,00100,00100",
+"U":"10001,10001,10001,10001,10001,10001,01110",
+"V":"10001,10001,10001,10001,10001,01010,00100",
+"W":"10001,10001,10001,10101,10101,11011,10001",
+"X":"10001,10001,01010,00100,01010,10001,10001",
+"Y":"10001,10001,01010,00100,00100,00100,00100",
+"Z":"11111,00001,00010,00100,01000,10000,11111",
+"0":"01110,10001,10011,10101,11001,10001,01110",
+"1":"00100,01100,00100,00100,00100,00100,01110",
+"2":"01110,10001,00001,00010,00100,01000,11111",
+"3":"11111,00010,00100,00010,00001,10001,01110",
+"4":"00010,00110,01010,10010,11111,00010,00010",
+"5":"11111,10000,11110,00001,00001,10001,01110",
+"6":"00110,01000,10000,11110,10001,10001,01110",
+"7":"11111,00001,00010,00100,01000,01000,01000",
+"8":"01110,10001,10001,01110,10001,10001,01110",
+"9":"01110,10001,10001,01111,00001,00010,01100",
+" ":"00000,00000,00000,00000,00000,00000,00000",
+"'":"00100,00100,01000,00000,00000,00000,00000",
+"-":"00000,00000,00000,11111,00000,00000,00000",
+".":"00000,00000,00000,00000,00000,01100,01100",
+",":"00000,00000,00000,00000,01100,01100,11000",
+":":"00000,01100,01100,00000,01100,01100,00000",
+"!":"00100,00100,00100,00100,00100,00000,00100",
+"?":"01110,10001,00001,00010,00100,00000,00100",
+"/":"00001,00010,00010,00100,01000,01000,10000",
+"(":"00010,00100,01000,01000,01000,00100,00010",
+")":"01000,00100,00010,00010,00010,00100,01000",
+"+":"00000,00100,00100,11111,00100,00100,00000",
+"=":"00000,00000,11111,00000,11111,00000,00000",
+"&":"01100,10010,10100,01000,10101,10010,01101",
+">":"10000,11000,11100,11110,11100,11000,10000"
+};
+var SVGNS = "http://www.w3.org/2000/svg";
+
+/* Dibuja `text` como pixeles. Agrupa los unos contiguos de cada fila en un
+   solo <rect> para no llenar el DOM de nodos. */
+function pixelText(text, cls){
+  text = String(text).toUpperCase();
+  var chars = [], i;
+  for(i = 0; i < text.length; i++){
+    chars.push(GLYPHS[text.charAt(i)] !== undefined ? text.charAt(i) : " ");
+  }
+  var w = chars.length * 6 - 1;
+  if(w < 1) w = 1;
+  var svg = document.createElementNS(SVGNS, "svg");
+  svg.setAttribute("viewBox", "0 0 " + w + " 7");
+  svg.setAttribute("shape-rendering", "crispEdges");
+  svg.setAttribute("preserveAspectRatio", "xMinYMid meet");
+  svg.setAttribute("focusable", "false");
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", text);
+  svg.setAttribute("class", "pxt " + (cls || "pxt-h3"));
+  for(i = 0; i < chars.length; i++){
+    var rows = GLYPHS[chars[i]].split(",");
+    for(var r = 0; r < rows.length; r++){
+      var row = rows[r], run = 0;
+      for(var c = 0; c <= row.length; c++){
+        if(row.charAt(c) === "1"){ run++; continue; }
+        if(run > 0){
+          var rect = document.createElementNS(SVGNS, "rect");
+          rect.setAttribute("x", String(i * 6 + c - run));
+          rect.setAttribute("y", String(r));
+          rect.setAttribute("width", String(run));
+          rect.setAttribute("height", "1");
+          svg.appendChild(rect);
+          run = 0;
+        }
+      }
+    }
+  }
+  return svg;
+}
+function setPixel(node, text, cls){
+  while(node.firstChild) node.removeChild(node.firstChild);
+  node.appendChild(pixelText(text, cls));
+}
+
+/* cabecera */
+setPixel(document.getElementById("heroTag"), "My English Booklet", "pxt-tag");
+setPixel(document.getElementById("heroTitle"), "5th Grade", "pxt-h1");
+setPixel(document.getElementById("press"), "Press start", "pxt-h3");
+
+/* cada tarjeta del mapa */
+(function(){
+  var n = document.querySelectorAll("[data-pix]"), i;
+  for(i = 0; i < n.length; i++){
+    var cls = n[i].className.indexOf("znum") >= 0 ? "pxt-tag" : "pxt-h3";
+    setPixel(n[i], n[i].getAttribute("data-pix"), cls);
+  }
+})();
+
+})();
+</script>
+</div>
+<footer class="cr">Copyright Prof Dan M. Mecikovsky</footer>
+</body>
+</html>
