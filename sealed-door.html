@@ -500,6 +500,7 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
       <button class="btn" id="codeBtn" type="button">Open the door</button>
     </div>
     <p class="lockmsg" id="codeMsg">No seal is broken yet.</p>
+    <div class="lockrow" id="rewardRow" hidden></div>
   </div>
 
   <!-- ============ SEAL 1 ============ -->
@@ -614,6 +615,9 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
    verbo que aparece aca ya esta en el material (pagina 159, los dos
    Grammar: Plus y los siete mini tests). No se agrego ninguno.
    ============================================================ */
+
+/* lo que hay del otro lado de la puerta */
+var REWARD = "https://www.youtube.com/watch?v=l0tOJ3gyokk";
 
 /* el codigo de la puerta: un digito por sello */
 var CODE = [5, 2, 8, 3, 6];
@@ -882,6 +886,18 @@ document.getElementById("codeBtn").addEventListener("click", function(){
   if(v === CODE.join("")){
     codeMsg.className = "lockmsg win";
     codeMsg.textContent = "The door is open. You have finished the Present Perfect Quest.";
+    /* del otro lado hay un premio: primero el boton, por si el navegador no
+       deja saltar solo, y dos segundos despues la puerta se cruza sola. */
+    var row = document.getElementById("rewardRow");
+    if(!row.querySelector("a")){
+      var a = document.createElement("a");
+      a.className = "btnlink";
+      a.href = REWARD;
+      a.textContent = "Go through the door";
+      row.appendChild(a);
+    }
+    row.hidden = false;
+    window.setTimeout(function(){ window.location.href = REWARD; }, 2200);
   } else {
     codeMsg.className = "lockmsg";
     codeMsg.textContent = "That is not the code. Beat the games and the digits appear above.";
