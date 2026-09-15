@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mini test 1 &middot; The First Twelve</title>
+<title>The Gate of Beginnings &middot; Present Perfect Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -319,6 +319,30 @@ input.w-m{width:min(100%,15rem)}
 .selfnote{font-style:italic;color:#5c4a2c;font-size:.85rem;margin-top:8px;display:block}
 
 .homelink + .homelink{margin-left:9px}
+
+/* ---------- etiquetas de forma en la produccion libre ---------- */
+.formhead{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.flab{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;
+  border:2px solid #2b1c07;border-radius:999px;padding:2px 12px;white-space:nowrap;
+}
+.flab.affirmative{background:#bdf0b0}
+.flab.negative{background:#ffc7d1}
+.flab.question{background:#a8e4ec}
+.modelbox p{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+
+/* ---------- boton de vuelta al pie de cada pagina ---------- */
+.bottomnav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:4px 0 32px}
+a.btnlink{
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.btnlink:hover{filter:brightness(1.07)}
+a.btnlink:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+a.btnlink.alt{background:var(--parch)}
 </style>
 </head>
 <body>
@@ -329,7 +353,7 @@ input.w-m{width:min(100%,15rem)}
     <h1 id="heroTitle"></h1>
     <p id="heroSub"></p>
     <div class="verbline" id="heroVerbs"></div>
-    <a class="homelink" href="mini-tests.html">&laquo; The seven mini tests</a>
+    <a class="homelink" href="seven-gates.html">&laquo; The Seven Gates</a>
     <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
   </div>
 
@@ -340,7 +364,7 @@ input.w-m{width:min(100%,15rem)}
   <section class="card codex" id="codexCard">
     <span class="tag">Codex</span>
     <h2>The Hero&rsquo;s Codex</h2>
-    <p class="sub">The three forms of every verb in this mini test. Open it <b>after</b> the trials, not before.</p>
+    <p class="sub">The three forms of every verb behind this gate. Open it <b>after</b> the trials, not before.</p>
     <div class="btnrow" style="margin-top:0">
       <button class="btn dark" id="codexToggle">Open the codex</button>
     </div>
@@ -348,6 +372,11 @@ input.w-m{width:min(100%,15rem)}
   </section>
 
 </div>
+
+<nav class="bottomnav">
+  <a class="btnlink" href="index.html">&laquo; Back to Present Perfect Quest</a>
+  <a class="btnlink alt" href="seven-gates.html">&laquo; The Seven Gates</a>
+</nav>
 
 <footer class="site">Copyright Prof Dan M. Mecikovsky</footer>
 
@@ -362,11 +391,11 @@ input.w-m{width:min(100%,15rem)}
    ============================================================ */
 var DATA = {
 
-meta: {"chapter": "Mini test 1 · 6th form", "title": "The First Twelve", "sub": "Verbs from BE to CHOOSE. Two versions, exactly the ones on the paper. The paper has two versions, and both of them are here.", "verbs": "infinitive &middot; simple past &middot; past participle"},
+meta: {"chapter": "The Seven Gates · Gate I", "title": "The Gate of Beginnings", "sub": "Every quest starts at a gate, and this one holds the first twelve verbs of the list. Put the missing forms back in the table, and then write your own sentences to open it.", "verbs": "from BE to CHOOSE &middot; two ways through"},
 
 verbs: {"be": {"f": ["BE", "WAS / WERE", "BEEN"], "a": [["be"], ["was / were", "was", "were", "was were", "were was"], ["been"]], "why": "be is the strangest verb of all: it has two past simple forms, was for I, he, she and it, and were for you, we and they, but only one past participle, been.", "tip": "After have or has there is only one possible word: been. have was does not exist."}, "beat": {"f": ["BEAT", "BEAT", "BEATEN"], "a": [["beat"], ["beat"], ["beaten"]], "why": "beat does not change in the past simple, but the past participle adds -en: beaten.", "tip": "The first two forms look the same, so the only new letters you write are -en."}, "become": {"f": ["BECOME", "BECAME", "BECOME"], "a": [["become"], ["became"], ["become"]], "why": "become follows come: the past simple changes the o into an a, and the past participle goes back to the infinitive.", "tip": "The first and the third form are the same word. Only the middle one changes."}, "begin": {"f": ["BEGIN", "BEGAN", "BEGUN"], "a": [["begin"], ["began"], ["begun"]], "why": "begin changes its vowel twice: i in the infinitive, a in the past simple and u in the past participle.", "tip": "i - a - u, the same road as drink - drank - drunk and sing - sang - sung."}, "bite": {"f": ["BITE", "BIT", "BITTEN"], "a": [["bite"], ["bit"], ["bitten"]], "why": "bite drops the e for the past simple, bit, and doubles the t for the participle: bitten.", "tip": "Two t in bitten. With one t it is the past simple."}, "blow": {"f": ["BLOW", "BLEW", "BLOWN"], "a": [["blow"], ["blew"], ["blown"]], "why": "blow belongs to the -ew / -own family: blew for the past simple and blown for the participle.", "tip": "blew sounds like the colour blue, but after have you need blown."}, "break": {"f": ["BREAK", "BROKE", "BROKEN"], "a": [["break"], ["broke"], ["broken"]], "why": "break changes ea into o for the past simple and the participle adds -n: broken.", "tip": "broke is the past simple. The one that follows have or has is broken."}, "bring": {"f": ["BRING", "BROUGHT", "BROUGHT"], "a": [["bring"], ["brought"], ["brought"]], "why": "bring takes -ought for both past forms, so the second and the third are the same word: brought.", "tip": "brought, bought and thought all end the same way and all rhyme."}, "build": {"f": ["BUILD", "BUILT", "BUILT"], "a": [["build"], ["built"], ["built"]], "why": "build turns its d into a t: built, for the past simple and for the participle.", "tip": "There is no -ed anywhere in this verb."}, "buy": {"f": ["BUY", "BOUGHT", "BOUGHT"], "a": [["buy"], ["bought"], ["bought"]], "why": "buy also goes to -ought, and the second and the third form are the same: bought.", "tip": "bought is already past, so you never add -ed on top of it."}, "catch": {"f": ["CATCH", "CAUGHT", "CAUGHT"], "a": [["catch"], ["caught"], ["caught"]], "why": "catch loses the -tch and takes -aught for both past forms: caught.", "tip": "caught starts c-a-u, never c-o-u."}, "choose": {"f": ["CHOOSE", "CHOSE", "CHOSEN"], "a": [["choose"], ["chose"], ["chosen"]], "why": "choose drops one o for the past simple, chose, and the participle adds -n: chosen.", "tip": "choose has two o; chose and chosen have only one."}},
 
-trials: [{"key": "v1table", "icon": "scroll", "medal": "Table A", "title": "Version 1 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "be", "given": [0]}, {"n": 2, "verb": "beat", "given": [2]}, {"n": 3, "verb": "become", "given": [0]}, {"n": 4, "verb": "begin", "given": [2]}, {"n": 5, "verb": "bite", "given": [1]}, {"n": 6, "verb": "blow", "given": [1]}, {"n": 7, "verb": "break", "given": [0]}, {"n": 8, "verb": "bring", "given": [1]}, {"n": 9, "verb": "build", "given": [0]}, {"n": 10, "verb": "buy", "given": [2]}, {"n": 11, "verb": "catch", "given": [0]}, {"n": 12, "verb": "choose", "given": [1]}]}, {"key": "v1sent", "icon": "sword", "medal": "Writing A", "title": "Version 1 · Your Own Sentences", "sub": "Now, choose five verbs from the box and write five complete sentences in the present perfect.", "type": "free", "note": {"title": "What your sentences need", "lines": ["person + have or has + past participle -> that is all a present perfect sentence needs.", "a different verb in each line -> five verbs, five sentences."], "warning": "The computer checks that you used have or has and a past participle from the box. Your teacher checks the spelling and the rest of the words."}, "pool": ["BE", "BEAT", "BECOME", "BEGIN", "BITE", "BLOW", "BREAK", "BRING", "BUILD", "BUY", "CATCH", "CHOOSE"], "lines": 5, "model": "I have broken my glasses twice this year."}, {"key": "v2table", "icon": "shield", "medal": "Table B", "title": "Version 2 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "be", "given": [0]}, {"n": 2, "verb": "beat", "given": [1]}, {"n": 3, "verb": "become", "given": [2]}, {"n": 4, "verb": "begin", "given": [0]}, {"n": 5, "verb": "bite", "given": [0]}, {"n": 6, "verb": "blow", "given": [2]}, {"n": 7, "verb": "break", "given": [1]}, {"n": 8, "verb": "bring", "given": [0]}, {"n": 9, "verb": "build", "given": [1]}, {"n": 10, "verb": "buy", "given": [0]}, {"n": 11, "verb": "catch", "given": [1]}, {"n": 12, "verb": "choose", "given": [2]}]}, {"key": "v2sent", "icon": "crown", "medal": "Writing B", "title": "Version 2 · Your Own Sentences", "sub": "Now, choose five verbs from the box and write five complete sentences in the present perfect.", "type": "free", "note": {"title": "What your sentences need", "lines": ["person + have or has + past participle -> that is all a present perfect sentence needs.", "a different verb in each line -> five verbs, five sentences."], "warning": "The computer checks that you used have or has and a past participle from the box. Your teacher checks the spelling and the rest of the words."}, "pool": ["BE", "BEAT", "BECOME", "BEGIN", "BITE", "BLOW", "BREAK", "BRING", "BUILD", "BUY", "CATCH", "CHOOSE"], "lines": 5, "model": "My brother has caught a very big fish."}],
+trials: [{"key": "v1table", "icon": "scroll", "medal": "Table A", "title": "Version 1 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "be", "given": [0]}, {"n": 2, "verb": "beat", "given": [2]}, {"n": 3, "verb": "become", "given": [0]}, {"n": 4, "verb": "begin", "given": [2]}, {"n": 5, "verb": "bite", "given": [1]}, {"n": 6, "verb": "blow", "given": [1]}, {"n": 7, "verb": "break", "given": [0]}, {"n": 8, "verb": "bring", "given": [1]}, {"n": 9, "verb": "build", "given": [0]}, {"n": 10, "verb": "buy", "given": [2]}, {"n": 11, "verb": "catch", "given": [0]}, {"n": 12, "verb": "choose", "given": [1]}]}, {"key": "v1sent", "icon": "sword", "medal": "Writing A", "title": "Version 1 · Your Own Sentences", "sub": "Now, choose five verbs from the box and write five complete sentences: two affirmative, two negative and one question.", "type": "free", "note": {"title": "The three shapes of a present perfect sentence", "lines": ["Affirmative -> person + have/has + past participle: I have eaten sushi.", "Negative -> person + haven't/hasn't + past participle: I haven't eaten sushi.", "Question -> Have/Has + person + past participle...? : Have you eaten sushi?"], "warning": "Each line tells you which shape it needs, and each line needs a different verb from the box."}, "pool": ["BE", "BEAT", "BECOME", "BEGIN", "BITE", "BLOW", "BREAK", "BRING", "BUILD", "BUY", "CATCH", "CHOOSE"], "lines": [{"n": 1, "form": "affirmative"}, {"n": 2, "form": "affirmative"}, {"n": 3, "form": "negative"}, {"n": 4, "form": "negative"}, {"n": 5, "form": "question"}], "models": [{"form": "affirmative", "text": "I have broken my glasses twice this year."}, {"form": "negative", "text": "My brother has not bought a new bike."}, {"form": "question", "text": "Have you ever caught a very big fish?"}]}, {"key": "v2table", "icon": "shield", "medal": "Table B", "title": "Version 2 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "be", "given": [0]}, {"n": 2, "verb": "beat", "given": [1]}, {"n": 3, "verb": "become", "given": [2]}, {"n": 4, "verb": "begin", "given": [0]}, {"n": 5, "verb": "bite", "given": [0]}, {"n": 6, "verb": "blow", "given": [2]}, {"n": 7, "verb": "break", "given": [1]}, {"n": 8, "verb": "bring", "given": [0]}, {"n": 9, "verb": "build", "given": [1]}, {"n": 10, "verb": "buy", "given": [0]}, {"n": 11, "verb": "catch", "given": [1]}, {"n": 12, "verb": "choose", "given": [2]}]}, {"key": "v2sent", "icon": "crown", "medal": "Writing B", "title": "Version 2 · Your Own Sentences", "sub": "Now, choose five verbs from the box and write five complete sentences: two affirmative, two negative and one question.", "type": "free", "note": {"title": "The three shapes of a present perfect sentence", "lines": ["Affirmative -> person + have/has + past participle: I have eaten sushi.", "Negative -> person + haven't/hasn't + past participle: I haven't eaten sushi.", "Question -> Have/Has + person + past participle...? : Have you eaten sushi?"], "warning": "Each line tells you which shape it needs, and each line needs a different verb from the box."}, "pool": ["BE", "BEAT", "BECOME", "BEGIN", "BITE", "BLOW", "BREAK", "BRING", "BUILD", "BUY", "CATCH", "CHOOSE"], "lines": [{"n": 1, "form": "affirmative"}, {"n": 2, "form": "affirmative"}, {"n": 3, "form": "negative"}, {"n": 4, "form": "negative"}, {"n": 5, "form": "question"}], "models": [{"form": "affirmative", "text": "My brother has caught a very big fish."}, {"form": "negative", "text": "We have not begun the new book."}, {"form": "question", "text": "Has your team ever beaten that school?"}]}],
 
 codex: ["be", "beat", "become", "begin", "bite", "blow", "break", "bring", "build", "buy", "catch", "choose"]
 
@@ -423,8 +452,13 @@ function matches(given, list){
 }
 /* Expande 've y 's para poder buscar have/has en una oracion libre. */
 function expand(s){
-  return normalize(s).replace(/'ve\b/g, " have").replace(/'s\b/g, " has")
-                     .replace(/\s+/g, " ").trim();
+  /* n't primero: asi "hasn't" queda "has not" y las dos partes se pueden
+     buscar por separado. */
+  return normalize(s)
+    .replace(/n't\b/g, " not")
+    .replace(/'ve\b/g, " have")
+    .replace(/'s\b/g, " has")
+    .replace(/\s+/g, " ").trim();
 }
 function hasWord(sentence, word){
   var t = expand(sentence).split(" "), w = normalize(word);
@@ -673,17 +707,22 @@ function renderFree(st, t){
   vb.appendChild(chips);
   st.body.appendChild(vb);
 
-  for(var i = 0; i < t.lines; i++){
-    var id = REG.push({ data: { n: i + 1 } }) - 1;
+  var PH = { affirmative: "Write an affirmative sentence.",
+             negative: "Write a negative sentence.",
+             question: "Write a question." };
+  for(var i = 0; i < t.lines.length; i++){
+    var ln = t.lines[i];
+    var id = REG.push({ data: ln }) - 1;
     var item = el("div", "item");
     item.setAttribute("data-id", String(id));
-    var line = el("div", "sline");
-    line.appendChild(el("span", "rn", String(i + 1)));
-    var inp = mkInput("w-l", "Write your sentence in the present perfect.");
-    line.appendChild(inp);
-    item.appendChild(line);
+    var head = el("div", "formhead");
+    head.appendChild(el("span", "rn", String(ln.n)));
+    head.appendChild(el("span", "flab " + ln.form, ln.form));
+    item.appendChild(head);
+    var inp = mkInput("w-l", PH[ln.form]);
+    item.appendChild(inp);
     st.body.appendChild(item);
-    st.entries.push({ kind: "free", inputs: [{ el: inp }], data: { n: i + 1 }, holder: item, exp: null });
+    st.entries.push({ kind: "free", inputs: [{ el: inp }], data: ln, holder: item, exp: null });
   }
 }
 
@@ -740,19 +779,32 @@ function checkTrial(key){
     if(e.kind === "free"){
       var s = e.inputs[0].el.value;
       var notEmpty = normalize(s) !== "";
+      var ex = expand(s);
       var usesAux = hasWord(s, "have") || hasWord(s, "has");
+      var hasNot = hasWord(s, "not");
+      var startsAux = /^(have|has)\b/.test(ex);
+      var endsQ = /\?\s*$/.test(String(s));
       var part = participleUsed(s, t.pool);
       var longEnough = wordCount(s) >= 5;
-      var lineOk = notEmpty && usesAux && part !== null && longEnough;
+      var formOk;
+      if(e.data.form === "affirmative")   formOk = usesAux && !hasNot && !endsQ;
+      else if(e.data.form === "negative") formOk = usesAux && hasNot && !endsQ;
+      else                                formOk = startsAux && endsQ;
+      var lineOk = notEmpty && formOk && part !== null && longEnough;
       markInput(e.inputs[0].el, lineOk);
       total++;
       if(lineOk) got++;
 
+      var FORMTXT = {
+        affirmative: "It is affirmative: it uses have or has, and there is no not in it.",
+        negative: "It is negative: it uses haven't or hasn't.",
+        question: "It is a question: it starts with Have or Has and ends with a question mark."
+      };
       var cl = el("div", "checklist " + (lineOk ? "right" : "wrong"));
-      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n));
+      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n + " · " + e.data.form));
       var ul = document.createElement("ul");
       ul.appendChild(el("li", null, (notEmpty ? "✓ " : "✗ ") + "You wrote a sentence."));
-      ul.appendChild(el("li", null, (usesAux ? "✓ " : "✗ ") + "It uses have or has."));
+      ul.appendChild(el("li", null, (formOk ? "✓ " : "✗ ") + FORMTXT[e.data.form]));
       ul.appendChild(el("li", null, (part ? "✓ " : "✗ ") + (part
         ? "It uses the past participle " + part + "."
         : "It uses a past participle from the box.")));
@@ -767,9 +819,14 @@ function checkTrial(key){
 
   if(t.type === "free"){
     var mb = el("div", "modelbox");
-    mb.appendChild(el("span", "needtitle", "One possible sentence"));
-    mb.appendChild(el("p", null, t.model));
-    mb.appendChild(el("span", "selfnote", "Your sentences do not have to be these ones. The computer only checks that the present perfect is there. Your teacher checks the spelling and the rest of the words."));
+    mb.appendChild(el("span", "needtitle", "Three possible sentences"));
+    for(var f = 0; f < t.models.length; f++){
+      var mp = el("p");
+      mp.appendChild(el("span", "flab " + t.models[f].form, t.models[f].form));
+      mp.appendChild(document.createTextNode(" " + t.models[f].text));
+      mb.appendChild(mp);
+    }
+    mb.appendChild(el("span", "selfnote", "Your sentences do not have to be these ones. The computer only checks the shape of the sentence and the verb. Your teacher checks the spelling and the rest of the words."));
     st.panel.appendChild(mb);
   }
   if(st.panel) st.panel.hidden = false;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mini test 2 &middot; From COME to FEEL</title>
+<title>The Summit of Words &middot; Present Perfect Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -319,6 +319,30 @@ input.w-m{width:min(100%,15rem)}
 .selfnote{font-style:italic;color:#5c4a2c;font-size:.85rem;margin-top:8px;display:block}
 
 .homelink + .homelink{margin-left:9px}
+
+/* ---------- etiquetas de forma en la produccion libre ---------- */
+.formhead{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.flab{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;
+  border:2px solid #2b1c07;border-radius:999px;padding:2px 12px;white-space:nowrap;
+}
+.flab.affirmative{background:#bdf0b0}
+.flab.negative{background:#ffc7d1}
+.flab.question{background:#a8e4ec}
+.modelbox p{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+
+/* ---------- boton de vuelta al pie de cada pagina ---------- */
+.bottomnav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:4px 0 32px}
+a.btnlink{
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.btnlink:hover{filter:brightness(1.07)}
+a.btnlink:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+a.btnlink.alt{background:var(--parch)}
 </style>
 </head>
 <body>
@@ -329,7 +353,7 @@ input.w-m{width:min(100%,15rem)}
     <h1 id="heroTitle"></h1>
     <p id="heroSub"></p>
     <div class="verbline" id="heroVerbs"></div>
-    <a class="homelink" href="mini-tests.html">&laquo; The seven mini tests</a>
+    <a class="homelink" href="seven-gates.html">&laquo; The Seven Gates</a>
     <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
   </div>
 
@@ -340,7 +364,7 @@ input.w-m{width:min(100%,15rem)}
   <section class="card codex" id="codexCard">
     <span class="tag">Codex</span>
     <h2>The Hero&rsquo;s Codex</h2>
-    <p class="sub">The three forms of every verb in this mini test. Open it <b>after</b> the trials, not before.</p>
+    <p class="sub">The three forms of every verb behind this gate. Open it <b>after</b> the trials, not before.</p>
     <div class="btnrow" style="margin-top:0">
       <button class="btn dark" id="codexToggle">Open the codex</button>
     </div>
@@ -349,26 +373,31 @@ input.w-m{width:min(100%,15rem)}
 
 </div>
 
+<nav class="bottomnav">
+  <a class="btnlink" href="index.html">&laquo; Back to Present Perfect Quest</a>
+  <a class="btnlink alt" href="seven-gates.html">&laquo; The Seven Gates</a>
+</nav>
+
 <footer class="site">Copyright Prof Dan M. Mecikovsky</footer>
 
 <script id="data-block">
 /* ============================================================
    SOLO CONTENIDO. Ni una referencia al DOM en este bloque.
    ============================================================
-   MINI TEST 2 - PRESENT PERFECT / IRREGULAR VERBS, 6TO GRADO.
-   Insumo unico: el archivo "MINI TEST - 2.docx" del profesor.
+   MINI TEST 6 - PRESENT PERFECT / IRREGULAR VERBS, 6TO GRADO.
+   Insumo unico: el archivo "MINI TEST - 6.docx" del profesor.
    Estan las DOS versiones de la hoja, con las mismas palabras
    dadas y las mismas celdas vacias que en el papel.
    ============================================================ */
 var DATA = {
 
-meta: {"chapter": "Mini test 2 · 6th form", "title": "From COME to FEEL", "sub": "A short table and five sentences. The table asks for the infinitive, the simple past or the past participle. The paper has two versions, and both of them are here.", "verbs": "infinitive &middot; simple past &middot; past participle"},
+meta: {"chapter": "The Seven Gates · Gate VI", "title": "The Summit of Words", "sub": "The last climb, where everything is spoken, told, taught and written. Sixteen verbs stand between you and the summit, and none of them is easy.", "verbs": "from SPEAK to WRITE &middot; two ways through"},
 
-verbs: {"come": {"f": ["COME", "CAME", "COME"], "a": [["come"], ["came"], ["come"]], "why": "come changes o into a for the past simple, and the participle goes back to come.", "tip": "The first and the third form are the same word, like become."}, "cost": {"f": ["COST", "COST", "COST"], "a": [["cost"], ["cost"], ["cost"]], "why": "cost never changes: the three forms are exactly the same word.", "tip": "If you add -ed to cost, it is wrong."}, "cut": {"f": ["CUT", "CUT", "CUT"], "a": [["cut"], ["cut"], ["cut"]], "why": "cut never changes, like put, hit and shut.", "tip": "Short verbs that already end in -t often keep the same shape three times."}, "do": {"f": ["DO", "DID", "DONE"], "a": [["do"], ["did"], ["done"]], "why": "do has three different forms: do, did and done.", "tip": "did is the past simple. After have or has you need done."}, "draw": {"f": ["DRAW", "DREW", "DRAWN"], "a": [["draw"], ["drew"], ["drawn"]], "why": "draw belongs to the -ew / -own family: drew for the past simple and drawn for the participle.", "tip": "drawn ends in -n, like known, grown and thrown."}, "drink": {"f": ["DRINK", "DRANK", "DRUNK"], "a": [["drink"], ["drank"], ["drunk"]], "why": "drink changes i into a and then into u: drink, drank, drunk.", "tip": "i - a - u, the same road as begin, sing and ring."}, "drive": {"f": ["DRIVE", "DROVE", "DRIVEN"], "a": [["drive"], ["drove"], ["driven"]], "why": "drive changes i into o for the past simple and adds -n for the participle: driven.", "tip": "driven has one v and ends in -en, like given and ridden."}, "eat": {"f": ["EAT", "ATE", "EATEN"], "a": [["eat"], ["ate"], ["eaten"]], "why": "eat has three different forms: eat, ate and eaten.", "tip": "ate is the past simple. have ate is always wrong."}, "fall": {"f": ["FALL", "FELL", "FALLEN"], "a": [["fall"], ["fell"], ["fallen"]], "why": "fall changes a into e for the past simple and the participle adds -en: fallen.", "tip": "fell is the past simple. After have it is fallen."}, "feel": {"f": ["FEEL", "FELT", "FELT"], "a": [["feel"], ["felt"], ["felt"]], "why": "feel loses one e and ends in -t: felt, for the past simple and for the participle.", "tip": "felt, kept and slept all belong to the same family."}},
+verbs: {"sleep": {"f": ["SLEEP", "SLEPT", "SLEPT"], "a": [["sleep"], ["slept"], ["slept"]], "why": "sleep loses one e and ends in -t: slept, twice.", "tip": "sleep, keep and feel all go the same way."}, "speak": {"f": ["SPEAK", "SPOKE", "SPOKEN"], "a": [["speak"], ["spoke"], ["spoken"]], "why": "speak changes ea into o for the past simple and the participle adds -n: spoken.", "tip": "spoke is the past simple; spoken follows have or has."}, "spend": {"f": ["SPEND", "SPENT", "SPENT"], "a": [["spend"], ["spent"], ["spent"]], "why": "spend turns its d into a t: spent, twice.", "tip": "spend, send and lend are the same family."}, "stand": {"f": ["STAND", "STOOD", "STOOD"], "a": [["stand"], ["stood"], ["stood"]], "why": "stand changes a into oo: stood, twice.", "tip": "Two o in stood."}, "steal": {"f": ["STEAL", "STOLE", "STOLEN"], "a": [["steal"], ["stole"], ["stolen"]], "why": "steal changes ea into o for the past simple and the participle adds -n: stolen.", "tip": "stolen ends in -en, like spoken and broken."}, "swim": {"f": ["SWIM", "SWAM", "SWUM"], "a": [["swim"], ["swam"], ["swum"]], "why": "swim follows i - a - u: swim, swam, swum.", "tip": "swum, with a u, is the one that follows have."}, "take": {"f": ["TAKE", "TOOK", "TAKEN"], "a": [["take"], ["took"], ["taken"]], "why": "take changes a into oo for the past simple and the participle adds -n: taken.", "tip": "took is the past simple; taken follows have or has."}, "teach": {"f": ["TEACH", "TAUGHT", "TAUGHT"], "a": [["teach"], ["taught"], ["taught"]], "why": "teach loses the -ch and takes -aught: taught, twice.", "tip": "catch and teach are a pair: caught and taught."}, "tear": {"f": ["TEAR", "TORE", "TORN"], "a": [["tear"], ["tore"], ["torn"]], "why": "tear changes ea into o: tore for the past simple and torn for the participle.", "tip": "Here tear means to break paper, and it sounds like air."}, "tell": {"f": ["TELL", "TOLD", "TOLD"], "a": [["tell"], ["told"], ["told"]], "why": "tell changes -ell into -old: told, twice.", "tip": "tell and sell are the same family: told and sold."}, "think": {"f": ["THINK", "THOUGHT", "THOUGHT"], "a": [["think"], ["thought"], ["thought"]], "why": "think goes to -ought: thought, twice.", "tip": "thought, bought and brought all rhyme."}, "throw": {"f": ["THROW", "THREW", "THROWN"], "a": [["throw"], ["threw"], ["thrown"]], "why": "throw belongs to the -ew / -own family: threw for the past simple and thrown for the participle.", "tip": "threw and through sound the same but they are different words."}, "understand": {"f": ["UNDERSTAND", "UNDERSTOOD", "UNDERSTOOD"], "a": [["understand"], ["understood"], ["understood"]], "why": "understand follows stand: understood, twice.", "tip": "If you know stand - stood, you already know this one."}, "wake": {"f": ["WAKE", "WOKE", "WOKEN"], "a": [["wake"], ["woke"], ["woken"]], "why": "wake changes a into o for the past simple and the participle adds -n: woken.", "tip": "woke is the past simple; woken follows have or has."}, "wear": {"f": ["WEAR", "WORE", "WORN"], "a": [["wear"], ["wore"], ["worn"]], "why": "wear changes ea into o: wore for the past simple and worn for the participle.", "tip": "wear and tear work the same way: wore/worn and tore/torn."}, "win": {"f": ["WIN", "WON", "WON"], "a": [["win"], ["won"], ["won"]], "why": "win changes i into o: won, twice.", "tip": "won sounds exactly like the number one."}, "write": {"f": ["WRITE", "WROTE", "WRITTEN"], "a": [["write"], ["wrote"], ["written"]], "why": "write changes i into o for the past simple and the participle doubles the t: written.", "tip": "Two t in written. wrote is the past simple."}},
 
-trials: [{"key": "v1table", "icon": "scroll", "medal": "Table A", "title": "Version 1 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "come", "given": [1]}, {"n": 2, "verb": "cost", "given": [0]}, {"n": 3, "verb": "do", "given": [1]}, {"n": 4, "verb": "eat", "given": [2]}, {"n": 5, "verb": "feel", "given": [0]}]}, {"key": "v1sent", "icon": "sword", "medal": "Sentences A", "title": "Version 1 · The Sentences", "sub": "Now, complete the sentences using the present perfect.", "type": "gap", "note": {"title": "How a present perfect sentence is built", "lines": ["I / you / we / they -> have + past participle.", "he / she / it -> has + past participle."], "warning": "The verb in brackets is the infinitive. You have to change it into the past participle yourself."}, "items": [{"n": 1, "before": "My dad", "after": "for 4 hours! He is so tired!", "verb": "(drive)", "answers": ["has driven", "'s driven"], "solution": "has driven", "why": "My dad is one person, so we use has, and drive is irregular: drive - drove - driven.", "tip": "He is tired right now, and that is why this is the present perfect and not the past simple."}, {"n": 2, "before": "They", "after": "from the stairs and now they can´t walk.", "verb": "(fall)", "answers": ["have fallen", "'ve fallen"], "solution": "have fallen", "why": "They is more than one person, so we use have, and fall is irregular: fall - fell - fallen.", "tip": "fell is the past simple. After have you always need fallen."}, {"n": 3, "before": "My sister", "after": "all the orange juice!", "verb": "(drink)", "answers": ["has drunk", "'s drunk"], "solution": "has drunk", "why": "My sister is one person, so we use has, and drink is irregular: drink - drank - drunk.", "tip": "drank is the past simple. After has the word is drunk."}, {"n": 4, "before": "All the students", "after": "beautiful pictures.", "verb": "(draw)", "answers": ["have drawn", "'ve drawn"], "solution": "have drawn", "why": "All the students is plural, so we use have, and draw is irregular: draw - drew - drawn.", "tip": "drawed does not exist. The past participle is drawn."}, {"n": 5, "before": "Mati", "after": "his finger! We have to go to the doctor!", "verb": "(cut)", "answers": ["has cut", "'s cut"], "solution": "has cut", "why": "Mati is one person, so we use has, and cut never changes: cut - cut - cut.", "tip": "The word looks like the infinitive. The has in front is what makes it the present perfect."}]}, {"key": "v2table", "icon": "shield", "medal": "Table B", "title": "Version 2 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "cost", "given": [1]}, {"n": 2, "verb": "cut", "given": [2]}, {"n": 3, "verb": "draw", "given": [1]}, {"n": 4, "verb": "fall", "given": [0]}, {"n": 5, "verb": "drive", "given": [1]}]}, {"key": "v2sent", "icon": "crown", "medal": "Sentences B", "title": "Version 2 · The Sentences", "sub": "Now, complete the sentences using the present perfect.", "type": "gap", "note": {"title": "How a present perfect sentence is built", "lines": ["I / you / we / they -> have + past participle.", "he / she / it -> has + past participle."], "warning": "The verb in brackets is the infinitive. You have to change it into the past participle yourself."}, "items": [{"n": 1, "before": "My sister", "after": "all my sweets and now she has a stomach ache.", "verb": "(eat)", "answers": ["has eaten", "'s eaten"], "solution": "has eaten", "why": "My sister is one person, so we use has, and eat is irregular: eat - ate - eaten.", "tip": "ate is the past simple. have ate is always wrong."}, {"n": 2, "before": "The students", "after": "all their homework quickly and the teacher is very happy.", "verb": "(do)", "answers": ["have done", "'ve done"], "solution": "have done", "why": "The students is plural, so we use have, and do is irregular: do - did - done.", "tip": "did can never follow have. The word you need is done."}, {"n": 3, "before": "Peter", "after": "three glasses of water this afternoon. He has to go to the toilet!", "verb": "(drink)", "answers": ["has drunk", "'s drunk"], "solution": "has drunk", "why": "Peter is one person, so we use has, and drink is irregular: drink - drank - drunk.", "tip": "this afternoon is not finished yet, so the present perfect fits perfectly."}, {"n": 4, "before": "I", "after": "back to school after a long holiday.", "verb": "(come)", "answers": ["have come", "'ve come"], "solution": "have come", "why": "I takes have, and come is irregular: come - came - come.", "tip": "The first and the third form of come are the same word."}, {"n": 5, "before": "Unfortunately, I", "after": "very sick all day today!", "verb": "(feel)", "answers": ["have felt", "'ve felt"], "solution": "have felt", "why": "I takes have, and feel is irregular: feel - felt - felt.", "tip": "today is not over yet, so we use the present perfect."}]}],
+trials: [{"key": "v1table", "icon": "scroll", "medal": "Table A", "title": "Version 1 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "speak", "given": [0]}, {"n": 2, "verb": "spend", "given": [2]}, {"n": 3, "verb": "stand", "given": [1]}, {"n": 4, "verb": "steal", "given": [0]}, {"n": 5, "verb": "swim", "given": [0]}, {"n": 6, "verb": "take", "given": [1]}, {"n": 7, "verb": "teach", "given": [2]}, {"n": 8, "verb": "tear", "given": [1]}, {"n": 9, "verb": "tell", "given": [0]}, {"n": 10, "verb": "think", "given": [1]}, {"n": 11, "verb": "throw", "given": [2]}, {"n": 12, "verb": "understand", "given": [0]}, {"n": 13, "verb": "win", "given": [2]}]}, {"key": "v1sent", "icon": "sword", "medal": "Sentences A", "title": "Version 1 · The Sentences", "sub": "Now, complete the sentences using the present perfect.", "type": "gap", "note": {"title": "How a present perfect sentence is built", "lines": ["I / you / we / they -> have + past participle.", "he / she / it -> has + past participle."], "warning": "The verb in brackets is the infinitive. You have to change it into the past participle yourself."}, "items": [{"n": 1, "before": "I", "after": "at a five-star hotel recently when I was on holiday. It was so comfortable.", "verb": "(sleep)", "answers": ["have slept", "'ve slept"], "solution": "have slept", "why": "I takes have, and sleep is irregular: sleep - slept - slept.", "tip": "sleep, keep and feel all end in -t in the past."}, {"n": 2, "before": "The famous author", "after": "a new book.", "verb": "(write)", "answers": ["has written", "'s written"], "solution": "has written", "why": "The famous author is one person, so we use has, and write is irregular: write - wrote - written.", "tip": "Two t in written. wrote is the past simple."}, {"n": 3, "before": "Somebody", "after": "my wallet. I can’t find it!", "verb": "(steal)", "answers": ["has stolen", "'s stolen"], "solution": "has stolen", "why": "Somebody is one person, so we use has, and steal is irregular: steal - stole - stolen.", "tip": "The wallet is missing right now, and that is why we use the present perfect."}, {"n": 4, "before": "Jenny", "after": "a beautiful dress to the party.", "verb": "(wear)", "answers": ["has worn", "'s worn"], "solution": "has worn", "why": "Jenny is one person, so we use has, and wear is irregular: wear - wore - worn.", "tip": "wore is the past simple. After has the word is worn."}, {"n": 5, "before": "I am very tired today! I", "after": "up at 5am.", "verb": "(wake)", "answers": ["have woken", "'ve woken"], "solution": "have woken", "why": "I takes have, and wake is irregular: wake - woke - woken.", "tip": "woke is the past simple. After have you need woken."}]}, {"key": "v2table", "icon": "shield", "medal": "Table B", "title": "Version 2 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "sleep", "given": [0]}, {"n": 2, "verb": "speak", "given": [2]}, {"n": 3, "verb": "spend", "given": [0]}, {"n": 4, "verb": "stand", "given": [2]}, {"n": 5, "verb": "steal", "given": [1]}, {"n": 6, "verb": "tear", "given": [2]}, {"n": 7, "verb": "tell", "given": [1]}, {"n": 8, "verb": "think", "given": [0]}, {"n": 9, "verb": "understand", "given": [2]}, {"n": 10, "verb": "wake", "given": [0]}, {"n": 11, "verb": "wear", "given": [1]}, {"n": 12, "verb": "write", "given": [1]}]}, {"key": "v2sent", "icon": "crown", "medal": "Sentences B", "title": "Version 2 · The Sentences", "sub": "Now, complete the sentences using the present perfect.", "type": "gap", "note": {"title": "How a present perfect sentence is built", "lines": ["I / you / we / they -> have + past participle.", "he / she / it -> has + past participle."], "warning": "The verb in brackets is the infinitive. You have to change it into the past participle yourself."}, "items": [{"n": 1, "before": "That fantastic actress", "after": "an Oscar. Wow!", "verb": "(win)", "answers": ["has won", "'s won"], "solution": "has won", "why": "That fantastic actress is one person, so we use has, and win is irregular: win - won - won.", "tip": "won sounds exactly like the number one."}, {"n": 2, "before": "We", "after": "in the ocean in the summer.", "verb": "(swim)", "answers": ["have swum", "'ve swum"], "solution": "have swum", "why": "We is plural, so we use have, and swim is irregular: swim - swam - swum.", "tip": "swam is the past simple. After have the word is swum."}, {"n": 3, "before": "Our English teacher", "after": "a new topic. It’s difficult!", "verb": "(teach)", "answers": ["has taught", "'s taught"], "solution": "has taught", "why": "Our English teacher is one person, so we use has, and teach is irregular: teach - taught - taught.", "tip": "catch and teach are a pair: caught and taught."}, {"n": 4, "before": "The basketball player", "after": "the ball and scored!", "verb": "(throw)", "answers": ["has thrown", "'s thrown"], "solution": "has thrown", "why": "The basketball player is one person, so we use has, and throw is irregular: throw - threw - thrown.", "tip": "threw is the past simple. After has you need thrown."}, {"n": 5, "before": "My dad", "after": "me to school today’s morning.", "verb": "(take)", "answers": ["has taken", "'s taken"], "solution": "has taken", "why": "My dad is one person, so we use has, and take is irregular: take - took - taken.", "tip": "took is the past simple. After has the word is taken."}]}],
 
-codex: ["come", "cost", "cut", "do", "draw", "drink", "drive", "eat", "fall", "feel"]
+codex: ["sleep", "speak", "spend", "stand", "steal", "swim", "take", "teach", "tear", "tell", "think", "throw", "understand", "wake", "wear", "win", "write"]
 
 };
 </script>
@@ -423,8 +452,13 @@ function matches(given, list){
 }
 /* Expande 've y 's para poder buscar have/has en una oracion libre. */
 function expand(s){
-  return normalize(s).replace(/'ve\b/g, " have").replace(/'s\b/g, " has")
-                     .replace(/\s+/g, " ").trim();
+  /* n't primero: asi "hasn't" queda "has not" y las dos partes se pueden
+     buscar por separado. */
+  return normalize(s)
+    .replace(/n't\b/g, " not")
+    .replace(/'ve\b/g, " have")
+    .replace(/'s\b/g, " has")
+    .replace(/\s+/g, " ").trim();
 }
 function hasWord(sentence, word){
   var t = expand(sentence).split(" "), w = normalize(word);
@@ -673,17 +707,22 @@ function renderFree(st, t){
   vb.appendChild(chips);
   st.body.appendChild(vb);
 
-  for(var i = 0; i < t.lines; i++){
-    var id = REG.push({ data: { n: i + 1 } }) - 1;
+  var PH = { affirmative: "Write an affirmative sentence.",
+             negative: "Write a negative sentence.",
+             question: "Write a question." };
+  for(var i = 0; i < t.lines.length; i++){
+    var ln = t.lines[i];
+    var id = REG.push({ data: ln }) - 1;
     var item = el("div", "item");
     item.setAttribute("data-id", String(id));
-    var line = el("div", "sline");
-    line.appendChild(el("span", "rn", String(i + 1)));
-    var inp = mkInput("w-l", "Write your sentence in the present perfect.");
-    line.appendChild(inp);
-    item.appendChild(line);
+    var head = el("div", "formhead");
+    head.appendChild(el("span", "rn", String(ln.n)));
+    head.appendChild(el("span", "flab " + ln.form, ln.form));
+    item.appendChild(head);
+    var inp = mkInput("w-l", PH[ln.form]);
+    item.appendChild(inp);
     st.body.appendChild(item);
-    st.entries.push({ kind: "free", inputs: [{ el: inp }], data: { n: i + 1 }, holder: item, exp: null });
+    st.entries.push({ kind: "free", inputs: [{ el: inp }], data: ln, holder: item, exp: null });
   }
 }
 
@@ -740,19 +779,32 @@ function checkTrial(key){
     if(e.kind === "free"){
       var s = e.inputs[0].el.value;
       var notEmpty = normalize(s) !== "";
+      var ex = expand(s);
       var usesAux = hasWord(s, "have") || hasWord(s, "has");
+      var hasNot = hasWord(s, "not");
+      var startsAux = /^(have|has)\b/.test(ex);
+      var endsQ = /\?\s*$/.test(String(s));
       var part = participleUsed(s, t.pool);
       var longEnough = wordCount(s) >= 5;
-      var lineOk = notEmpty && usesAux && part !== null && longEnough;
+      var formOk;
+      if(e.data.form === "affirmative")   formOk = usesAux && !hasNot && !endsQ;
+      else if(e.data.form === "negative") formOk = usesAux && hasNot && !endsQ;
+      else                                formOk = startsAux && endsQ;
+      var lineOk = notEmpty && formOk && part !== null && longEnough;
       markInput(e.inputs[0].el, lineOk);
       total++;
       if(lineOk) got++;
 
+      var FORMTXT = {
+        affirmative: "It is affirmative: it uses have or has, and there is no not in it.",
+        negative: "It is negative: it uses haven't or hasn't.",
+        question: "It is a question: it starts with Have or Has and ends with a question mark."
+      };
       var cl = el("div", "checklist " + (lineOk ? "right" : "wrong"));
-      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n));
+      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n + " · " + e.data.form));
       var ul = document.createElement("ul");
       ul.appendChild(el("li", null, (notEmpty ? "✓ " : "✗ ") + "You wrote a sentence."));
-      ul.appendChild(el("li", null, (usesAux ? "✓ " : "✗ ") + "It uses have or has."));
+      ul.appendChild(el("li", null, (formOk ? "✓ " : "✗ ") + FORMTXT[e.data.form]));
       ul.appendChild(el("li", null, (part ? "✓ " : "✗ ") + (part
         ? "It uses the past participle " + part + "."
         : "It uses a past participle from the box.")));
@@ -767,9 +819,14 @@ function checkTrial(key){
 
   if(t.type === "free"){
     var mb = el("div", "modelbox");
-    mb.appendChild(el("span", "needtitle", "One possible sentence"));
-    mb.appendChild(el("p", null, t.model));
-    mb.appendChild(el("span", "selfnote", "Your sentences do not have to be these ones. The computer only checks that the present perfect is there. Your teacher checks the spelling and the rest of the words."));
+    mb.appendChild(el("span", "needtitle", "Three possible sentences"));
+    for(var f = 0; f < t.models.length; f++){
+      var mp = el("p");
+      mp.appendChild(el("span", "flab " + t.models[f].form, t.models[f].form));
+      mp.appendChild(document.createTextNode(" " + t.models[f].text));
+      mb.appendChild(mp);
+    }
+    mb.appendChild(el("span", "selfnote", "Your sentences do not have to be these ones. The computer only checks the shape of the sentence and the verb. Your teacher checks the spelling and the rest of the words."));
     st.panel.appendChild(mb);
   }
   if(st.panel) st.panel.hidden = false;

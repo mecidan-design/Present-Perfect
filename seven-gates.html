@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Seven Mini Tests &middot; Present Perfect Quest</title>
+<title>The Seven Gates &middot; Present Perfect Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -371,6 +371,30 @@ input.w-m{width:min(100%,15rem)}
 .selfnote{font-style:italic;color:#5c4a2c;font-size:.85rem;margin-top:8px;display:block}
 
 .homelink + .homelink{margin-left:9px}
+
+/* ---------- etiquetas de forma en la produccion libre ---------- */
+.formhead{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.flab{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;
+  border:2px solid #2b1c07;border-radius:999px;padding:2px 12px;white-space:nowrap;
+}
+.flab.affirmative{background:#bdf0b0}
+.flab.negative{background:#ffc7d1}
+.flab.question{background:#a8e4ec}
+.modelbox p{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+
+/* ---------- boton de vuelta al pie de cada pagina ---------- */
+.bottomnav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:4px 0 32px}
+a.btnlink{
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.btnlink:hover{filter:brightness(1.07)}
+a.btnlink:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+a.btnlink.alt{background:var(--parch)}
 </style>
 </head>
 <body>
@@ -378,75 +402,79 @@ input.w-m{width:min(100%,15rem)}
 
   <div class="hero">
     <span class="chapter">Present Perfect Quest &middot; Stop V</span>
-    <h1 class="big">The Seven Mini Tests</h1>
-    <p>The mini tests of 6th form, the same ones that are on paper. Every one of them has a verb table with missing forms and a second part in the present perfect, and every one of them comes in <b>two versions</b>, exactly like the photocopy.</p>
+    <h1 class="big">The Seven Gates</h1>
+    <p>Seven gates stand between you and the end of the quest, and behind every one of them there is a table of verbs with pieces missing. Open them in order or choose the one you need: each gate asks for the same three forms, and each gate has two ways through it.</p>
     <div class="verbline">infinitive &middot; simple past &middot; past participle</div>
     <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
   </div>
 
-  <p class="maplead"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7.5l4 3.2L12 4l5 6.7 4-3.2-1.9 11.3H4.9z"/></svg> Choose your mini test</p>
+  <p class="maplead"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7.5l4 3.2L12 4l5 6.7 4-3.2-1.9 11.3H4.9z"/></svg> Choose your gate</p>
 
   <div class="map">
 
     <section class="stop">
-      <span class="num">Mini test I</span>
-      <h2>The First Twelve</h2>
-      <p>Twelve verbs, from BE to CHOOSE. Fill in the table and then write five sentences of your own with the verbs you like best.</p>
+      <span class="num">Gate I</span>
+      <h2>The Gate of Beginnings</h2>
+      <p>Twelve verbs, the first ones on the list. Fill in the table and then write five sentences of your own, two affirmative, two negative and one question.</p>
       <div class="what"><span>12 verbs</span><span>Table</span><span>Your own sentences</span></div>
-      <a class="enter" href="mini-test-1.html">Enter</a>
+      <a class="enter" href="gate-of-beginnings.html">Enter</a>
     </section>
 
     <section class="stop">
-      <span class="num">Mini test II</span>
-      <h2>From COME to FEEL</h2>
-      <p>A short table, from COME to FEEL, and five sentences where the verb in brackets has to become the present perfect.</p>
-      <div class="what"><span>5 verbs</span><span>Table</span><span>5 sentences</span></div>
-      <a class="enter" href="mini-test-2.html">Enter</a>
-    </section>
-
-    <section class="stop">
-      <span class="num">Mini test III</span>
-      <h2>From GIVE to HIDE</h2>
-      <p>From GIVE to HIDE. Seven verbs in the table, and five sentences about phones, planes and a folder that somebody hid.</p>
-      <div class="what"><span>7 verbs</span><span>Table</span><span>5 sentences</span></div>
-      <a class="enter" href="mini-test-3.html">Enter</a>
-    </section>
-
-    <section class="stop">
-      <span class="num">Mini test IV</span>
-      <h2>From HIT to PUT</h2>
-      <p>From HIT to PUT. Many of these verbs never change, so the only clue is the have or has in front of them.</p>
+      <span class="num">Gate II</span>
+      <h2>The Hall of Hunger</h2>
+      <p>A short table and five sentences about food, drinks and a cut finger. Every verb in brackets has to turn into the present perfect.</p>
       <div class="what"><span>10 verbs</span><span>Table</span><span>5 sentences</span></div>
-      <a class="enter" href="mini-test-4.html">Enter</a>
+      <a class="enter" href="hall-of-hunger.html">Enter</a>
     </section>
 
     <section class="stop">
-      <span class="num">Mini test V</span>
-      <h2>From RIDE to SIT</h2>
-      <p>From RIDE to SIT. The longest tables of the set, plus five sentences with songs, houses and a bell.</p>
-      <div class="what"><span>10 verbs</span><span>Table</span><span>5 sentences</span></div>
-      <a class="enter" href="mini-test-5.html">Enter</a>
+      <span class="num">Gate III</span>
+      <h2>The Forest of Finding</h2>
+      <p>Seven verbs in the table and five sentences about things that were lost, hidden or flown.</p>
+      <div class="what"><span>12 verbs</span><span>Table</span><span>5 sentences</span></div>
+      <a class="enter" href="forest-of-finding.html">Enter</a>
     </section>
 
     <section class="stop">
-      <span class="num">Mini test VI</span>
-      <h2>From SPEAK to WRITE</h2>
-      <p>From SPEAK to WRITE, the last stretch of the list. Thirteen verbs in one table and twelve in the other.</p>
-      <div class="what"><span>13 verbs</span><span>Table</span><span>5 sentences</span></div>
-      <a class="enter" href="mini-test-6.html">Enter</a>
+      <span class="num">Gate IV</span>
+      <h2>The Keep of Stone</h2>
+      <p>Ten verbs, and many of them look exactly the same in the three columns. Read the helper in front before you decide.</p>
+      <div class="what"><span>16 verbs</span><span>Table</span><span>5 sentences</span></div>
+      <a class="enter" href="keep-of-stone.html">Enter</a>
     </section>
 
     <section class="stop">
-      <span class="num">Mini test VII</span>
-      <h2>All the Verbs</h2>
-      <p>The final test: verbs from the whole list, and then five complete sentences of your own from a box of eight.</p>
+      <span class="num">Gate V</span>
+      <h2>The Tower of Bells</h2>
+      <p>The longest tables of the quest, plus five sentences with a book, a song, a house and a bell.</p>
+      <div class="what"><span>15 verbs</span><span>Table</span><span>5 sentences</span></div>
+      <a class="enter" href="tower-of-bells.html">Enter</a>
+    </section>
+
+    <section class="stop">
+      <span class="num">Gate VI</span>
+      <h2>The Summit of Words</h2>
+      <p>The end of the list: speak, steal, swim, teach, throw, understand and everything in between.</p>
+      <div class="what"><span>16 verbs</span><span>Table</span><span>5 sentences</span></div>
+      <a class="enter" href="summit-of-words.html">Enter</a>
+    </section>
+
+    <section class="stop">
+      <span class="num">Gate VII</span>
+      <h2>The Dragon's Hoard</h2>
+      <p>Verbs from every corner of the quest, and then five sentences of your own in the three shapes.</p>
       <div class="what"><span>All the verbs</span><span>Table</span><span>Your own sentences</span></div>
-      <a class="enter" href="mini-test-7.html">Enter</a>
+      <a class="enter" href="dragons-hoard.html">Enter</a>
     </section>
 
   </div>
 
 </div>
+
+<nav class="bottomnav">
+  <a class="btnlink" href="index.html">&laquo; Back to Present Perfect Quest</a>
+</nav>
 
 <footer class="site">Copyright Prof Dan M. Mecikovsky</footer>
 </body>

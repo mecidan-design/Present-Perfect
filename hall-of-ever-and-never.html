@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Hall of Ever and Never &middot; Present Perfect Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   ESTETICA: fantasy heroica (la misma de 03-groups-6-7-8).
+   Cielo nocturno estrellado, pergamino, oro, carmesi y esmeralda.
+   Borde grueso + sombra solida sin blur + tarjetas rotadas.
+   SIN SONIDO: este archivo no reproduce audio de ninguna clase.
+   ========================================================= */
+:root{
+  --gold:#f2b632; --gold-lt:#ffd873; --gold-dk:#9d6d15;
+  --night:#120b30; --royal:#5b2ea8; --teal:#0f7a86;
+  --crimson:#b1263c; --emerald:#1c7f45;
+  --parch:#fdf6e3; --ink:#241605;
+  --head:"Cinzel",Georgia,"Times New Roman",serif;
+  --body:"Poppins","Segoe UI",Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--body); color:var(--ink); min-height:100vh; padding:24px 14px 0;
+  background:
+    radial-gradient(rgba(255,255,255,.55) 1px, transparent 1.5px) 0 0/37px 37px,
+    radial-gradient(rgba(255,216,115,.45) 1px, transparent 1.4px) 19px 23px/59px 59px,
+    radial-gradient(130% 85% at 50% 0%, rgba(255,216,115,.15), transparent 62%),
+    linear-gradient(165deg,#0d0827 0%,#221046 26%,#4a1d6e 52%,#123f52 79%,#0a2736 100%);
+  background-attachment:fixed;
+}
+.wrap{max-width:900px;margin:0 auto}
+svg.ic{width:1em;height:1em;vertical-align:-.13em;fill:currentColor}
+
+/* ---------- header ---------- */
+.hero{
+  background:linear-gradient(158deg,#1a0f3d 0%,#3b1a5e 58%,#0f3a4a 100%);
+  border:5px solid var(--gold); border-radius:22px;
+  box-shadow:0 0 0 4px #150c2f, 13px 13px 0 rgba(0,0,0,.45);
+  padding:22px 26px; margin-bottom:26px; position:relative; overflow:hidden;
+}
+.hero:before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(60% 90% at 82% 15%, rgba(255,216,115,.22), transparent 62%);
+  pointer-events:none;
+}
+.chapter{
+  font-family:var(--head); font-weight:700; font-size:.78rem; letter-spacing:3.4px;
+  color:var(--gold); text-transform:uppercase; display:block; margin-bottom:5px;
+}
+.hero h1{
+  font-family:var(--head); font-weight:900; color:#fff9e8; margin:0;
+  font-size:clamp(1.55rem,5vw,2.6rem); line-height:1.08; letter-spacing:1.4px;
+  text-shadow:0 3px 0 #6a3a00, 0 5px 14px rgba(0,0,0,.6);
+}
+.hero p{font-family:var(--body);color:#d8c7f5;margin:.6rem 0 0;font-size:.97rem;font-weight:500}
+.hero .verbline{
+  font-family:var(--head); font-weight:700; color:var(--gold-lt); font-size:.84rem;
+  letter-spacing:1.5px; margin-top:10px; text-transform:uppercase; line-height:1.6;
+}
+
+.homelink{
+  display:inline-flex;align-items:center;gap:7px;margin-top:14px;
+  font-family:var(--head);font-weight:700;font-size:.76rem;letter-spacing:1.6px;text-transform:uppercase;
+  color:#1a0f3d;background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:4px 14px;text-decoration:none;
+  box-shadow:4px 4px 0 #0a0620;position:relative;
+}
+.homelink:hover{filter:brightness(1.08)}
+
+/* ---------- quest bar (3 medals) ---------- */
+.quest{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px}
+.medal{
+  flex:1 1 190px; display:flex; align-items:center; gap:10px;
+  background:rgba(10,6,28,.72); border:3px solid #4a3a7a; border-radius:16px; padding:9px 13px;
+  transition:border-color .2s, background .2s;
+}
+.medal .mi{
+  width:34px;height:34px;flex:0 0 auto;border-radius:50%;border:3px solid #4a3a7a;
+  display:flex;align-items:center;justify-content:center;color:#7a6aa8;font-size:1rem;
+}
+.medal .mt{font-family:var(--head);font-weight:700;font-size:.8rem;letter-spacing:1px;color:#9c8ac8;line-height:1.2}
+.medal .ms{font-family:var(--head);font-weight:900;font-size:.95rem;color:#7a6aa8}
+.medal.won{border-color:var(--gold);background:rgba(60,36,6,.75)}
+.medal.won .mi{border-color:var(--gold);color:var(--gold);background:rgba(242,182,50,.16)}
+.medal.won .mt{color:var(--gold-lt)}
+.medal.won .ms{color:#fff9e8}
+
+/* ---------- cards ---------- */
+.card{
+  background:
+    radial-gradient(rgba(150,110,40,.075) 1px, transparent 1.6px) 0 0/13px 13px,
+    linear-gradient(180deg,#fdf6e3 0%,#f6e9cd 100%);
+  border:4px solid #2b1c07; border-radius:18px; padding:22px 22px 24px;
+  margin-bottom:34px; position:relative;
+}
+.card:nth-of-type(3n+1){box-shadow:10px 10px 0 var(--gold-dk); transform:rotate(-.4deg)}
+.card:nth-of-type(3n+2){box-shadow:10px 10px 0 var(--crimson); transform:rotate(.35deg)}
+.card:nth-of-type(3n+3){box-shadow:10px 10px 0 var(--teal);    transform:rotate(-.25deg)}
+/* OJO (trampa del SPECS): cualquier variante necesita DOS clases,
+   porque :nth-of-type le gana por especificidad a una clase sola. */
+.card.arena{
+  background:
+    radial-gradient(rgba(255,255,255,.2) 1px, transparent 1.4px) 0 0/28px 28px,
+    linear-gradient(165deg,#180d38 0%,#2c1352 55%,#0e3446 100%);
+  border-color:var(--gold); box-shadow:0 0 0 4px #140b2e, 11px 11px 0 rgba(0,0,0,.45);
+  transform:rotate(-.35deg);
+}
+.card.codex{
+  background:linear-gradient(180deg,#1a0f3d,#12283a);
+  border-color:var(--gold); box-shadow:10px 10px 0 rgba(0,0,0,.42); transform:rotate(.3deg);
+}
+
+.tag{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--head); font-weight:700; font-size:.75rem; letter-spacing:2px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold)); color:#2b1c07;
+  border:3px solid #2b1c07; border-radius:999px;
+  padding:3px 14px; margin-bottom:11px; text-transform:uppercase;
+}
+.card h2{font-family:var(--head);font-weight:900;font-size:1.5rem;margin:.1rem 0 .3rem;line-height:1.15;letter-spacing:.6px}
+.sub{font-size:.92rem;color:#5c4a2c;margin:0 0 18px;line-height:1.5}
+.arena h2{color:#fff9e8}
+.arena .sub{color:#c9bbe8}
+.codex h2{color:#fff9e8}
+.codex .sub{color:#c9bbe8}
+
+/* ---------- buttons ---------- */
+.btn{
+  font-family:var(--head); font-weight:700; font-size:.97rem; letter-spacing:.7px;
+  color:#2b1c07; cursor:pointer;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07; border-radius:999px; padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07; transition:transform .07s, box-shadow .07s;
+}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.btn.ghost{background:var(--parch);color:#2b1c07}
+.btn.dark{background:linear-gradient(180deg,#3b1a5e,#1a0f3d);color:#ffe9b0;border-color:var(--gold);box-shadow:5px 5px 0 #0a0620}
+.btn[disabled]{opacity:.45;cursor:default;transform:none;box-shadow:5px 5px 0 #2b1c07}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.scoreline{font-family:var(--head);font-weight:700;font-size:1rem;letter-spacing:.5px}
+.arena .scoreline{color:#ffe9b0}
+
+/* ---------- inputs ---------- */
+input[type=text]{
+  font-family:var(--body); font-size:1rem; font-weight:500; padding:7px 11px;
+  border:3px solid #2b1c07; border-radius:10px; background:#fffdf4; outline:none; color:var(--ink);
+}
+input[type=text]:focus{background:#fff;box-shadow:0 0 0 4px var(--gold)}
+input.ok{background:#e3f7e0;border-color:var(--emerald)}
+input.no{background:#fde5e9;border-color:var(--crimson)}
+
+/* ---------- explanation blocks ---------- */
+.exp{
+  border:3px solid #2b1c07;border-radius:13px;padding:11px 13px;margin-top:11px;
+  background:#f3ecfb;font-size:.92rem;line-height:1.5;
+}
+.exp.right{background:#eaf8e5}
+.exp.wrong{background:#fdeef1}
+.exp b.lab{
+  font-family:var(--head);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  display:inline-block;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-right:7px;
+}
+.lab.why{background:#a8e4ec}
+.lab.tip{background:var(--gold-lt)}
+.exp p{margin:0 0 7px}
+.exp p:last-child{margin-bottom:0}
+/* OJO: Cinzel dibuja las minusculas como VERSALITAS. Sirve para titulos y
+   etiquetas, pero destruye la lectura de una oracion completa. Todo lo que el
+   alumno tenga que LEER como ingles corriente va con la tipografia de cuerpo. */
+.sol{font-family:var(--body);font-weight:700;color:#3d1470}
+
+/* ---------- grammar scroll ---------- */
+.gnote{
+  border:4px solid #2b1c07;border-radius:15px;padding:13px 16px;margin:0 0 18px;
+  background:linear-gradient(180deg,#fffaea,#fbf0d2);box-shadow:5px 5px 0 var(--gold);
+  font-size:.95rem;line-height:1.6;
+}
+.gnotetitle{font-family:var(--head);font-weight:900;font-size:1.02rem;display:flex;align-items:center;gap:8px;margin-bottom:8px;letter-spacing:.5px}
+.gnote ul{margin:0;padding-left:20px}
+.gnote li{margin-bottom:6px}
+.gform{
+  font-family:var(--body);font-weight:600;background:#a8e4ec;
+  border:2px solid #2b1c07;border-radius:6px;padding:1px 7px;display:inline-block;
+}
+.gwarn{margin:10px 0 0;background:#fde5e9;border:2px solid #2b1c07;border-radius:10px;padding:8px 11px;font-weight:500}
+
+/* ---------- tabla de formas del libro (Scroll) ---------- */
+.ftable{width:100%;border-collapse:collapse;margin:0 0 20px;background:#fffdf4;border:3px solid #2b1c07}
+.ftable th{
+  font-family:var(--head);font-weight:900;font-size:.76rem;letter-spacing:1.6px;text-transform:uppercase;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:#2b1c07;
+  border:2px solid #2b1c07;padding:8px 10px;text-align:left;width:9.5rem;vertical-align:top;
+}
+.ftable td{border:2px solid #2b1c07;padding:8px 11px;font-size:.97rem;line-height:1.75;vertical-align:top}
+.ftable td b{color:#8f1230}
+.ftable .split{display:block}
+
+/* ---------- las siete reglas del libro ---------- */
+.rulelist{margin:0;padding-left:20px}
+.rulelist li{margin-bottom:12px;line-height:1.55;font-size:.97rem}
+.rulelist .ex{display:block;margin-top:4px;font-family:var(--body);font-weight:600;color:#3d1470}
+.rulelist .ex b{color:#8f1230}
+.rulelist .ex s{color:#8a7a5c;font-weight:500}
+.rulelist em{font-style:italic;font-weight:600;color:#8a6a2a}
+.seepage{
+  font-family:var(--head);font-weight:700;font-size:.78rem;letter-spacing:1.8px;text-transform:uppercase;
+  color:#8a6a2a;margin:16px 0 0;display:flex;align-items:center;gap:8px;
+}
+
+/* ---------- SPEED RUN ---------- */
+.hud{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+.chip{
+  font-family:var(--head);font-weight:700;font-size:.82rem;letter-spacing:.8px;
+  border:3px solid #2b1c07;border-radius:999px;padding:3px 14px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:#2b1c07;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.chip.streak{background:linear-gradient(180deg,#ff9db0,var(--crimson));color:#fff;border-color:#2b1c07}
+.chip.clock{background:linear-gradient(180deg,#9fe6ef,var(--teal));color:#04262b}
+.chip.combo{background:linear-gradient(180deg,#d7b6ff,var(--royal));color:#fff}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 14px}
+.dot{width:14px;height:14px;border-radius:50%;border:3px solid #7a6aa8;background:transparent}
+.dot.y{background:var(--gold);border-color:var(--gold)}
+.dot.n{background:var(--crimson);border-color:var(--crimson)}
+.dot.now{box-shadow:0 0 0 3px #a8e4ec}
+.timer{height:13px;border:3px solid var(--gold);border-radius:999px;overflow:hidden;background:rgba(0,0,0,.35);margin-bottom:14px}
+.timer span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold-lt),var(--gold));transition:width .08s linear}
+.timer.low span{background:linear-gradient(90deg,#ff9db0,var(--crimson))}
+.qbox{background:var(--parch);border:4px solid var(--gold);border-radius:16px;padding:16px}
+.vword{
+  font-family:var(--head);font-weight:900;font-size:clamp(2rem,9vw,3.1rem);letter-spacing:3px;
+  text-align:center;margin:4px 0 4px;color:#3d1470;line-height:1.1;
+}
+.vhint{font-family:var(--head);font-weight:700;font-size:.75rem;letter-spacing:2px;text-align:center;color:#8a6a2a;text-transform:uppercase;margin-bottom:12px}
+.qsent{font-size:1.08rem;font-weight:500;line-height:1.6;margin:2px 0 14px}
+.opts{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+.opt{
+  font-family:var(--body);font-size:1rem;font-weight:600;cursor:pointer;background:#fff;
+  border:3px solid #2b1c07;border-radius:999px;padding:8px 20px;box-shadow:3px 3px 0 #2b1c07;
+  transition:transform .07s,box-shadow .07s;color:var(--ink);
+}
+.opt:hover{background:#fff3d0}
+.opt.good{background:#bdf0b0;border-color:var(--emerald)}
+.opt.bad{background:#ffc7d1;text-decoration:line-through;border-color:var(--crimson)}
+.opt[disabled]{cursor:default}
+.flash{font-family:var(--head);font-weight:900;font-size:1.15rem;letter-spacing:1px;text-align:center;margin:14px 0 2px}
+.flash.y{color:var(--emerald)}
+.flash.n{color:var(--crimson)}
+.pair{font-family:var(--head);font-weight:900;font-size:1.5rem;letter-spacing:2px;text-align:center;color:#3d1470;margin:2px 0 8px}
+.final{text-align:center;padding:12px 6px}
+.final .big{font-family:var(--head);font-weight:900;font-size:3.2rem;color:var(--gold);line-height:1;margin:6px 0;text-shadow:0 3px 0 #6a3a00}
+.final .msg{font-family:var(--head);font-weight:700;color:#fff9e8;font-size:1.15rem;margin-bottom:8px;letter-spacing:.6px}
+.final .stats{color:#c9bbe8;font-size:.95rem;margin-bottom:14px;line-height:1.7}
+.review{margin-top:22px;text-align:left}
+.review h3{font-family:var(--head);font-weight:900;color:var(--gold-lt);font-size:1.05rem;letter-spacing:1px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.ritem{background:var(--parch);border:3px solid #2b1c07;border-radius:13px;padding:11px 13px;margin-bottom:11px}
+.rtop{font-family:var(--head);font-weight:900;font-size:1rem;letter-spacing:.8px;margin-bottom:5px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.mark{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1px;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px}
+.mark.y{background:#bdf0b0}
+.mark.n{background:#ffc7d1}
+
+/* ---------- VERB VAULT ---------- */
+.vaultbox{
+  border:4px dashed #2b1c07;border-radius:16px;padding:13px 15px;margin-bottom:20px;
+  background:linear-gradient(180deg,#fffaea,#f7ecd2);
+}
+.vaultbox .vt{font-family:var(--head);font-weight:900;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:#8a6a2a;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.vchips{display:flex;flex-wrap:wrap;gap:8px}
+.vchip{
+  font-family:var(--head);font-weight:700;font-size:.88rem;letter-spacing:1.5px;
+  background:#fff;border:3px solid #2b1c07;border-radius:9px;padding:4px 12px;box-shadow:3px 3px 0 var(--gold);
+}
+.vchip.used{background:#e3f7e0;box-shadow:3px 3px 0 var(--emerald);opacity:.62;text-decoration:line-through}
+.vchip.extra{background:#ffe9b0;box-shadow:3px 3px 0 var(--crimson)}
+.item{border:3px solid #2b1c07;border-radius:15px;padding:14px 15px;margin-bottom:16px;background:#fffdf4}
+.item.model{border-style:dashed;background:#eaf8e5}
+.sline{display:flex;align-items:flex-start;gap:9px;font-size:1.04rem;font-weight:500;line-height:2.1}
+.rn{
+  font-family:var(--head);font-size:.74rem;font-weight:700;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:22px;height:22px;flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;margin-top:8px;
+}
+.rn.zero{background:var(--emerald)}
+.sline input{width:230px;text-align:left}
+.donetext{font-family:var(--body);font-weight:700;color:#1c7f45}
+.exampletag{
+  font-family:var(--head);font-weight:700;font-size:.68rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:#bdf0b0;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-left:8px;
+  display:inline-block;vertical-align:2px;
+}
+.extraline{
+  border:4px solid #2b1c07;border-radius:16px;padding:14px 15px;margin-top:6px;
+  background:linear-gradient(180deg,#fff3d0,#ffe9b0);box-shadow:5px 5px 0 var(--crimson);
+}
+.extraline .et{font-family:var(--head);font-weight:900;font-size:.98rem;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.extraline .eh{font-size:.89rem;color:#5c4a2c;margin:0 0 10px;line-height:1.5}
+.extraline input{width:100%;text-align:left}
+.checklist{margin-top:12px;border:3px solid #2b1c07;border-radius:13px;padding:11px 13px;background:#fffdf4;font-size:.92rem;line-height:1.55}
+.checklist ul{margin:6px 0 0;padding-left:20px}
+.checklist li{margin-bottom:4px}
+.needtitle{font-family:var(--head);font-weight:900;font-size:.88rem;letter-spacing:.6px;display:block;margin-bottom:2px}
+.modelbox{border:3px solid #2b1c07;border-radius:13px;padding:11px 13px;background:#eaf8e5;font-size:.92rem;line-height:1.55;margin-top:9px}
+.selfnote{font-style:italic;color:#5c4a2c;font-size:.85rem;margin-top:8px;display:block}
+
+/* ---------- FORMS (question / short answer) ---------- */
+.aff{font-size:1.06rem;font-weight:600;line-height:1.5;margin:0 0 11px;display:flex;align-items:flex-start;gap:9px}
+.fline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:9px}
+.flab{
+  font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:1.4px;text-transform:uppercase;
+  border:2px solid #2b1c07;border-radius:999px;padding:2px 12px;white-space:nowrap;flex:0 0 auto;
+}
+.flab.que{background:#a8e4ec}
+.flab.ans{background:#bdf0b0}
+.fline input{flex:1 1 320px;min-width:230px;text-align:left}
+.leadword{font-family:var(--body);font-weight:700;font-size:1.02rem;flex:0 0 auto}
+
+/* ---------- CODEX ---------- */
+.gbox{border:3px solid var(--gold);border-radius:14px;padding:12px 14px;margin-bottom:12px;background:rgba(255,255,255,.05)}
+.gbox h4{font-family:var(--head);font-weight:900;font-size:.92rem;letter-spacing:1.6px;color:var(--gold-lt);margin:0 0 4px;text-transform:uppercase}
+.gbox .pat{font-size:.84rem;color:#c9bbe8;margin:0 0 9px}
+.pairs{display:flex;flex-wrap:wrap;gap:7px}
+.pchip{font-family:var(--head);font-weight:700;font-size:.85rem;letter-spacing:.8px;background:var(--parch);border:2px solid #2b1c07;border-radius:8px;padding:3px 11px;color:var(--ink)}
+.pchip b{color:#8f1230}
+.hidden{display:none}
+
+/* ---------- pie ---------- */
+footer.site{
+  margin-top:10px;padding:20px 14px 26px;text-align:center;
+  font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:2.2px;
+  text-transform:uppercase;color:#9c8ac8;
+}
+
+/* ---------- boton de vuelta al pie de la pagina ---------- */
+.bottomnav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:4px 0 32px}
+a.btnlink{
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.btnlink:hover{filter:brightness(1.07)}
+a.btnlink:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="chapter" id="heroChapter"></span>
+    <h1 id="heroTitle"></h1>
+    <p id="heroSub"></p>
+    <div class="verbline" id="heroVerbs"></div>
+    <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
+  </div>
+
+  <div class="quest" id="questBar"></div>
+
+  <!-- ============ THE SCROLL: reglas del libro, siempre visibles ============ -->
+  <section class="card" id="scrollCard">
+    <span class="tag">The scroll</span>
+    <h2>Present Perfect</h2>
+    <p class="sub">Read this before the trials. It is the grammar of Unit 13, exactly as it is in your book.</p>
+    <table class="ftable">
+      <tbody>
+        <tr>
+          <th>Positive</th>
+          <td>
+            <span class="split">I / You / We / They<b>'ve (have) talked</b>.</span>
+            <span class="split">He / She / It<b>'s (has) decided</b>.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Negative</th>
+          <td>
+            <span class="split">I / You / We / They <b>haven't (have not) gone</b>.</span>
+            <span class="split">He / She / It <b>hasn't (has not) taken</b>.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Questions</th>
+          <td>
+            <span class="split"><b>Have</b> I / you / we / they <b>painted</b>?</span>
+            <span class="split"><b>Has</b> he / she / it <b>worked</b>?</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Short answers</th>
+          <td>
+            <span class="split">Yes, I / you / we / they <b>have</b>.</span>
+            <span class="split">No, I / you / we / they <b>haven't</b>.</span>
+            <span class="split">Yes, he / she / it <b>has</b>.</span>
+            <span class="split">No, he / she / it <b>hasn't</b>.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ul class="rulelist">
+      <li>We can use the present perfect to talk about our experiences before now.
+        <span class="ex"><b>I've tried</b> rock climbing.</span></li>
+      <li>We use <em>have/has</em> + past participle.
+        <span class="ex">My sister <b>hasn't slept</b> in a tent.</span></li>
+      <li>With regular verbs, we write the past participle in the same way as regular past simple verbs.
+        <span class="ex">My mum <b>has worked</b> for a famous magazine.</span></li>
+      <li>With irregular verbs, the past participle does not end in <em>-ed</em>.
+        <span class="ex">I <b>have spoken</b> to a film star.</span></li>
+      <li>We sometimes use <em>ever</em> with present perfect questions to say 'in your life'.
+        <span class="ex"><b>Have</b> you <b>ever climbed</b> a tree?</span></li>
+      <li>We sometimes use <em>never</em> with present perfect statements to say 'not ever in my life'.
+        <span class="ex">My grandparents <b>have never flown</b> in a plane.</span></li>
+      <li>We don't use past time expressions like <em>yesterday</em>, <em>last weekend</em>, <em>two days ago</em>, etc. with the present perfect. We use them with the past simple.
+        <span class="ex">I <b>played</b> tennis <b>yesterday</b>. (not <s>I've played tennis yesterday.</s>)</span></li>
+    </ul>
+
+    <p class="seepage" id="seePage"></p>
+  </section>
+
+  <!-- ============ TRIAL I: MEMORY SPEED RUN ============ -->
+  <section class="card arena" id="srCard">
+    <span class="tag">Trial I</span>
+    <h2>Memory Speed Run</h2>
+    <p class="sub">One verb at a time, against the clock. Choose the past participle. Answer fast to score more. If the bar runs out, the point is gone.</p>
+    <div class="hud">
+      <span class="chip" id="srScore"></span>
+      <span class="chip streak" id="srStreak"></span>
+      <span class="chip combo" id="srCombo"></span>
+      <span class="chip clock" id="srClock"></span>
+    </div>
+    <div class="dots" id="srDots"></div>
+    <div class="timer" id="srTimer"><span id="srTimerBar"></span></div>
+    <div id="srStage"></div>
+  </section>
+
+  <!-- ============ TRIAL II: THE VERB VAULT ============ -->
+  <section class="card" id="vaultCard">
+    <span class="tag">Trial II</span>
+    <h2>The Verb Vault</h2>
+    <p class="sub" id="vaultSub"></p>
+    <div id="vaultNote"></div>
+    <div class="vaultbox">
+      <div class="vt">Verb vault</div>
+      <div class="vchips" id="vaultChips"></div>
+    </div>
+    <div id="vaultBox"></div>
+    <div class="extraline" id="extraLine"></div>
+    <div class="btnrow">
+      <button class="btn" id="vaultCheck">Check my answers</button>
+      <button class="btn ghost" id="vaultReset">Try again</button>
+      <span class="scoreline" id="vaultScore"></span>
+    </div>
+  </section>
+
+  <!-- ============ TRIAL III: THE RIDDLE GATE ============ -->
+  <section class="card" id="gateCard">
+    <span class="tag">Trial III</span>
+    <h2>The Riddle Gate</h2>
+    <p class="sub">Trial II was all about statements with never. Now ask: build the complete question with ever, and then give the short answer the gate is waiting for.</p>
+    <div id="gateNote"></div>
+    <div id="gateBox"></div>
+    <div class="btnrow">
+      <button class="btn" id="gateCheck">Check my answers</button>
+      <button class="btn ghost" id="gateReset">Try again</button>
+      <span class="scoreline" id="gateScore"></span>
+    </div>
+  </section>
+
+  <!-- ============ CODEX (reference, not an exercise) ============ -->
+  <section class="card codex" id="codexCard">
+    <span class="tag">Codex</span>
+    <h2>The Hero&rsquo;s Codex</h2>
+    <p class="sub">Every past participle in this unit. Open it <b>after</b> the three trials, not before.</p>
+    <div class="btnrow" style="margin-top:0">
+      <button class="btn dark" id="codexToggle">Open the codex</button>
+    </div>
+    <div id="codexBody" class="hidden" style="margin-top:18px"></div>
+  </section>
+
+</div>
+
+<nav class="bottomnav">
+  <a class="btnlink" href="index.html">&laquo; Back to Present Perfect Quest</a>
+</nav>
+
+<footer class="site">Copyright Prof Dan M. Mecikovsky</footer>
+
+<script id="data-block">
+/* ============================================================
+   SOLO CONTENIDO. Ni una referencia al DOM en este bloque.
+   ============================================================
+   UNIT 13 - PRESENT PERFECT WITH EVER AND NEVER.
+   Insumo unico: la pagina 159 de Prepare Level 3 (2nd ed.),
+   "Grammar reference and practice", que mando el profesor.
+
+   >>> LIMITE DURO DE ESTE ARCHIVO <<<
+   No aparece NINGUN verbo que no este en esa pagina. Los chicos
+   recien empiezan con past participles. Lista completa de verbos
+   usados aca, todos de la pagina:
+     talk, decide, go, take, paint, work, try, sleep, speak,
+     climb, fly, play, arrive, enjoy, repair, stop, travel, walk,
+     break, buy, fall, grow, lend, wear, explore, kayak, learn,
+     meet, pick, swim, write, ride, forget, sell, win.
+   Las opciones incorrectas del Trial I son formas MAL ESCRITAS
+   del mismo verbo (arrivd, buyed, weared...), no verbos nuevos.
+
+   TRAVEL: el libro es britanico, asi que la forma del curso es
+   travelled. El corrector del vault acepta igual traveled.
+   LEARN: se aceptan learned y learnt.
+   ============================================================ */
+var DATA = {
+
+meta: {
+  chapter: "Unit 13 · Stop I",
+  title: "The Hall of Ever and Never",
+  sub: "The present perfect talks about your whole life until now. Three trials wait in this hall: the past participles, the statements with never, and the questions with ever.",
+  verbs: "have &middot; has &middot; ever &middot; never &middot; past participle",
+  seepage: "For past participles, see page 167"
+},
+
+/* ---------- TRIAL I: los 12 verbos del ejercicio 1 ---------- */
+speedrun: [
+  { mode: "verb", q: "ARRIVE", hint: "Regular",
+    options: ["arrived","arrivd","arriveed"], correct: 0,
+    why: "Arrive is regular and it already ends in -e, so we only add -d: arrive - arrived.",
+    tip: "If the verb ends in -e, never write -eed. One d is enough." },
+
+  { mode: "verb", q: "ENJOY", hint: "Regular",
+    options: ["enjoied","enjoyed","enjoyd"], correct: 1,
+    why: "Enjoy is regular. There is a vowel (o) before the y, so the y stays: enjoy - enjoyed.",
+    tip: "Look at the letter before the -y. A vowel before it means you only add -ed." },
+
+  { mode: "verb", q: "REPAIR", hint: "Regular",
+    options: ["repaired","repairred","repaird"], correct: 0,
+    why: "Repair is regular and nothing in the word changes. We only add -ed: repair - repaired.",
+    tip: "Most regular verbs need nothing more than -ed at the end." },
+
+  { mode: "verb", q: "STOP", hint: "Regular",
+    options: ["stoped","stopped","stopt"], correct: 1,
+    why: "Stop has one short vowel and one consonant at the end, so we write the p twice: stop - stopped.",
+    tip: "One syllable, one vowel, one consonant at the end means you double the last letter." },
+
+  { mode: "verb", q: "TRAVEL", hint: "Regular",
+    options: ["travelled","traveld","travelt"], correct: 0,
+    why: "Travel is regular, and in British English we write the l twice: travel - travelled.",
+    tip: "Your book is British, so travelled with two l is the spelling to learn." },
+
+  { mode: "verb", q: "WALK", hint: "Regular",
+    options: ["walkd","walked","walkt"], correct: 1,
+    why: "Walk is regular and it ends in two consonants, so nothing doubles: walk - walked.",
+    tip: "Two consonants at the end? Then you never double a letter." },
+
+  { mode: "verb", q: "BREAK", hint: "Irregular",
+    options: ["breaked","broke","broken"], correct: 2,
+    why: "Break is irregular: break - broke - broken. The past participle is the third form, broken.",
+    tip: "Broke is the past simple. After have or has you always need the third form: broken." },
+
+  { mode: "verb", q: "BUY", hint: "Irregular",
+    options: ["buyed","bought","boughted"], correct: 1,
+    why: "Buy is irregular: buy - bought - bought. The second and the third form are the same word.",
+    tip: "Bought is already past. Never add -ed on top of it." },
+
+  { mode: "verb", q: "FALL", hint: "Irregular",
+    options: ["fell","fallen","falled"], correct: 1,
+    why: "Fall is irregular: fall - fell - fallen. The past participle is fallen, not fell.",
+    tip: "I have fell is wrong. After have or has, write fallen." },
+
+  { mode: "verb", q: "GROW", hint: "Irregular",
+    options: ["growed","grew","grown"], correct: 2,
+    why: "Grow is irregular: grow - grew - grown. Grew is the past simple, grown is the third form.",
+    tip: "Verbs with -ow often end in -own: grow - grown. There is no word growed." },
+
+  { mode: "verb", q: "LEND", hint: "Irregular",
+    options: ["lended","lent","lendt"], correct: 1,
+    why: "Lend is irregular: lend - lent - lent. The d turns into a t and there is no -ed.",
+    tip: "A short verb that ends in -t in the past is a good sign that it is irregular." },
+
+  { mode: "verb", q: "WEAR", hint: "Irregular",
+    options: ["weared","worn","wore"], correct: 1,
+    why: "Wear is irregular: wear - wore - worn. The past participle is worn, with an o and no e.",
+    tip: "Wore is the past simple. After have or has the word is worn." }
+],
+
+/* ---------- TRIAL II: ejercicio 2, present perfect con never ---------- */
+vault: {
+  sub: "Complete the sentences with the present perfect with never and the verbs in the vault. Number 0 is done for you, and its verb is the extra one: you use it at the end in your own sentence.",
+  note: {
+    title: "How a never sentence is built",
+    lines: [
+      "I / you / we / they -> have never + past participle.",
+      "he / she / it -> has never + past participle.",
+      "My grandparents have never flown in a plane. -> never means 'not ever in my life'."
+    ],
+    warning: "Never use not with never. Have never explored is right; have not never explored is wrong."
+  },
+  box: ["EXPLORE","GROW","KAYAK","LEARN","MEET","PICK"],
+  example: { before: "I ", gap: "have never picked", after: " wild fruit." },
+  items: [
+    { before: "We ", after: " down a river.",
+      answers: ["have never kayaked","'ve never kayaked","ve never kayaked"],
+      solution: "have never kayaked", verb: "KAYAK",
+      why: "We is a plural subject, so it takes have. Kayak is regular: kayak - kayaked.",
+      tip: "Never goes in the middle: have + never + past participle." },
+
+    { before: "My parents have got a big garden, but they ", after: " vegetables there.",
+      answers: ["have never grown","'ve never grown","ve never grown"],
+      solution: "have never grown", verb: "GROW",
+      why: "They means my parents, so we use have. Grow is irregular: grow - grew - grown.",
+      tip: "They have a garden, and the surprise is that they never grow vegetables in it." },
+
+    { before: "My friends ", after: " a famous person.",
+      answers: ["have never met","'ve never met","ve never met"],
+      solution: "have never met", verb: "MEET",
+      why: "My friends is plural, so we use have. Meet is irregular: meet - met - met.",
+      tip: "Met has one t here. There is no word meeted." },
+
+    { before: "My grandma ", after: " to speak English.",
+      answers: ["has never learned","has never learnt","'s never learned","'s never learnt","s never learned","s never learnt"],
+      solution: "has never learned", verb: "LEARN",
+      why: "My grandma is one person (she), so we use has, not have. Learn is regular: learn - learned.",
+      tip: "One person takes has. Two or more people take have. Learned and learnt are both correct." },
+
+    { before: "I ", after: " a cave.",
+      answers: ["have never explored","'ve never explored","ve never explored"],
+      solution: "have never explored", verb: "EXPLORE",
+      why: "I takes have. Explore ends in -e, so we only add -d: explore - explored.",
+      tip: "Explore, arrive and decide all end in -e, and all of them only add -d." }
+  ],
+  extra: {
+    verb: "PICK", past: "picked",
+    prompt: "The verb of number 0 is PICK: I have never picked wild fruit. Now write your own sentence in the present perfect with never and picked.",
+    model: "My little brother has never picked flowers in the garden.",
+    modelnote: "Your sentence does not have to be this one. It only has to use never and picked, and make sense."
+  }
+},
+
+/* ---------- TRIAL III: ejercicio 3, preguntas con ever ---------- */
+gate: {
+  note: {
+    title: "One question, one short answer",
+    lines: [
+      "Have you ever climbed a tree? -> Have or Has + person + ever + past participle.",
+      "Yes, I have. / No, I haven't. -> the short answer only repeats have or has.",
+      "Has your teacher ever forgotten your name? -> one person takes Has."
+    ],
+    warning: "Ever goes in questions and never goes in statements. Never write Have you never...? in this exercise."
+  },
+  example: {
+    prompt: "you / swim / in a cold lake?",
+    question: "Have you ever swum in a cold lake?",
+    lead: "Yes,", answer: "I have."
+  },
+  items: [
+    { prompt: "your brother / write / a blog?", lead: "No,",
+      qAnswers: ["has your brother ever written a blog"],
+      qSolution: "Has your brother ever written a blog?",
+      aAnswers: ["he hasn't","he has not","no he hasn't","no he has not"],
+      aSolution: "No, he hasn't.",
+      why: "Your brother is one person (he), so the question starts with Has. Write is irregular: write - wrote - written.",
+      tip: "The short answer only repeats has, never the whole verb: No, he hasn't." },
+
+    { prompt: "your friends / ride / a horse?", lead: "Yes,",
+      qAnswers: ["have your friends ever ridden a horse"],
+      qSolution: "Have your friends ever ridden a horse?",
+      aAnswers: ["they have","yes they have"],
+      aSolution: "Yes, they have.",
+      why: "Your friends is plural (they), so the question starts with Have. Ride is irregular: ride - rode - ridden.",
+      tip: "In a positive short answer we never use a contraction. Say Yes, they have, not Yes, they've." },
+
+    { prompt: "your teacher / forget / your name?", lead: "Yes,",
+      qAnswers: ["has your teacher ever forgotten your name"],
+      qSolution: "Has your teacher ever forgotten your name?",
+      aAnswers: ["he has","she has","yes he has","yes she has"],
+      aSolution: "Yes, he has. / Yes, she has.",
+      why: "Your teacher is one person, so we use Has. Forget is irregular: forget - forgot - forgotten.",
+      tip: "Your teacher can be he or she, so both short answers are correct here." },
+
+    { prompt: "you / sell / things you don't want?", lead: "No,",
+      qAnswers: ["have you ever sold things you don't want"],
+      qSolution: "Have you ever sold things you don't want?",
+      aAnswers: ["i haven't","i have not","no i haven't","no i have not"],
+      aSolution: "No, I haven't.",
+      why: "You takes Have. Sell is irregular: sell - sold - sold, so the second and third forms are the same.",
+      tip: "When the question asks about you, you answer about yourself: No, I haven't." },
+
+    { prompt: "you and your friends / win / a competition?", lead: "No,",
+      qAnswers: ["have you and your friends ever won a competition"],
+      qSolution: "Have you and your friends ever won a competition?",
+      aAnswers: ["we haven't","we have not","no we haven't","no we have not"],
+      aSolution: "No, we haven't.",
+      why: "You and your friends is more than one person, so we use Have. Win is irregular: win - won - won.",
+      tip: "You and your friends is the same as we, so the answer is No, we haven't." }
+  ]
+},
+
+/* ---------- CODEX: todos los past participles de la pagina ---------- */
+codex: [
+  { name: "Regular", pattern: "The past participle is the same as the regular past simple: -ed.",
+    pairs: [["arrive","arrived"],["enjoy","enjoyed"],["repair","repaired"],["stop","stopped"],
+            ["travel","travelled"],["walk","walked"],["explore","explored"],["kayak","kayaked"],
+            ["learn","learned"],["pick","picked"],["talk","talked"],["decide","decided"],
+            ["paint","painted"],["work","worked"],["climb","climbed"],["try","tried"],["play","played"]] },
+  { name: "Irregular", pattern: "The past participle does not end in -ed. These ones you learn by heart.",
+    pairs: [["break","broken"],["buy","bought"],["fall","fallen"],["grow","grown"],["lend","lent"],
+            ["wear","worn"],["meet","met"],["swim","swum"],["write","written"],["ride","ridden"],
+            ["forget","forgotten"],["sell","sold"],["win","won"],["go","gone"],["take","taken"],
+            ["sleep","slept"],["speak","spoken"],["fly","flown"]] }
+]
+
+};
+</script>
+
+<script id="engine-block">
+(function(){
+"use strict";
+
+/* ===== registries: el DOM guarda SOLO un indice numerico ===== */
+var REG = { sr: [], vault: [], gate: [] };
+
+/* ===== iconos svg estaticos (decorativos) ===== */
+var ICONS = {
+  shield: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 2 20.5 5v6.2c0 5.2-3.6 9.2-8.5 10.8C7.1 20.4 3.5 16.4 3.5 11.2V5z"/></svg>',
+  sword:  '<svg class="ic" viewBox="0 0 24 24"><path d="M12 1.5l2.2 3.6v9.4h-4.4V5.1z"/><rect x="6" y="14.6" width="12" height="2.4" rx="1.2"/><rect x="10.8" y="17.2" width="2.4" height="3.6" rx="1.2"/><rect x="9.4" y="20.2" width="5.2" height="2" rx="1"/></svg>',
+  scroll: '<svg class="ic" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 2h11a2.5 2.5 0 0 1 2.5 2.5V18a4 4 0 0 0 4 4H8a4 4 0 0 1-4-4V4.5A2.5 2.5 0 0 1 6 2zm2 5h9v2H8zm0 4h9v2H8zm0 4h6v2H8z"/></svg>',
+  star:   '<svg class="ic" viewBox="0 0 24 24"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg>',
+  crown:  '<svg class="ic" viewBox="0 0 24 24"><path d="M3 7.5l4 3.2L12 4l5 6.7 4-3.2-1.9 11.3H4.9z"/></svg>',
+  bolt:   '<svg class="ic" viewBox="0 0 24 24"><path d="M13 2 4 13.5h6L11 22l9-11.5h-6z"/></svg>',
+  flame:  '<svg class="ic" viewBox="0 0 24 24"><path d="M12 2c3.2 4.2 6.2 5.6 6.2 9.8A6.2 6.2 0 0 1 5.8 12c0-2.2 1.1-3.7 2.3-4.9.3 1.4 1 2.1 1.9 2.4C10.3 7.2 11 4.6 12 2z"/></svg>',
+  glass:  '<svg class="ic" viewBox="0 0 24 24"><path d="M6 2h12v2h-1v2.5L13.2 12 17 17.5V20h1v2H6v-2h1v-2.5L10.8 12 7 6.5V4H6z"/></svg>'
+};
+function icon(name){
+  var s = document.createElement("span");
+  s.innerHTML = ICONS[name] || "";
+  return s.firstChild;
+}
+
+/* ===== helpers ===== */
+function normalize(s){
+  return String(s).toLowerCase()
+    .replace(/[‘’ʼ]/g, "'")
+    .replace(/[^a-z0-9' ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+/* ADAPTACION A PRIMARIA (se aparta a proposito del normalize del SPECS):
+   a esta edad "hasnt" o "dont" sin apostrofe son un error de TIPEO, no de
+   gramatica, y lo que se evalua aca es have/has + participio. Por eso la
+   comparacion tambien se hace ciega al apostrofe. Ojo: esto NO afloja la
+   gramatica, "have never grew" sigue estando mal. */
+function loose(s){ return normalize(s).replace(/'/g, ""); }
+function matches(given, list){
+  var g = normalize(given);
+  if(g === "") return false;
+  var gl = loose(given);
+  for(var i = 0; i < list.length; i++){
+    if(normalize(list[i]) === g) return true;
+    if(loose(list[i]) === gl) return true;
+  }
+  return false;
+}
+/* Para el checklist de la oracion libre: expandimos 've y 's antes de buscar,
+   asi "My brother's never picked flowers" cuenta como que usa has. */
+function expand(s){
+  return normalize(s).replace(/'ve\b/g, " have").replace(/'s\b/g, " has").replace(/\s+/g, " ").trim();
+}
+function hasWord(sentence, word){
+  var t = expand(sentence).split(" ");
+  var w = normalize(word);
+  for(var i = 0; i < t.length; i++){ if(t[i] === w) return true; }
+  return false;
+}
+function hasAny(sentence, words){
+  for(var i = 0; i < words.length; i++){ if(hasWord(sentence, words[i])) return true; }
+  return false;
+}
+function wordCount(s){
+  var t = normalize(s);
+  return t === "" ? 0 : t.split(" ").length;
+}
+function el(tag, cls, txt){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(txt !== undefined && txt !== null) n.textContent = txt;
+  return n;
+}
+
+/* Caja Why + Hero tip. Se muestra SIEMPRE, este bien o mal. */
+function explainBox(ok, answerText, why, tip){
+  var box = el("div", "exp " + (ok ? "right" : "wrong"));
+  if(answerText){
+    var p0 = el("p");
+    p0.appendChild(el("span", "sol", "Answer: " + answerText));
+    box.appendChild(p0);
+  }
+  var p1 = el("p");
+  p1.appendChild(el("b", "lab why", "Why"));
+  p1.appendChild(document.createTextNode(why));
+  box.appendChild(p1);
+  var p2 = el("p");
+  p2.appendChild(el("b", "lab tip", "Hero tip"));
+  p2.appendChild(document.createTextNode(tip));
+  box.appendChild(p2);
+  return box;
+}
+function clearExp(scope){
+  var old = scope.querySelectorAll(".exp");
+  for(var i = 0; i < old.length; i++){ old[i].parentNode.removeChild(old[i]); }
+}
+/* Caja de gramatica al estilo de las del manual. Cada linea usa " -> ". */
+function noteBox(n){
+  var g = el("div", "gnote");
+  var t = el("div", "gnotetitle");
+  t.appendChild(icon("scroll"));
+  t.appendChild(document.createTextNode(" " + n.title));
+  g.appendChild(t);
+  var ul = document.createElement("ul");
+  for(var i = 0; i < n.lines.length; i++){
+    var parts = n.lines[i].split(" -> ");
+    var li = document.createElement("li");
+    li.appendChild(el("span", "gform", parts[0]));
+    if(parts.length > 1) li.appendChild(document.createTextNode(" " + parts[1]));
+    ul.appendChild(li);
+  }
+  g.appendChild(ul);
+  if(n.warning) g.appendChild(el("p", "gwarn", n.warning));
+  return g;
+}
+
+/* ============================================================
+   CABECERA + BARRA DE MEDALLAS
+   ============================================================ */
+document.title = "Present Perfect with ever and never - " + DATA.meta.chapter;
+document.getElementById("heroChapter").textContent = DATA.meta.chapter;
+document.getElementById("heroTitle").textContent = DATA.meta.title;
+document.getElementById("heroSub").textContent = DATA.meta.sub;
+document.getElementById("heroVerbs").innerHTML = DATA.meta.verbs;
+(function(){
+  var p = document.getElementById("seePage");
+  p.appendChild(icon("scroll"));
+  p.appendChild(document.createTextNode(" " + DATA.meta.seepage));
+})();
+
+var QUESTS = [
+  { key: "sr",    label: "Speed Run",  ic: "bolt"   },
+  { key: "vault", label: "Verb Vault", ic: "scroll" },
+  { key: "gate",  label: "Riddle Gate", ic: "shield" }
+];
+var questBar = document.getElementById("questBar");
+var questEls = {};
+(function buildQuest(){
+  for(var i = 0; i < QUESTS.length; i++){
+    var q = QUESTS[i];
+    var d = el("div", "medal");
+    var mi = el("div", "mi");
+    mi.appendChild(icon(q.ic));
+    var txt = el("div");
+    txt.appendChild(el("div", "mt", q.label));
+    var sc = el("div", "ms", "not tried yet");
+    txt.appendChild(sc);
+    d.appendChild(mi);
+    d.appendChild(txt);
+    questBar.appendChild(d);
+    questEls[q.key] = { wrap: d, score: sc };
+  }
+})();
+function setQuest(key, got, total){
+  var q = questEls[key];
+  q.score.textContent = got + " / " + total;
+  if(got === total) q.wrap.classList.add("won");
+  else q.wrap.classList.remove("won");
+}
+
+/* ============================================================
+   TRIAL I - MEMORY SPEED RUN
+   Timer por pregunta. Puntos = base + bonus por rapidez, con
+   multiplicador de racha. Las explicaciones completas van al
+   final, en el panel de review, para no frenar la carrera.
+   ============================================================ */
+var QTIME = 10000;            /* ms por pregunta */
+var srStage = document.getElementById("srStage");
+var srDots  = document.getElementById("srDots");
+var srScore = document.getElementById("srScore");
+var srStreakEl = document.getElementById("srStreak");
+var srComboEl  = document.getElementById("srCombo");
+var srClock = document.getElementById("srClock");
+var srTimer = document.getElementById("srTimer");
+var srBar   = document.getElementById("srTimerBar");
+function freshS(){ return { i: -1, points: 0, streak: 0, best: 0, right: 0, elapsed: 0, qStart: 0, results: [] }; }
+var S = freshS(), tickHandle = null, runHandle = null;
+
+function comboOf(streak){
+  if(streak >= 6) return 3;
+  if(streak >= 3) return 2;
+  return 1;
+}
+function drawSRHud(){
+  srScore.textContent = "";
+  srScore.appendChild(icon("star"));
+  srScore.appendChild(document.createTextNode(" " + S.points + " pts"));
+  srStreakEl.textContent = "";
+  srStreakEl.appendChild(icon("flame"));
+  srStreakEl.appendChild(document.createTextNode(" Streak " + S.streak));
+  srComboEl.textContent = "x" + comboOf(S.streak) + " combo";
+  srClock.textContent = "";
+  srClock.appendChild(icon("glass"));
+  srClock.appendChild(document.createTextNode(" " + (S.elapsed / 1000).toFixed(1) + "s"));
+}
+function drawSRDots(){
+  srDots.innerHTML = "";
+  for(var i = 0; i < DATA.speedrun.length; i++){
+    var cls = "dot";
+    if(S.results[i] === true) cls += " y";
+    else if(S.results[i] === false) cls += " n";
+    if(i === S.i) cls += " now";
+    srDots.appendChild(el("span", cls));
+  }
+}
+function stopTimers(){
+  if(tickHandle){ clearInterval(tickHandle); tickHandle = null; }
+  if(runHandle){ clearInterval(runHandle); runHandle = null; }
+}
+function srQuestion(){
+  stopTimers();
+  drawSRDots();
+  drawSRHud();
+  srTimer.classList.remove("hidden");
+  srTimer.classList.remove("low");
+  srBar.style.width = "100%";
+  srStage.innerHTML = "";
+  REG.sr.length = 0;
+
+  var d = DATA.speedrun[S.i];
+  var id = REG.sr.push({ data: d }) - 1;
+
+  var box = el("div", "qbox");
+  if(d.mode === "verb"){
+    box.appendChild(el("div", "vhint", "Verb " + (S.i + 1) + " of " + DATA.speedrun.length + (d.hint ? " · " + d.hint : "")));
+    box.appendChild(el("div", "vword", d.q));
+    box.appendChild(el("div", "vhint", "What is the past participle?"));
+  } else {
+    box.appendChild(el("div", "vhint", "Question " + (S.i + 1) + " of " + DATA.speedrun.length));
+    box.appendChild(el("p", "qsent", d.q));
+  }
+  var opts = el("div", "opts");
+  for(var j = 0; j < d.options.length; j++){
+    var b = el("button", "opt", d.options[j]);
+    b.type = "button";
+    b.setAttribute("data-sid", String(id));
+    b.setAttribute("data-opt", String(j));
+    b.addEventListener("click", onSRAnswer);
+    opts.appendChild(b);
+  }
+  box.appendChild(opts);
+  srStage.appendChild(box);
+
+  S.qStart = Date.now();
+  tickHandle = setInterval(function(){
+    var left = QTIME - (Date.now() - S.qStart);
+    if(left <= 0){ srResolve(box, id, -1, 0); return; }
+    var frac = left / QTIME;
+    srBar.style.width = (frac * 100).toFixed(1) + "%";
+    if(frac < .3) srTimer.classList.add("low");
+  }, 60);
+  runHandle = setInterval(function(){
+    S.elapsed = S.elapsed + 100;
+    drawSRHud();
+  }, 100);
+}
+function onSRAnswer(ev){
+  var b = ev.currentTarget;
+  var id = parseInt(b.getAttribute("data-sid"), 10);
+  var j  = parseInt(b.getAttribute("data-opt"), 10);
+  var left = Math.max(0, QTIME - (Date.now() - S.qStart));
+  srResolve(b.parentNode.parentNode, id, j, left / QTIME);
+}
+function srResolve(box, id, picked, frac){
+  stopTimers();
+  var d = REG.sr[id].data;
+  var ok = picked === d.correct;
+
+  var btns = box.querySelectorAll(".opt");
+  for(var k = 0; k < btns.length; k++){
+    btns[k].disabled = true;
+    if(k === d.correct) btns[k].classList.add("good");
+    else if(k === picked) btns[k].classList.add("bad");
+  }
+
+  S.results[S.i] = ok;
+  if(ok){
+    S.streak++;
+    if(S.streak > S.best) S.best = S.streak;
+    var gained = Math.round((100 + 100 * frac) * comboOf(S.streak));
+    S.points = S.points + gained;
+    S.right++;
+    box.appendChild(el("div", "flash y", "+" + gained + " points"));
+  } else {
+    S.streak = 0;
+    box.appendChild(el("div", "flash n", picked === -1 ? "Time is up." : "Not this one."));
+  }
+  box.appendChild(el("div", "pair", (d.mode === "verb" ? d.q.toLowerCase() : "answer") + "  →  " + d.options[d.correct]));
+  drawSRHud();
+  drawSRDots();
+
+  var row = el("div", "btnrow");
+  row.style.justifyContent = "center";
+  var next = el("button", "btn", S.i === DATA.speedrun.length - 1 ? "See my run" : "Next verb");
+  next.type = "button";
+  next.addEventListener("click", function(){
+    if(S.i === DATA.speedrun.length - 1){ srFinal(); }
+    else { S.i++; srQuestion(); }
+  });
+  row.appendChild(next);
+  box.appendChild(row);
+}
+function srFinal(){
+  stopTimers();
+  S.i = -1;
+  drawSRDots();
+  srTimer.classList.add("hidden");
+  var total = DATA.speedrun.length;
+  var msg;
+  if(S.right === total) msg = "Perfect run. Not one participle escaped.";
+  else if(S.right >= total - 2) msg = "Strong run. Two more and the sword is yours.";
+  else if(S.right >= total / 2) msg = "Good start. Read the scroll below, then run again.";
+  else msg = "The verbs won this time. Read the scroll and run again.";
+
+  srStage.innerHTML = "";
+  var f = el("div", "final");
+  f.appendChild(el("div", "big", S.points + " pts"));
+  f.appendChild(el("div", "msg", msg));
+  var st = el("div", "stats");
+  st.appendChild(document.createTextNode("Correct: " + S.right + " / " + total));
+  st.appendChild(document.createElement("br"));
+  st.appendChild(document.createTextNode("Best streak: " + S.best));
+  st.appendChild(document.createElement("br"));
+  st.appendChild(document.createTextNode("Time: " + (S.elapsed / 1000).toFixed(1) + " seconds"));
+  f.appendChild(st);
+  var again = el("button", "btn", "Run again");
+  again.type = "button";
+  again.addEventListener("click", startSR);
+  f.appendChild(again);
+
+  /* review: TODOS los items, bien o mal, con Why + Hero tip (regla del SPECS) */
+  var rev = el("div", "review");
+  var h = el("h3");
+  h.appendChild(icon("scroll"));
+  h.appendChild(document.createTextNode(" The scroll of this run"));
+  rev.appendChild(h);
+  for(var i = 0; i < DATA.speedrun.length; i++){
+    var d = DATA.speedrun[i];
+    var ok = S.results[i] === true;
+    var ri = el("div", "ritem");
+    var top = el("div", "rtop");
+    top.appendChild(document.createTextNode((i + 1) + ". " + (d.mode === "verb" ? d.q.toLowerCase() + " → " + d.options[d.correct] : d.options[d.correct])));
+    top.appendChild(el("span", "mark " + (ok ? "y" : "n"), ok ? "right" : "review"));
+    ri.appendChild(top);
+    if(d.mode === "sentence") ri.appendChild(el("p", "qsent", d.q));
+    var ex = explainBox(ok, null, d.why, d.tip);
+    ex.style.marginTop = "6px";
+    ri.appendChild(ex);
+    rev.appendChild(ri);
+  }
+  f.appendChild(rev);
+  srStage.appendChild(f);
+  setQuest("sr", S.right, total);
+}
+function startSR(){
+  S = freshS();
+  S.i = 0;
+  srQuestion();
+}
+
+/* Pantalla de salida. El cronometro NO puede arrancar solo al abrir el
+   archivo: si no, la primera pregunta se vence mientras el chico todavia
+   esta leyendo el titulo de la pagina. Arranca cuando el aprieta. */
+function srReady(){
+  stopTimers();
+  S = freshS();
+  srTimer.classList.add("hidden");
+  drawSRDots();
+  drawSRHud();
+  srStage.innerHTML = "";
+  var box = el("div", "qbox");
+  box.appendChild(el("div", "vhint", DATA.speedrun.length + " verbs · ten seconds each"));
+  box.appendChild(el("div", "vword", "READY?"));
+  box.appendChild(el("p", "qsent", "The faster you answer, the more points you win. Three right answers in a row give you a double combo. When the bar empties, that verb is gone."));
+  var row = el("div", "btnrow");
+  row.style.justifyContent = "center";
+  var b = el("button", "btn", "Start the run");
+  b.type = "button";
+  b.addEventListener("click", startSR);
+  row.appendChild(b);
+  box.appendChild(row);
+  srStage.appendChild(box);
+}
+
+/* ============================================================
+   TRIAL II - THE VERB VAULT
+   Caja de verbos + oraciones con never + verbo extra con
+   produccion propia.
+   ============================================================ */
+var vaultSubEl = document.getElementById("vaultSub");
+var vaultNote  = document.getElementById("vaultNote");
+var vaultChips = document.getElementById("vaultChips");
+var vaultBox   = document.getElementById("vaultBox");
+var extraLine  = document.getElementById("extraLine");
+var vaultScore = document.getElementById("vaultScore");
+var chipEls = {};
+
+vaultSubEl.textContent = DATA.vault.sub;
+vaultNote.appendChild(noteBox(DATA.vault.note));
+
+function renderVault(){
+  vaultChips.innerHTML = "";
+  chipEls = {};
+  for(var c = 0; c < DATA.vault.box.length; c++){
+    var chip = el("span", "vchip", DATA.vault.box[c]);
+    vaultChips.appendChild(chip);
+    chipEls[DATA.vault.box[c]] = chip;
+  }
+
+  vaultBox.innerHTML = "";
+  REG.vault.length = 0;
+
+  /* numero 0: el ejemplo ya resuelto del libro */
+  var ex = DATA.vault.example;
+  var ei0 = el("div", "item model");
+  var l0 = el("div", "sline");
+  l0.appendChild(el("span", "rn zero", "0"));
+  var t0 = el("span");
+  t0.appendChild(document.createTextNode(ex.before));
+  t0.appendChild(el("span", "donetext", ex.gap));
+  t0.appendChild(document.createTextNode(ex.after));
+  t0.appendChild(el("span", "exampletag", "example"));
+  l0.appendChild(t0);
+  ei0.appendChild(l0);
+  vaultBox.appendChild(ei0);
+
+  for(var i = 0; i < DATA.vault.items.length; i++){
+    var d = DATA.vault.items[i];
+    var id = REG.vault.push({ data: d }) - 1;
+    var item = el("div", "item");
+    item.setAttribute("data-vid", String(id));
+    var line = el("div", "sline");
+    line.appendChild(el("span", "rn", String(i + 1)));
+    var txt = el("span");
+    txt.appendChild(document.createTextNode(d.before));
+    var inp = document.createElement("input");
+    inp.type = "text";
+    inp.setAttribute("autocomplete", "off");
+    inp.setAttribute("autocapitalize", "off");
+    inp.setAttribute("spellcheck", "false");
+    inp.setAttribute("data-vid", String(id));
+    txt.appendChild(inp);
+    txt.appendChild(document.createTextNode(d.after));
+    line.appendChild(txt);
+    item.appendChild(line);
+    vaultBox.appendChild(item);
+  }
+
+  extraLine.innerHTML = "";
+  var t = el("div", "et");
+  t.appendChild(icon("crown"));
+  t.appendChild(document.createTextNode(" The extra verb"));
+  extraLine.appendChild(t);
+  extraLine.appendChild(el("p", "eh", DATA.vault.extra.prompt));
+  var eiInput = document.createElement("input");
+  eiInput.type = "text";
+  eiInput.id = "extraInput";
+  eiInput.setAttribute("autocomplete", "off");
+  eiInput.setAttribute("spellcheck", "false");
+  eiInput.setAttribute("placeholder", "Write your sentence here.");
+  extraLine.appendChild(eiInput);
+
+  vaultScore.textContent = "";
+}
+function checkVault(){
+  clearExp(vaultBox);
+  clearExp(extraLine);
+  var old = extraLine.querySelectorAll(".checklist");
+  for(var z = 0; z < old.length; z++){ old[z].parentNode.removeChild(old[z]); }
+
+  var items = vaultBox.querySelectorAll(".item[data-vid]");
+  var got = 0;
+  for(var i = 0; i < items.length; i++){
+    var item = items[i];
+    var d = REG.vault[parseInt(item.getAttribute("data-vid"), 10)].data;
+    var inp = item.querySelector("input");
+    var ok = matches(inp.value, d.answers);
+    inp.classList.remove("ok", "no");
+    inp.classList.add(ok ? "ok" : "no");
+    if(ok){
+      got++;
+      if(chipEls[d.verb]) chipEls[d.verb].className = "vchip used";
+    }
+    item.appendChild(explainBox(ok, d.solution, d.why, d.tip));
+  }
+  if(chipEls[DATA.vault.extra.verb]) chipEls[DATA.vault.extra.verb].className = "vchip extra";
+
+  /* verbo extra: no se corrige la produccion libre, se verifica el checklist */
+  var ei = document.getElementById("extraInput");
+  var s = ei.value;
+  var notEmpty  = normalize(s) !== "";
+  var usesAux   = hasAny(s, ["have","has"]);
+  var usesNever = hasWord(s, "never");
+  var usesForm  = hasWord(s, DATA.vault.extra.past);
+  var longEnough = wordCount(s) >= 5;
+  ei.classList.remove("ok", "no");
+  ei.classList.add(usesAux && usesNever && usesForm && longEnough ? "ok" : "no");
+
+  var cl = el("div", "checklist");
+  cl.appendChild(el("span", "needtitle", "Your sentence with " + DATA.vault.extra.verb));
+  var ul = document.createElement("ul");
+  ul.appendChild(el("li", null, (notEmpty ? "✓ " : "✗ ") + "You wrote a sentence."));
+  ul.appendChild(el("li", null, (usesAux ? "✓ " : "✗ ") + "It uses have or has."));
+  ul.appendChild(el("li", null, (usesNever ? "✓ " : "✗ ") + "It uses never."));
+  ul.appendChild(el("li", null, (usesForm ? "✓ " : "✗ ") + "It uses the past participle " + DATA.vault.extra.past + "."));
+  ul.appendChild(el("li", null, (longEnough ? "✓ " : "✗ ") + "It has at least five words."));
+  cl.appendChild(ul);
+  var mb = el("div", "modelbox");
+  mb.appendChild(el("span", "needtitle", "One possible sentence"));
+  mb.appendChild(el("p", null, DATA.vault.extra.model));
+  cl.appendChild(mb);
+  cl.appendChild(el("span", "selfnote", DATA.vault.extra.modelnote + " Your teacher checks the spelling and the rest of the words."));
+  extraLine.appendChild(cl);
+
+  var total = items.length;
+  vaultScore.textContent = got + " / " + total + " gaps right";
+  setQuest("vault", got, total);
+}
+function resetVault(){
+  renderVault();
+  questEls.vault.score.textContent = "not tried yet";
+  questEls.vault.wrap.classList.remove("won");
+}
+
+/* ============================================================
+   TRIAL III - THE RIDDLE GATE (pregunta con ever + short answer)
+   ============================================================ */
+var gateNote  = document.getElementById("gateNote");
+var gateBox   = document.getElementById("gateBox");
+var gateScore = document.getElementById("gateScore");
+
+gateNote.appendChild(noteBox(DATA.gate.note));
+
+function gateLine(kind, label, lead){
+  var row = el("div", "fline");
+  row.appendChild(el("span", "flab " + kind, label));
+  if(lead) row.appendChild(el("span", "leadword", lead));
+  var inp = document.createElement("input");
+  inp.type = "text";
+  inp.setAttribute("autocomplete", "off");
+  inp.setAttribute("spellcheck", "false");
+  inp.setAttribute("data-kind", kind);
+  inp.setAttribute("placeholder", kind === "que" ? "Write the complete question." : "Write the short answer.");
+  row.appendChild(inp);
+  return row;
+}
+function renderGate(){
+  gateBox.innerHTML = "";
+  REG.gate.length = 0;
+
+  /* numero 0: el ejemplo ya resuelto del libro */
+  var ex = DATA.gate.example;
+  var i0 = el("div", "item model");
+  var a0 = el("p", "aff");
+  a0.appendChild(el("span", "rn zero", "0"));
+  var s0 = el("span");
+  s0.appendChild(document.createTextNode(ex.prompt));
+  s0.appendChild(el("span", "exampletag", "example"));
+  a0.appendChild(s0);
+  i0.appendChild(a0);
+  i0.appendChild(el("p", "qsent", ex.question));
+  i0.appendChild(el("p", "qsent", ex.lead + " " + ex.answer));
+  gateBox.appendChild(i0);
+
+  for(var i = 0; i < DATA.gate.items.length; i++){
+    var d = DATA.gate.items[i];
+    var id = REG.gate.push({ data: d }) - 1;
+    var item = el("div", "item");
+    item.setAttribute("data-gid", String(id));
+
+    var a = el("p", "aff");
+    a.appendChild(el("span", "rn", String(i + 1)));
+    a.appendChild(document.createTextNode(d.prompt));
+    item.appendChild(a);
+
+    item.appendChild(gateLine("que", "Question", null));
+    item.appendChild(gateLine("ans", "Short answer", d.lead));
+    gateBox.appendChild(item);
+  }
+  gateScore.textContent = "";
+}
+function checkGate(){
+  clearExp(gateBox);
+  var items = gateBox.querySelectorAll(".item[data-gid]");
+  var got = 0, total = 0;
+  for(var i = 0; i < items.length; i++){
+    var item = items[i];
+    var d = REG.gate[parseInt(item.getAttribute("data-gid"), 10)].data;
+    var ins = item.querySelectorAll("input");
+    var queIn = ins[0], ansIn = ins[1];
+    var okQ = matches(queIn.value, d.qAnswers);
+    var okA = matches(ansIn.value, d.aAnswers);
+    queIn.classList.remove("ok", "no"); queIn.classList.add(okQ ? "ok" : "no");
+    ansIn.classList.remove("ok", "no"); ansIn.classList.add(okA ? "ok" : "no");
+    if(okQ) got++;
+    if(okA) got++;
+    total = total + 2;
+    item.appendChild(explainBox(okQ && okA, d.qSolution + "   /   " + d.aSolution, d.why, d.tip));
+  }
+  gateScore.textContent = got + " / " + total + " answers right";
+  setQuest("gate", got, total);
+}
+function resetGate(){
+  renderGate();
+  questEls.gate.score.textContent = "not tried yet";
+  questEls.gate.wrap.classList.remove("won");
+}
+
+/* ============================================================
+   CODEX
+   ============================================================ */
+var codexBody = document.getElementById("codexBody");
+var codexToggle = document.getElementById("codexToggle");
+function renderCodex(){
+  codexBody.innerHTML = "";
+  for(var i = 0; i < DATA.codex.length; i++){
+    var g = DATA.codex[i];
+    var b = el("div", "gbox");
+    b.appendChild(el("h4", null, g.name));
+    b.appendChild(el("p", "pat", g.pattern));
+    var ps = el("div", "pairs");
+    for(var j = 0; j < g.pairs.length; j++){
+      var c = el("span", "pchip");
+      c.appendChild(document.createTextNode(g.pairs[j][0] + " → "));
+      c.appendChild(el("b", null, g.pairs[j][1]));
+      ps.appendChild(c);
+    }
+    b.appendChild(ps);
+    codexBody.appendChild(b);
+  }
+}
+codexToggle.addEventListener("click", function(){
+  var open = codexBody.classList.toggle("hidden") === false;
+  codexToggle.textContent = open ? "Close the codex" : "Open the codex";
+});
+
+/* ============================================================
+   ARRANQUE
+   ============================================================ */
+document.getElementById("vaultCheck").addEventListener("click", checkVault);
+document.getElementById("vaultReset").addEventListener("click", resetVault);
+document.getElementById("gateCheck").addEventListener("click", checkGate);
+document.getElementById("gateReset").addEventListener("click", resetGate);
+
+renderVault();
+renderGate();
+renderCodex();
+srReady();
+
+})();
+</script>
+</body>
+</html>

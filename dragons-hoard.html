@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mini test 5 &middot; From RIDE to SIT</title>
+<title>The Dragon's Hoard &middot; Present Perfect Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -319,6 +319,30 @@ input.w-m{width:min(100%,15rem)}
 .selfnote{font-style:italic;color:#5c4a2c;font-size:.85rem;margin-top:8px;display:block}
 
 .homelink + .homelink{margin-left:9px}
+
+/* ---------- etiquetas de forma en la produccion libre ---------- */
+.formhead{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.flab{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;
+  border:2px solid #2b1c07;border-radius:999px;padding:2px 12px;white-space:nowrap;
+}
+.flab.affirmative{background:#bdf0b0}
+.flab.negative{background:#ffc7d1}
+.flab.question{background:#a8e4ec}
+.modelbox p{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+
+/* ---------- boton de vuelta al pie de cada pagina ---------- */
+.bottomnav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:4px 0 32px}
+a.btnlink{
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.btnlink:hover{filter:brightness(1.07)}
+a.btnlink:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+a.btnlink.alt{background:var(--parch)}
 </style>
 </head>
 <body>
@@ -329,7 +353,7 @@ input.w-m{width:min(100%,15rem)}
     <h1 id="heroTitle"></h1>
     <p id="heroSub"></p>
     <div class="verbline" id="heroVerbs"></div>
-    <a class="homelink" href="mini-tests.html">&laquo; The seven mini tests</a>
+    <a class="homelink" href="seven-gates.html">&laquo; The Seven Gates</a>
     <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
   </div>
 
@@ -340,7 +364,7 @@ input.w-m{width:min(100%,15rem)}
   <section class="card codex" id="codexCard">
     <span class="tag">Codex</span>
     <h2>The Hero&rsquo;s Codex</h2>
-    <p class="sub">The three forms of every verb in this mini test. Open it <b>after</b> the trials, not before.</p>
+    <p class="sub">The three forms of every verb behind this gate. Open it <b>after</b> the trials, not before.</p>
     <div class="btnrow" style="margin-top:0">
       <button class="btn dark" id="codexToggle">Open the codex</button>
     </div>
@@ -349,32 +373,31 @@ input.w-m{width:min(100%,15rem)}
 
 </div>
 
+<nav class="bottomnav">
+  <a class="btnlink" href="index.html">&laquo; Back to Present Perfect Quest</a>
+  <a class="btnlink alt" href="seven-gates.html">&laquo; The Seven Gates</a>
+</nav>
+
 <footer class="site">Copyright Prof Dan M. Mecikovsky</footer>
 
 <script id="data-block">
 /* ============================================================
    SOLO CONTENIDO. Ni una referencia al DOM en este bloque.
    ============================================================
-   MINI TEST 5 - PRESENT PERFECT / IRREGULAR VERBS, 6TO GRADO.
-   Insumo unico: el archivo "MINI TEST - 5.docx" del profesor.
+   MINI TEST 7 - PRESENT PERFECT / IRREGULAR VERBS, 6TO GRADO.
+   Insumo unico: el archivo "MINI TEST - ALL THE VERBS.docx" del profesor.
    Estan las DOS versiones de la hoja, con las mismas palabras
    dadas y las mismas celdas vacias que en el papel.
-
-   >>> AVISO PARA EL PROFESOR <<<
-   MINI TEST 5, VERSION 1: la hoja tiene una ultima fila completamente
-   vacia (sin ninguna palabra dada). No se puede completar, asi que no
-   esta en pantalla. Por el contenido de la version 2, probablemente
-   era SIT - SAT - SAT.
    ============================================================ */
 var DATA = {
 
-meta: {"chapter": "Mini test 5 · 6th form", "title": "From RIDE to SIT", "sub": "Nine verbs in the first table, ten in the second one, and five sentences in each version. The paper has two versions, and both of them are here.", "verbs": "infinitive &middot; simple past &middot; past participle"},
+meta: {"chapter": "The Seven Gates · Gate VII", "title": "The Dragon's Hoard", "sub": "The hoard holds every verb of the quest at once. Complete the table, write five sentences of your own in the three shapes, and the treasure is yours.", "verbs": "every verb of the quest &middot; two ways through"},
 
-verbs: {"read": {"f": ["READ", "READ", "READ"], "a": [["read"], ["read"], ["read"]], "why": "read is written exactly the same three times, but the two past forms sound like red.", "tip": "Your eyes see the same word; your mouth says a different one."}, "ride": {"f": ["RIDE", "RODE", "RIDDEN"], "a": [["ride"], ["rode"], ["ridden"]], "why": "ride changes i into o for the past simple and the participle doubles the d: ridden.", "tip": "Two d in ridden. rode is the past simple."}, "ring": {"f": ["RING", "RANG", "RUNG"], "a": [["ring"], ["rang"], ["rung"]], "why": "ring follows i - a - u: ring, rang, rung.", "tip": "The same road as sing, drink and begin."}, "rise": {"f": ["RISE", "ROSE", "RISEN"], "a": [["rise"], ["rose"], ["risen"]], "why": "rise changes i into o for the past simple and adds -n for the participle: risen.", "tip": "rose is also a flower, but here it is the past of rise."}, "run": {"f": ["RUN", "RAN", "RUN"], "a": [["run"], ["ran"], ["run"]], "why": "run changes u into a for the past simple and goes back to run for the participle.", "tip": "The first and the third form are the same word, like come."}, "say": {"f": ["SAY", "SAID", "SAID"], "a": [["say"], ["said"], ["said"]], "why": "say becomes said for both past forms.", "tip": "It is written said, but it sounds like sed."}, "see": {"f": ["SEE", "SAW", "SEEN"], "a": [["see"], ["saw"], ["seen"]], "why": "see has three different forms: see, saw and seen.", "tip": "saw is the past simple. After have or has it is seen."}, "sell": {"f": ["SELL", "SOLD", "SOLD"], "a": [["sell"], ["sold"], ["sold"]], "why": "sell changes -ell into -old: sold, twice.", "tip": "sell and tell work the same way: sold and told."}, "send": {"f": ["SEND", "SENT", "SENT"], "a": [["send"], ["sent"], ["sent"]], "why": "send turns its d into a t: sent, twice.", "tip": "send, lend and spend are the same family."}, "shine": {"f": ["SHINE", "SHONE", "SHONE"], "a": [["shine"], ["shone"], ["shone"]], "why": "shine changes i into o: shone, twice.", "tip": "In British English shone rhymes with gone."}, "shoot": {"f": ["SHOOT", "SHOT", "SHOT"], "a": [["shoot"], ["shot"], ["shot"]], "why": "shoot loses one o: shot, twice.", "tip": "Two o in shoot, one in shot."}, "show": {"f": ["SHOW", "SHOWED", "SHOWN"], "a": [["show"], ["showed"], ["shown"]], "why": "show is half regular: the past simple is showed, with -ed, but the past participle is shown.", "tip": "This is the trap: showed for the past simple, shown after have or has."}, "shut": {"f": ["SHUT", "SHUT", "SHUT"], "a": [["shut"], ["shut"], ["shut"]], "why": "shut never changes.", "tip": "shutted does not exist."}, "sing": {"f": ["SING", "SANG", "SUNG"], "a": [["sing"], ["sang"], ["sung"]], "why": "sing follows i - a - u: sing, sang, sung.", "tip": "sang is the past simple; sung is the one that follows have."}, "sit": {"f": ["SIT", "SAT", "SAT"], "a": [["sit"], ["sat"], ["sat"]], "why": "sit changes i into a: sat, twice.", "tip": "One t in sat."}},
+verbs: {"be": {"f": ["BE", "WAS / WERE", "BEEN"], "a": [["be"], ["was / were", "was", "were", "was were", "were was"], ["been"]], "why": "be is the strangest verb of all: it has two past simple forms, was for I, he, she and it, and were for you, we and they, but only one past participle, been.", "tip": "After have or has there is only one possible word: been. have was does not exist."}, "begin": {"f": ["BEGIN", "BEGAN", "BEGUN"], "a": [["begin"], ["began"], ["begun"]], "why": "begin changes its vowel twice: i in the infinitive, a in the past simple and u in the past participle.", "tip": "i - a - u, the same road as drink - drank - drunk and sing - sang - sung."}, "bring": {"f": ["BRING", "BROUGHT", "BROUGHT"], "a": [["bring"], ["brought"], ["brought"]], "why": "bring takes -ought for both past forms, so the second and the third are the same word: brought.", "tip": "brought, bought and thought all end the same way and all rhyme."}, "catch": {"f": ["CATCH", "CAUGHT", "CAUGHT"], "a": [["catch"], ["caught"], ["caught"]], "why": "catch loses the -tch and takes -aught for both past forms: caught.", "tip": "caught starts c-a-u, never c-o-u."}, "choose": {"f": ["CHOOSE", "CHOSE", "CHOSEN"], "a": [["choose"], ["chose"], ["chosen"]], "why": "choose drops one o for the past simple, chose, and the participle adds -n: chosen.", "tip": "choose has two o; chose and chosen have only one."}, "come": {"f": ["COME", "CAME", "COME"], "a": [["come"], ["came"], ["come"]], "why": "come changes o into a for the past simple, and the participle goes back to come.", "tip": "The first and the third form are the same word, like become."}, "do": {"f": ["DO", "DID", "DONE"], "a": [["do"], ["did"], ["done"]], "why": "do has three different forms: do, did and done.", "tip": "did is the past simple. After have or has you need done."}, "drink": {"f": ["DRINK", "DRANK", "DRUNK"], "a": [["drink"], ["drank"], ["drunk"]], "why": "drink changes i into a and then into u: drink, drank, drunk.", "tip": "i - a - u, the same road as begin, sing and ring."}, "drive": {"f": ["DRIVE", "DROVE", "DRIVEN"], "a": [["drive"], ["drove"], ["driven"]], "why": "drive changes i into o for the past simple and adds -n for the participle: driven.", "tip": "driven has one v and ends in -en, like given and ridden."}, "eat": {"f": ["EAT", "ATE", "EATEN"], "a": [["eat"], ["ate"], ["eaten"]], "why": "eat has three different forms: eat, ate and eaten.", "tip": "ate is the past simple. have ate is always wrong."}, "fight": {"f": ["FIGHT", "FOUGHT", "FOUGHT"], "a": [["fight"], ["fought"], ["fought"]], "why": "fight goes to -ought for both past forms: fought.", "tip": "fought, bought, brought and thought all rhyme."}, "find": {"f": ["FIND", "FOUND", "FOUND"], "a": [["find"], ["found"], ["found"]], "why": "find changes i into ou: found, for the past simple and for the participle.", "tip": "There is no -ed in this verb, and the two past forms are the same."}, "forget": {"f": ["FORGET", "FORGOT", "FORGOTTEN"], "a": [["forget"], ["forgot"], ["forgotten"]], "why": "forget follows get, and the past participle doubles the t: forgotten.", "tip": "Two t in forgotten. With one t it is the past simple."}, "give": {"f": ["GIVE", "GAVE", "GIVEN"], "a": [["give"], ["gave"], ["given"]], "why": "give changes i into a for the past simple and adds -n for the participle: given.", "tip": "gave is the past simple; given is the one that follows have or has."}, "hear": {"f": ["HEAR", "HEARD", "HEARD"], "a": [["hear"], ["heard"], ["heard"]], "why": "hear only adds a d, and the sound changes: heard, twice.", "tip": "It is written with the same letters as hear, plus a d."}, "hit": {"f": ["HIT", "HIT", "HIT"], "a": [["hit"], ["hit"], ["hit"]], "why": "hit never changes: the three forms are the same word.", "tip": "hitted does not exist."}, "hurt": {"f": ["HURT", "HURT", "HURT"], "a": [["hurt"], ["hurt"], ["hurt"]], "why": "hurt never changes, like hit, cut and put.", "tip": "If you add anything to hurt, it is wrong."}, "know": {"f": ["KNOW", "KNEW", "KNOWN"], "a": [["know"], ["knew"], ["known"]], "why": "know belongs to the -ew / -own family: knew for the past simple and known for the participle.", "tip": "The k at the beginning is silent, but you still have to write it."}, "lie": {"f": ["LIE", "LAY", "LAIN"], "a": [["lie"], ["lay"], ["lain"]], "why": "lie means to rest on a bed or on the floor, and its forms are lie, lay and lain.", "tip": "The past simple of lie is lay, and that is why these two verbs are so easy to mix."}, "make": {"f": ["MAKE", "MADE", "MADE"], "a": [["make"], ["made"], ["made"]], "why": "make turns the k into a d: made, for the past simple and for the participle.", "tip": "made already carries its d, so maked does not exist."}, "meet": {"f": ["MEET", "MET", "MET"], "a": [["meet"], ["met"], ["met"]], "why": "meet loses one e: met, twice.", "tip": "Two e in meet, one in met."}, "put": {"f": ["PUT", "PUT", "PUT"], "a": [["put"], ["put"], ["put"]], "why": "put never changes.", "tip": "putted does not exist."}, "ride": {"f": ["RIDE", "RODE", "RIDDEN"], "a": [["ride"], ["rode"], ["ridden"]], "why": "ride changes i into o for the past simple and the participle doubles the d: ridden.", "tip": "Two d in ridden. rode is the past simple."}, "run": {"f": ["RUN", "RAN", "RUN"], "a": [["run"], ["ran"], ["run"]], "why": "run changes u into a for the past simple and goes back to run for the participle.", "tip": "The first and the third form are the same word, like come."}, "say": {"f": ["SAY", "SAID", "SAID"], "a": [["say"], ["said"], ["said"]], "why": "say becomes said for both past forms.", "tip": "It is written said, but it sounds like sed."}, "see": {"f": ["SEE", "SAW", "SEEN"], "a": [["see"], ["saw"], ["seen"]], "why": "see has three different forms: see, saw and seen.", "tip": "saw is the past simple. After have or has it is seen."}, "send": {"f": ["SEND", "SENT", "SENT"], "a": [["send"], ["sent"], ["sent"]], "why": "send turns its d into a t: sent, twice.", "tip": "send, lend and spend are the same family."}, "sing": {"f": ["SING", "SANG", "SUNG"], "a": [["sing"], ["sang"], ["sung"]], "why": "sing follows i - a - u: sing, sang, sung.", "tip": "sang is the past simple; sung is the one that follows have."}, "sleep": {"f": ["SLEEP", "SLEPT", "SLEPT"], "a": [["sleep"], ["slept"], ["slept"]], "why": "sleep loses one e and ends in -t: slept, twice.", "tip": "sleep, keep and feel all go the same way."}, "speak": {"f": ["SPEAK", "SPOKE", "SPOKEN"], "a": [["speak"], ["spoke"], ["spoken"]], "why": "speak changes ea into o for the past simple and the participle adds -n: spoken.", "tip": "spoke is the past simple; spoken follows have or has."}, "teach": {"f": ["TEACH", "TAUGHT", "TAUGHT"], "a": [["teach"], ["taught"], ["taught"]], "why": "teach loses the -ch and takes -aught: taught, twice.", "tip": "catch and teach are a pair: caught and taught."}, "think": {"f": ["THINK", "THOUGHT", "THOUGHT"], "a": [["think"], ["thought"], ["thought"]], "why": "think goes to -ought: thought, twice.", "tip": "thought, bought and brought all rhyme."}, "throw": {"f": ["THROW", "THREW", "THROWN"], "a": [["throw"], ["threw"], ["thrown"]], "why": "throw belongs to the -ew / -own family: threw for the past simple and thrown for the participle.", "tip": "threw and through sound the same but they are different words."}, "understand": {"f": ["UNDERSTAND", "UNDERSTOOD", "UNDERSTOOD"], "a": [["understand"], ["understood"], ["understood"]], "why": "understand follows stand: understood, twice.", "tip": "If you know stand - stood, you already know this one."}, "wear": {"f": ["WEAR", "WORE", "WORN"], "a": [["wear"], ["wore"], ["worn"]], "why": "wear changes ea into o: wore for the past simple and worn for the participle.", "tip": "wear and tear work the same way: wore/worn and tore/torn."}},
 
-trials: [{"key": "v1table", "icon": "scroll", "medal": "Table A", "title": "Version 1 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "ride", "given": [1]}, {"n": 2, "verb": "rise", "given": [0]}, {"n": 3, "verb": "say", "given": [0]}, {"n": 4, "verb": "see", "given": [2]}, {"n": 5, "verb": "send", "given": [1]}, {"n": 6, "verb": "shine", "given": [1]}, {"n": 7, "verb": "shoot", "given": [2]}, {"n": 8, "verb": "show", "given": [0]}, {"n": 9, "verb": "shut", "given": [1]}]}, {"key": "v1sent", "icon": "sword", "medal": "Sentences A", "title": "Version 1 · The Sentences", "sub": "Now, complete the sentences using the present perfect.", "type": "gap", "note": {"title": "How a present perfect sentence is built", "lines": ["I / you / we / they -> have + past participle.", "he / she / it -> has + past participle."], "warning": "The verb in brackets is the infinitive. You have to change it into the past participle yourself."}, "items": [{"n": 1, "before": "We", "after": "a great book in our English class: Gangsta Granny.", "verb": "(read)", "answers": ["have read", "'ve read"], "solution": "have read", "why": "We is plural, so we use have, and read is written the same three times: read - read - read.", "tip": "You write the same word, but here it sounds like the colour red."}, {"n": 2, "before": "Tini", "after": "a new song at her concert recently and her fans were surprised.", "verb": "(sing)", "answers": ["has sung", "'s sung"], "solution": "has sung", "why": "Tini is one person, so we use has, and sing is irregular: sing - sang - sung.", "tip": "sang is the past simple. After has you need sung."}, {"n": 3, "before": "He", "after": "his house to buy a new one.", "verb": "(sell)", "answers": ["has sold", "'s sold"], "solution": "has sold", "why": "He is one person, so we use has, and sell is irregular: sell - sold - sold.", "tip": "sell and tell are the same family: sold and told."}, {"n": 4, "before": "The athletes", "after": "a 5km marathon.", "verb": "(run)", "answers": ["have run", "'ve run"], "solution": "have run", "why": "The athletes is plural, so we use have, and run is irregular: run - ran - run.", "tip": "The first and the third form of run are the same word."}, {"n": 5, "before": "Ok! You can go to the break, the bell", "after": ".", "verb": "(ring)", "answers": ["has rung", "'s rung"], "solution": "has rung", "why": "The bell is one thing, so we use has, and ring is irregular: ring - rang - rung.", "tip": "rang is the past simple. After has the word is rung."}]}, {"key": "v2table", "icon": "shield", "medal": "Table B", "title": "Version 2 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "read", "given": [2]}, {"n": 2, "verb": "ring", "given": [0]}, {"n": 3, "verb": "rise", "given": [1]}, {"n": 4, "verb": "run", "given": [0]}, {"n": 5, "verb": "sell", "given": [1]}, {"n": 6, "verb": "shine", "given": [0]}, {"n": 7, "verb": "shoot", "given": [1]}, {"n": 8, "verb": "shut", "given": [0]}, {"n": 9, "verb": "sing", "given": [1]}, {"n": 10, "verb": "sit", "given": [2]}]}, {"key": "v2sent", "icon": "crown", "medal": "Sentences B", "title": "Version 2 · The Sentences", "sub": "Now, complete the sentences using the present perfect.", "type": "gap", "note": {"title": "How a present perfect sentence is built", "lines": ["I / you / we / they -> have + past participle.", "he / she / it -> has + past participle."], "warning": "The verb in brackets is the infinitive. You have to change it into the past participle yourself."}, "items": [{"n": 1, "before": "The secretary said that she", "after": "me an e-mail, but I didn’t receive it.", "verb": "(send)", "answers": ["has sent", "'s sent"], "solution": "has sent", "why": "she is one person, so we use has, and send is irregular: send - sent - sent.", "tip": "send, lend and spend all end in -t in the past."}, {"n": 2, "before": "I", "after": "a horse recently. It was amazing!", "verb": "(ride)", "answers": ["have ridden", "'ve ridden"], "solution": "have ridden", "why": "I takes have, and ride is irregular: ride - rode - ridden.", "tip": "Two d in ridden. rode is the past simple."}, {"n": 3, "before": "I think I", "after": "you at the shopping centre the other day. Were you there?", "verb": "(see)", "answers": ["have seen", "'ve seen"], "solution": "have seen", "why": "I takes have, and see is irregular: see - saw - seen.", "tip": "saw is the past simple. After have you need seen."}, {"n": 4, "before": "You", "after": "me the picture that you drew. It’s fantastic, I love it!", "verb": "(show)", "answers": ["have shown", "'ve shown"], "solution": "have shown", "why": "You takes have, and show is only half irregular: show - showed - shown.", "tip": "showed is the past simple, but the past participle is shown."}, {"n": 5, "before": "Oh no! The teacher", "after": "that we are having a test next week.", "verb": "(say)", "answers": ["has said", "'s said"], "solution": "has said", "why": "The teacher is one person, so we use has, and say is irregular: say - said - said.", "tip": "It is written said, but it sounds like sed."}]}],
+trials: [{"key": "v1table", "icon": "scroll", "medal": "Table A", "title": "Version 1 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "be", "given": [0]}, {"n": 2, "verb": "begin", "given": [2]}, {"n": 3, "verb": "come", "given": [1]}, {"n": 4, "verb": "catch", "given": [0]}, {"n": 5, "verb": "drive", "given": [2]}, {"n": 6, "verb": "forget", "given": [0]}, {"n": 7, "verb": "hurt", "given": [1]}, {"n": 8, "verb": "lie", "given": [2]}, {"n": 9, "verb": "put", "given": [0]}, {"n": 10, "verb": "say", "given": [1]}, {"n": 11, "verb": "speak", "given": [0]}, {"n": 12, "verb": "teach", "given": [0]}, {"n": 13, "verb": "throw", "given": [1]}]}, {"key": "v1sent", "icon": "sword", "medal": "Writing A", "title": "Version 1 · Your Own Sentences", "sub": "Now, choose five verbs from the box and write five complete sentences: two affirmative, two negative and one question.", "type": "free", "note": {"title": "The three shapes of a present perfect sentence", "lines": ["Affirmative -> person + have/has + past participle: I have eaten sushi.", "Negative -> person + haven't/hasn't + past participle: I haven't eaten sushi.", "Question -> Have/Has + person + past participle...? : Have you eaten sushi?"], "warning": "Each line tells you which shape it needs, and each line needs a different verb from the box."}, "pool": ["FIGHT", "GIVE", "HEAR", "MAKE", "EAT", "RIDE", "SEND", "CHOOSE"], "lines": [{"n": 1, "form": "affirmative"}, {"n": 2, "form": "affirmative"}, {"n": 3, "form": "negative"}, {"n": 4, "form": "negative"}, {"n": 5, "form": "question"}], "models": [{"form": "affirmative", "text": "My grandmother has made the best cake in the world."}, {"form": "negative", "text": "I have not ridden a horse in my life."}, {"form": "question", "text": "Have you ever heard this song before?"}]}, {"key": "v2table", "icon": "shield", "medal": "Table B", "title": "Version 2 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "be", "given": [0]}, {"n": 2, "verb": "bring", "given": [2]}, {"n": 3, "verb": "drink", "given": [1]}, {"n": 4, "verb": "hear", "given": [0]}, {"n": 5, "verb": "choose", "given": [2]}, {"n": 6, "verb": "find", "given": [0]}, {"n": 7, "verb": "know", "given": [1]}, {"n": 8, "verb": "lie", "given": [2]}, {"n": 9, "verb": "hit", "given": [0]}, {"n": 10, "verb": "see", "given": [1]}, {"n": 11, "verb": "sleep", "given": [0]}, {"n": 12, "verb": "think", "given": [0]}, {"n": 13, "verb": "understand", "given": [1]}]}, {"key": "v2sent", "icon": "crown", "medal": "Writing B", "title": "Version 2 · Your Own Sentences", "sub": "Now, choose five verbs from the box and write five complete sentences: two affirmative, two negative and one question.", "type": "free", "note": {"title": "The three shapes of a present perfect sentence", "lines": ["Affirmative -> person + have/has + past participle: I have eaten sushi.", "Negative -> person + haven't/hasn't + past participle: I haven't eaten sushi.", "Question -> Have/Has + person + past participle...? : Have you eaten sushi?"], "warning": "Each line tells you which shape it needs, and each line needs a different verb from the box."}, "pool": ["WEAR", "FORGET", "HURT", "MEET", "DO", "RUN", "SING", "CATCH"], "lines": [{"n": 1, "form": "affirmative"}, {"n": 2, "form": "affirmative"}, {"n": 3, "form": "negative"}, {"n": 4, "form": "negative"}, {"n": 5, "form": "question"}], "models": [{"form": "affirmative", "text": "I have forgotten my homework at home again."}, {"form": "negative", "text": "My sister has not done her homework today."}, {"form": "question", "text": "Have you ever met a famous person?"}]}],
 
-codex: ["read", "ride", "ring", "rise", "run", "say", "see", "sell", "send", "shine", "shoot", "show", "shut", "sing", "sit"]
+codex: ["be", "begin", "bring", "catch", "choose", "come", "do", "drink", "drive", "eat", "fight", "find", "forget", "give", "hear", "hit", "hurt", "know", "lie", "make", "meet", "put", "ride", "run", "say", "see", "send", "sing", "sleep", "speak", "teach", "think", "throw", "understand", "wear"]
 
 };
 </script>
@@ -429,8 +452,13 @@ function matches(given, list){
 }
 /* Expande 've y 's para poder buscar have/has en una oracion libre. */
 function expand(s){
-  return normalize(s).replace(/'ve\b/g, " have").replace(/'s\b/g, " has")
-                     .replace(/\s+/g, " ").trim();
+  /* n't primero: asi "hasn't" queda "has not" y las dos partes se pueden
+     buscar por separado. */
+  return normalize(s)
+    .replace(/n't\b/g, " not")
+    .replace(/'ve\b/g, " have")
+    .replace(/'s\b/g, " has")
+    .replace(/\s+/g, " ").trim();
 }
 function hasWord(sentence, word){
   var t = expand(sentence).split(" "), w = normalize(word);
@@ -679,17 +707,22 @@ function renderFree(st, t){
   vb.appendChild(chips);
   st.body.appendChild(vb);
 
-  for(var i = 0; i < t.lines; i++){
-    var id = REG.push({ data: { n: i + 1 } }) - 1;
+  var PH = { affirmative: "Write an affirmative sentence.",
+             negative: "Write a negative sentence.",
+             question: "Write a question." };
+  for(var i = 0; i < t.lines.length; i++){
+    var ln = t.lines[i];
+    var id = REG.push({ data: ln }) - 1;
     var item = el("div", "item");
     item.setAttribute("data-id", String(id));
-    var line = el("div", "sline");
-    line.appendChild(el("span", "rn", String(i + 1)));
-    var inp = mkInput("w-l", "Write your sentence in the present perfect.");
-    line.appendChild(inp);
-    item.appendChild(line);
+    var head = el("div", "formhead");
+    head.appendChild(el("span", "rn", String(ln.n)));
+    head.appendChild(el("span", "flab " + ln.form, ln.form));
+    item.appendChild(head);
+    var inp = mkInput("w-l", PH[ln.form]);
+    item.appendChild(inp);
     st.body.appendChild(item);
-    st.entries.push({ kind: "free", inputs: [{ el: inp }], data: { n: i + 1 }, holder: item, exp: null });
+    st.entries.push({ kind: "free", inputs: [{ el: inp }], data: ln, holder: item, exp: null });
   }
 }
 
@@ -746,19 +779,32 @@ function checkTrial(key){
     if(e.kind === "free"){
       var s = e.inputs[0].el.value;
       var notEmpty = normalize(s) !== "";
+      var ex = expand(s);
       var usesAux = hasWord(s, "have") || hasWord(s, "has");
+      var hasNot = hasWord(s, "not");
+      var startsAux = /^(have|has)\b/.test(ex);
+      var endsQ = /\?\s*$/.test(String(s));
       var part = participleUsed(s, t.pool);
       var longEnough = wordCount(s) >= 5;
-      var lineOk = notEmpty && usesAux && part !== null && longEnough;
+      var formOk;
+      if(e.data.form === "affirmative")   formOk = usesAux && !hasNot && !endsQ;
+      else if(e.data.form === "negative") formOk = usesAux && hasNot && !endsQ;
+      else                                formOk = startsAux && endsQ;
+      var lineOk = notEmpty && formOk && part !== null && longEnough;
       markInput(e.inputs[0].el, lineOk);
       total++;
       if(lineOk) got++;
 
+      var FORMTXT = {
+        affirmative: "It is affirmative: it uses have or has, and there is no not in it.",
+        negative: "It is negative: it uses haven't or hasn't.",
+        question: "It is a question: it starts with Have or Has and ends with a question mark."
+      };
       var cl = el("div", "checklist " + (lineOk ? "right" : "wrong"));
-      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n));
+      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n + " · " + e.data.form));
       var ul = document.createElement("ul");
       ul.appendChild(el("li", null, (notEmpty ? "✓ " : "✗ ") + "You wrote a sentence."));
-      ul.appendChild(el("li", null, (usesAux ? "✓ " : "✗ ") + "It uses have or has."));
+      ul.appendChild(el("li", null, (formOk ? "✓ " : "✗ ") + FORMTXT[e.data.form]));
       ul.appendChild(el("li", null, (part ? "✓ " : "✗ ") + (part
         ? "It uses the past participle " + part + "."
         : "It uses a past participle from the box.")));
@@ -773,9 +819,14 @@ function checkTrial(key){
 
   if(t.type === "free"){
     var mb = el("div", "modelbox");
-    mb.appendChild(el("span", "needtitle", "One possible sentence"));
-    mb.appendChild(el("p", null, t.model));
-    mb.appendChild(el("span", "selfnote", "Your sentences do not have to be these ones. The computer only checks that the present perfect is there. Your teacher checks the spelling and the rest of the words."));
+    mb.appendChild(el("span", "needtitle", "Three possible sentences"));
+    for(var f = 0; f < t.models.length; f++){
+      var mp = el("p");
+      mp.appendChild(el("span", "flab " + t.models[f].form, t.models[f].form));
+      mp.appendChild(document.createTextNode(" " + t.models[f].text));
+      mb.appendChild(mp);
+    }
+    mb.appendChild(el("span", "selfnote", "Your sentences do not have to be these ones. The computer only checks the shape of the sentence and the verb. Your teacher checks the spelling and the rest of the words."));
     st.panel.appendChild(mb);
   }
   if(st.panel) st.panel.hidden = false;
