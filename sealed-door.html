@@ -493,7 +493,7 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
 
   <div class="lockcard">
     <h2>The lock</h2>
-    <p>Five digits, one for every seal. They appear here as you win the games.</p>
+    <p>Five digits, one for every seal. They appear here as you win the games, and the door only moves when the five seals are broken.</p>
     <div class="digits" id="digits"></div>
     <div class="lockrow">
       <input type="text" id="codeInput" maxlength="5" autocomplete="off" spellcheck="false" placeholder="- - - - -">
@@ -559,7 +559,7 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
   <section class="gamecard" id="g4">
     <span class="tag">Seal IV</span>
     <h2>The Gatekeeper&rsquo;s Grid<span class="done hidden" id="d4">digit won</span></h2>
-    <p class="sub">Three in a row against the gatekeeper. Click an empty square and answer the question: if you are right the square is yours, if you are wrong the gatekeeper takes it. Beat him and the fourth digit is yours. A draw is not enough.</p>
+    <p class="sub">Three in a row against the gatekeeper. Click an empty square and answer the question: if you are right the square is yours, if you are wrong the gatekeeper takes it. Beat him and the fourth digit is yours. A draw is not enough, but he does make mistakes.</p>
     <p class="turnmsg" id="g4msg">Pick a square to start.</p>
     <div class="board" id="g4board"></div>
     <div class="qbox hidden" id="g4box"></div>
@@ -622,6 +622,10 @@ var REWARD = "https://www.youtube.com/watch?v=l0tOJ3gyokk";
 /* el codigo de la puerta: un digito por sello */
 var CODE = [5, 2, 8, 3, 6];
 var LABELS = ["The Cracked Sentences","The Two Keys","The Third Form Hunt","The Gatekeeper's Grid","Beat the Hourglass"];
+
+/* Cada cuanto el guardian del tateti juega cualquier cosa en vez de su
+   mejor jugada. 0 = imbatible, 0.3 = falla tres de cada diez. */
+var SLOPPY = 0.3;
 
 /* cuantos aciertos pide cada juego */
 var NEED1 = 7, NEED2 = 10, NEED3 = 3, NEED5 = 10;
@@ -883,7 +887,16 @@ drawDigits();
 
 document.getElementById("codeBtn").addEventListener("click", function(){
   var v = document.getElementById("codeInput").value.replace(/\D/g, "");
-  if(v === CODE.join("")){
+  var cerrados = 0;
+  for(var s = 0; s < won.length; s++){ if(!won[s]) cerrados++; }
+  if(v === CODE.join("") && cerrados > 0){
+    /* El codigo se puede copiar de un companero: la puerta pide ademas que
+       los cinco juegos esten ganados en esta pantalla. */
+    codeMsg.className = "lockmsg";
+    codeMsg.textContent = "The code is right, but the door does not move: "
+      + cerrados + (cerrados === 1 ? " seal is" : " seals are")
+      + " still closed. Win the games yourself.";
+  } else if(v === CODE.join("")){
     codeMsg.className = "lockmsg win";
     codeMsg.textContent = "The door is open. You have finished the Present Perfect Quest.";
     /* del otro lado hay un premio: primero el boton, por si el navegador no
@@ -1196,6 +1209,9 @@ document.getElementById("codeBtn").addEventListener("click", function(){
   }
   function cpuMove(b){
     var free = freeCells(b), i, t;
+    /* El guardian no juega perfecto: una de cada tres veces tira cualquier
+       cosa. Sin esto el tateti se empata siempre y el sello no se abre. */
+    if(Math.random() < SLOPPY) return free[Math.floor(Math.random() * free.length)];
     for(i = 0; i < free.length; i++){ t = b.slice(); t[free[i]] = "O"; if(winner(t)) return free[i]; }
     for(i = 0; i < free.length; i++){ t = b.slice(); t[free[i]] = "X"; if(winner(t)) return free[i]; }
     if(b[4] === "") return 4;
