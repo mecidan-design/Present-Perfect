@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Sealed Door &middot; Present Perfect Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   ESTETICA: fantasy heroica (la misma de 03-groups-6-7-8 y del
+   resto de la Present Perfect Quest). SIN SONIDO.
+   ========================================================= */
+:root{
+  --gold:#f2b632; --gold-lt:#ffd873; --gold-dk:#9d6d15;
+  --night:#120b30; --royal:#5b2ea8; --teal:#0f7a86;
+  --crimson:#b1263c; --emerald:#1c7f45;
+  --parch:#fdf6e3; --ink:#241605;
+  --head:"Cinzel",Georgia,"Times New Roman",serif;
+  --body:"Poppins","Segoe UI",Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--body); color:var(--ink); min-height:100vh; padding:24px 14px 0;
+  background:
+    radial-gradient(rgba(255,255,255,.55) 1px, transparent 1.5px) 0 0/37px 37px,
+    radial-gradient(rgba(255,216,115,.45) 1px, transparent 1.4px) 19px 23px/59px 59px,
+    radial-gradient(130% 85% at 50% 0%, rgba(255,216,115,.15), transparent 62%),
+    linear-gradient(165deg,#0d0827 0%,#221046 26%,#4a1d6e 52%,#123f52 79%,#0a2736 100%);
+  background-attachment:fixed;
+}
+.wrap{max-width:900px;margin:0 auto}
+svg.ic{width:1em;height:1em;vertical-align:-.13em;fill:currentColor}
+
+/* ---------- header ---------- */
+.hero{
+  background:linear-gradient(158deg,#1a0f3d 0%,#3b1a5e 58%,#0f3a4a 100%);
+  border:5px solid var(--gold); border-radius:22px;
+  box-shadow:0 0 0 4px #150c2f, 13px 13px 0 rgba(0,0,0,.45);
+  padding:22px 26px; margin-bottom:26px; position:relative; overflow:hidden;
+}
+.hero:before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(60% 90% at 82% 15%, rgba(255,216,115,.22), transparent 62%);
+  pointer-events:none;
+}
+.chapter{
+  font-family:var(--head); font-weight:700; font-size:.78rem; letter-spacing:3.4px;
+  color:var(--gold); text-transform:uppercase; display:block; margin-bottom:5px;
+}
+.hero h1{
+  font-family:var(--head); font-weight:900; color:#fff9e8; margin:0;
+  font-size:clamp(1.55rem,5vw,2.6rem); line-height:1.08; letter-spacing:1.4px;
+  text-shadow:0 3px 0 #6a3a00, 0 5px 14px rgba(0,0,0,.6);
+}
+.hero p{font-family:var(--body);color:#d8c7f5;margin:.6rem 0 0;font-size:.97rem;font-weight:500}
+.hero .verbline{
+  font-family:var(--head); font-weight:700; color:var(--gold-lt); font-size:.84rem;
+  letter-spacing:1.5px; margin-top:10px; text-transform:uppercase; line-height:1.6;
+}
+.homelink{
+  display:inline-flex;align-items:center;gap:7px;margin-top:14px;
+  font-family:var(--head);font-weight:700;font-size:.76rem;letter-spacing:1.6px;text-transform:uppercase;
+  color:#1a0f3d;background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:4px 14px;text-decoration:none;
+  box-shadow:4px 4px 0 #0a0620;position:relative;
+}
+.homelink:hover{filter:brightness(1.08)}
+
+/* ---------- quest bar ---------- */
+.quest{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px}
+.medal{
+  flex:1 1 165px; display:flex; align-items:center; gap:10px;
+  background:rgba(10,6,28,.72); border:3px solid #4a3a7a; border-radius:16px; padding:9px 13px;
+  transition:border-color .2s, background .2s;
+}
+.medal .mi{
+  width:34px;height:34px;flex:0 0 auto;border-radius:50%;border:3px solid #4a3a7a;
+  display:flex;align-items:center;justify-content:center;color:#7a6aa8;font-size:1rem;
+}
+.medal .mt{font-family:var(--head);font-weight:700;font-size:.8rem;letter-spacing:1px;color:#9c8ac8;line-height:1.2}
+.medal .ms{font-family:var(--head);font-weight:900;font-size:.95rem;color:#7a6aa8}
+.medal.won{border-color:var(--gold);background:rgba(60,36,6,.75)}
+.medal.won .mi{border-color:var(--gold);color:var(--gold);background:rgba(242,182,50,.16)}
+.medal.won .mt{color:var(--gold-lt)}
+.medal.won .ms{color:#fff9e8}
+
+/* ---------- cards ---------- */
+.card{
+  background:
+    radial-gradient(rgba(150,110,40,.075) 1px, transparent 1.6px) 0 0/13px 13px,
+    linear-gradient(180deg,#fdf6e3 0%,#f6e9cd 100%);
+  border:4px solid #2b1c07; border-radius:18px; padding:22px 22px 24px;
+  margin-bottom:34px; position:relative;
+}
+.card:nth-of-type(3n+1){box-shadow:10px 10px 0 var(--gold-dk); transform:rotate(-.4deg)}
+.card:nth-of-type(3n+2){box-shadow:10px 10px 0 var(--crimson); transform:rotate(.35deg)}
+.card:nth-of-type(3n+3){box-shadow:10px 10px 0 var(--teal);    transform:rotate(-.25deg)}
+/* OJO (trampa del SPECS): cualquier variante necesita DOS clases,
+   porque :nth-of-type le gana por especificidad a una clase sola. */
+.card.codex{
+  background:linear-gradient(180deg,#1a0f3d,#12283a);
+  border-color:var(--gold); box-shadow:10px 10px 0 rgba(0,0,0,.42); transform:rotate(.3deg);
+}
+.tag{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--head); font-weight:700; font-size:.75rem; letter-spacing:2px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold)); color:#2b1c07;
+  border:3px solid #2b1c07; border-radius:999px;
+  padding:3px 14px; margin-bottom:11px; text-transform:uppercase;
+}
+.card h2{font-family:var(--head);font-weight:900;font-size:1.5rem;margin:.1rem 0 .3rem;line-height:1.15;letter-spacing:.6px}
+.sub{font-size:.92rem;color:#5c4a2c;margin:0 0 18px;line-height:1.5}
+.codex h2{color:#fff9e8}
+.codex .sub{color:#c9bbe8}
+
+/* ---------- buttons ---------- */
+.btn{
+  font-family:var(--head); font-weight:700; font-size:.97rem; letter-spacing:.7px;
+  color:#2b1c07; cursor:pointer;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07; border-radius:999px; padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07; transition:transform .07s, box-shadow .07s;
+}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.btn.ghost{background:var(--parch);color:#2b1c07}
+.btn.dark{background:linear-gradient(180deg,#3b1a5e,#1a0f3d);color:#ffe9b0;border-color:var(--gold);box-shadow:5px 5px 0 #0a0620}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.scoreline{font-family:var(--head);font-weight:700;font-size:1rem;letter-spacing:.5px}
+
+/* ---------- inputs ---------- */
+input[type=text],select{
+  font-family:var(--body); font-size:1rem; font-weight:500; padding:7px 11px;
+  border:3px solid #2b1c07; border-radius:10px; background:#fffdf4; outline:none; color:var(--ink);
+}
+input[type=text]:focus,select:focus{background:#fff;box-shadow:0 0 0 4px var(--gold)}
+input.ok,select.ok{background:#e3f7e0;border-color:var(--emerald)}
+input.no,select.no{background:#fde5e9;border-color:var(--crimson)}
+input.w-s{width:150px}
+input.w-l{width:100%}
+
+/* ---------- explanation blocks ---------- */
+.exp{
+  border:3px solid #2b1c07;border-radius:13px;padding:11px 13px;margin-top:11px;
+  background:#f3ecfb;font-size:.92rem;line-height:1.5;
+}
+.exp.right{background:#eaf8e5}
+.exp.wrong{background:#fdeef1}
+.exp b.lab{
+  font-family:var(--head);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+  display:inline-block;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-right:7px;
+}
+.lab.why{background:#a8e4ec}
+.lab.tip{background:var(--gold-lt)}
+.exp p{margin:0 0 7px}
+.exp p:last-child{margin-bottom:0}
+/* OJO: Cinzel dibuja las minusculas como VERSALITAS. Sirve para titulos y
+   etiquetas, pero destruye la lectura de una oracion completa. Todo lo que el
+   alumno tenga que LEER como ingles corriente va con la tipografia de cuerpo. */
+.sol{font-family:var(--body);font-weight:700;color:#3d1470}
+
+/* ---------- grammar note ---------- */
+.gnote{
+  border:4px solid #2b1c07;border-radius:15px;padding:13px 16px;margin:0 0 18px;
+  background:linear-gradient(180deg,#fffaea,#fbf0d2);box-shadow:5px 5px 0 var(--gold);
+  font-size:.95rem;line-height:1.6;
+}
+.gnotetitle{font-family:var(--head);font-weight:900;font-size:1.02rem;display:flex;align-items:center;gap:8px;margin-bottom:8px;letter-spacing:.5px}
+.gnote ul{margin:0;padding-left:20px}
+.gnote li{margin-bottom:6px}
+.gform{
+  font-family:var(--body);font-weight:600;background:#a8e4ec;
+  border:2px solid #2b1c07;border-radius:6px;padding:1px 7px;display:inline-block;
+}
+.gwarn{margin:10px 0 0;background:#fde5e9;border:2px solid #2b1c07;border-radius:10px;padding:8px 11px;font-weight:500}
+
+/* ---------- word box ---------- */
+.vaultbox{
+  border:4px dashed #2b1c07;border-radius:16px;padding:13px 15px;margin-bottom:20px;
+  background:linear-gradient(180deg,#fffaea,#f7ecd2);
+}
+.vaultbox .vt{font-family:var(--head);font-weight:900;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:#8a6a2a;display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.vchips{display:flex;flex-wrap:wrap;gap:8px}
+.vchip{
+  font-family:var(--head);font-weight:700;font-size:.88rem;letter-spacing:1.5px;
+  background:#fff;border:3px solid #2b1c07;border-radius:9px;padding:4px 12px;box-shadow:3px 3px 0 var(--gold);
+}
+.vchip.used{background:#e3f7e0;box-shadow:3px 3px 0 var(--emerald);opacity:.62;text-decoration:line-through}
+.vchip.done{background:#e7e2f5;box-shadow:3px 3px 0 var(--royal);opacity:.62;text-decoration:line-through}
+
+/* ---------- items ---------- */
+.item{border:3px solid #2b1c07;border-radius:15px;padding:14px 15px;margin-bottom:16px;background:#fffdf4}
+.item.model{border-style:dashed;background:#eaf8e5}
+.sline{display:flex;align-items:flex-start;gap:9px;font-size:1.04rem;font-weight:500;line-height:2.1}
+.rn{
+  font-family:var(--head);font-size:.74rem;font-weight:700;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:22px;height:22px;flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;margin-top:8px;
+}
+.rn.zero{background:var(--emerald)}
+.prompt{display:flex;align-items:flex-start;gap:9px;font-size:1.04rem;font-weight:600;line-height:1.5;margin:0 0 10px}
+.prompt .wrong{text-decoration:line-through;text-decoration-color:var(--crimson);text-decoration-thickness:2px}
+.donetext{font-family:var(--body);font-weight:700;color:#1c7f45}
+.exampletag{
+  font-family:var(--head);font-weight:700;font-size:.68rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:#bdf0b0;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-left:8px;
+  display:inline-block;vertical-align:2px;
+}
+.hintword{
+  font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:var(--gold-lt);border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-left:8px;
+  display:inline-block;vertical-align:2px;
+}
+.matchrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:9px}
+.matchrow .mlab{font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:1.4px;text-transform:uppercase;border:2px solid #2b1c07;border-radius:999px;padding:2px 12px;background:#a8e4ec}
+
+/* ---------- conversation (underline the option) ---------- */
+.conv{border:3px solid #2b1c07;border-radius:15px;padding:14px 15px;background:#fffdf4}
+.convline{display:flex;gap:10px;margin-bottom:9px;line-height:1.9;font-size:1.02rem}
+.convline .who{font-family:var(--head);font-weight:900;letter-spacing:.6px;flex:0 0 4.4rem;color:#3d1470}
+.optgroup{display:inline-flex;flex-wrap:wrap;gap:5px;vertical-align:-3px;margin:0 3px}
+.optgroup .gn{
+  font-family:var(--head);font-weight:900;font-size:.7rem;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:19px;height:19px;
+  display:inline-flex;align-items:center;justify-content:center;align-self:center;
+}
+.pickbtn{
+  font-family:var(--body);font-size:.95rem;font-weight:600;cursor:pointer;background:#fff;
+  border:2px solid #2b1c07;border-radius:8px;padding:2px 9px;color:var(--ink);
+}
+.pickbtn:hover{background:#fff3d0}
+.pickbtn.on{background:var(--gold-lt);text-decoration:underline;text-decoration-thickness:3px}
+.pickbtn.good{background:#bdf0b0;border-color:var(--emerald)}
+.pickbtn.bad{background:#ffc7d1;border-color:var(--crimson);text-decoration:line-through}
+
+/* ---------- running text with gaps (cloze) ---------- */
+.clozetext{border:3px solid #2b1c07;border-radius:15px;padding:14px 16px;background:#fffdf4;font-size:1.02rem;line-height:2.4}
+.clozetext .gn{
+  font-family:var(--head);font-weight:900;font-size:.7rem;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:19px;height:19px;margin-right:4px;
+  display:inline-flex;align-items:center;justify-content:center;vertical-align:1px;
+}
+.clozetext input{width:130px}
+
+/* ---------- panel de explicaciones para huecos inline ---------- */
+/* REGLA DE LAYOUT DEL SPECS: si los huecos estan dentro de un texto corrido,
+   la explicacion NO va pegada a cada input (rompe la lectura del parrafo).
+   Van todas juntas, numeradas, en un panel debajo del texto completo. */
+.explist{margin-top:16px}
+.explist h3{font-family:var(--head);font-weight:900;font-size:1rem;letter-spacing:1px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.expitem{display:flex;gap:10px;margin-bottom:10px}
+.expitem .en{
+  font-family:var(--head);font-size:.74rem;font-weight:700;color:#fff9e8;background:var(--royal);
+  border:2px solid #2b1c07;border-radius:50%;width:22px;height:22px;flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;margin-top:9px;
+}
+.expitem .exp{flex:1;margin-top:0}
+
+/* ---------- CODEX ---------- */
+.gbox{border:3px solid var(--gold);border-radius:14px;padding:12px 14px;margin-bottom:12px;background:rgba(255,255,255,.05)}
+.gbox h4{font-family:var(--head);font-weight:900;font-size:.92rem;letter-spacing:1.6px;color:var(--gold-lt);margin:0 0 4px;text-transform:uppercase}
+.gbox .pat{font-size:.84rem;color:#c9bbe8;margin:0 0 9px}
+.pairs{display:flex;flex-wrap:wrap;gap:7px}
+.pchip{font-family:var(--head);font-weight:700;font-size:.85rem;letter-spacing:.8px;background:var(--parch);border:2px solid #2b1c07;border-radius:8px;padding:3px 11px;color:var(--ink)}
+.pchip b{color:#8f1230}
+.hidden{display:none}
+
+/* ---------- pie ---------- */
+footer.site{
+  margin-top:10px;padding:20px 14px 26px;text-align:center;
+  font-family:var(--head);font-weight:700;font-size:.74rem;letter-spacing:2.2px;
+  text-transform:uppercase;color:#9c8ac8;
+}
+
+/* ---------- mapa de la quest ---------- */
+.hero h1.big{font-size:clamp(1.9rem,7vw,3.4rem)}
+.maplead{
+  font-family:var(--head);font-weight:700;font-size:.8rem;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--gold-lt);margin:0 0 16px;display:flex;align-items:center;gap:9px;
+}
+.map{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));margin-bottom:34px}
+.stop{
+  background:
+    radial-gradient(rgba(150,110,40,.075) 1px, transparent 1.6px) 0 0/13px 13px,
+    linear-gradient(180deg,#fdf6e3 0%,#f6e9cd 100%);
+  border:4px solid #2b1c07;border-radius:18px;padding:20px 20px 22px;
+  display:flex;flex-direction:column;gap:11px;position:relative;
+}
+.stop:nth-of-type(4n+1){box-shadow:10px 10px 0 var(--gold-dk);transform:rotate(-.4deg)}
+.stop:nth-of-type(4n+2){box-shadow:10px 10px 0 var(--crimson);transform:rotate(.35deg)}
+.stop:nth-of-type(4n+3){box-shadow:10px 10px 0 var(--teal);transform:rotate(-.3deg)}
+.stop:nth-of-type(4n+4){box-shadow:10px 10px 0 var(--royal);transform:rotate(.3deg)}
+.stop h2{font-family:var(--head);font-weight:900;font-size:1.35rem;margin:0;line-height:1.15;letter-spacing:.6px}
+.stop p{margin:0;font-size:.93rem;line-height:1.55;color:#4a3a1d;flex:1}
+.stop .what{
+  display:flex;flex-wrap:wrap;gap:7px;margin:0;
+}
+.stop .what span{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.1px;text-transform:uppercase;
+  background:#fff;border:2px solid #2b1c07;border-radius:999px;padding:2px 10px;
+}
+a.enter{
+  align-self:flex-start;text-decoration:none;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:9px 22px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.enter:hover{filter:brightness(1.07)}
+a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.stop .num{
+  position:absolute;top:-15px;right:18px;
+  font-family:var(--head);font-weight:900;font-size:.8rem;letter-spacing:1.6px;text-transform:uppercase;
+  background:linear-gradient(180deg,#3b1a5e,#1a0f3d);color:#ffe9b0;
+  border:3px solid var(--gold);border-radius:999px;padding:3px 13px;
+}
+
+/* ---------- estante del profesor ---------- */
+.shelf{margin-top:6px}
+.shelf a{
+  display:inline-block;text-decoration:none;margin:0 7px 9px 0;
+  font-family:var(--head);font-weight:700;font-size:.85rem;letter-spacing:.8px;
+  background:var(--parch);border:2px solid #2b1c07;border-radius:8px;padding:5px 12px;color:var(--ink);
+}
+.shelf a:hover{background:#fff3d0}
+
+/* =========================================================
+   LOS CINCO JUEGOS. Los motores son los de escape-the-grammar-lab
+   (otro alumno, otra estetica): aca se les pone la ropa de la quest.
+   ========================================================= */
+
+/* ---------- la puerta y sus cinco sellos ---------- */
+.lockcard{
+  background:linear-gradient(158deg,#1a0f3d 0%,#3b1a5e 58%,#0f3a4a 100%);
+  border:5px solid var(--gold);border-radius:22px;
+  box-shadow:0 0 0 4px #150c2f, 13px 13px 0 rgba(0,0,0,.45);
+  padding:22px 26px;margin-bottom:30px;
+}
+.lockcard h2{font-family:var(--head);font-weight:900;color:#fff9e8;font-size:1.5rem;margin:.1rem 0 .4rem;letter-spacing:.6px}
+.lockcard p{color:#d8c7f5;font-size:.95rem;line-height:1.55;margin:0 0 14px}
+.digits{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.digit{
+  font-family:var(--head);font-weight:900;font-size:1.9rem;color:#7a6aa8;
+  width:3rem;height:3.6rem;display:flex;align-items:center;justify-content:center;
+  background:rgba(10,6,28,.72);border:3px solid #4a3a7a;border-radius:12px;
+}
+.digit.got{color:#fff9e8;border-color:var(--gold);background:rgba(60,36,6,.75)}
+.lockrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.lockrow input{width:9rem;text-align:center;font-family:var(--head);font-weight:900;font-size:1.2rem;letter-spacing:4px}
+.lockmsg{font-family:var(--head);font-weight:700;color:#ffe9b0;font-size:.95rem;margin:12px 0 0;letter-spacing:.5px}
+.lockmsg.win{color:var(--green,#bdf0b0)}
+
+/* ---------- tarjeta de juego ---------- */
+.gamecard{
+  background:
+    radial-gradient(rgba(150,110,40,.075) 1px, transparent 1.6px) 0 0/13px 13px,
+    linear-gradient(180deg,#fdf6e3 0%,#f6e9cd 100%);
+  border:4px solid #2b1c07;border-radius:18px;padding:22px 22px 24px;margin-bottom:34px;
+}
+.gamecard:nth-of-type(3n+1){box-shadow:10px 10px 0 var(--gold-dk);transform:rotate(-.4deg)}
+.gamecard:nth-of-type(3n+2){box-shadow:10px 10px 0 var(--crimson);transform:rotate(.35deg)}
+.gamecard:nth-of-type(3n+3){box-shadow:10px 10px 0 var(--teal);transform:rotate(-.25deg)}
+.gamecard h2{font-family:var(--head);font-weight:900;font-size:1.45rem;margin:.1rem 0 .3rem;letter-spacing:.6px}
+.gamecard .done{
+  font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:#bdf0b0;border:2px solid #2b1c07;border-radius:999px;padding:2px 10px;margin-left:10px;
+  display:inline-block;vertical-align:4px;
+}
+.hidden{display:none}
+
+/* ---------- caja de juego ---------- */
+.qbox{border:4px solid var(--gold);border-radius:16px;padding:16px;background:#fffdf4;margin-top:4px}
+.gq{font-size:1.06rem;font-weight:500;line-height:1.6;margin:0 0 14px}
+.keyhint{font-size:.85rem;color:#5c4a2c;line-height:1.5;margin:12px 0 0}
+.fixline{font-family:var(--body);font-weight:700;color:#3d1470;margin:10px 0 0;font-size:.95rem}
+.turnmsg{font-family:var(--head);font-weight:700;color:#5c4a2c;letter-spacing:.5px;margin:0 0 12px}
+.score{font-family:var(--head);font-weight:700;font-size:1rem;letter-spacing:.5px}
+
+/* ---------- juego 1: palabras clickeables ---------- */
+.sentence{font-size:1.12rem;line-height:2.2;margin:0}
+.word{
+  cursor:pointer;padding:2px 6px;border-radius:7px;border:2px solid transparent;
+  transition:background .08s,border-color .08s;
+}
+.word:hover{background:#fff3d0;border-color:#2b1c07}
+.word.dead{cursor:default}
+.word.dead:hover{background:transparent;border-color:transparent}
+.word.good{background:#bdf0b0;border-color:var(--emerald)}
+.word.bad{background:#ffc7d1;border-color:var(--crimson);text-decoration:line-through}
+
+/* ---------- juego 2: for o since ---------- */
+.timeword{
+  font-family:var(--head);font-weight:900;font-size:clamp(1.8rem,7vw,2.8rem);letter-spacing:2px;
+  text-align:center;color:#3d1470;margin:6px 0 18px;line-height:1.2;
+}
+.twobtn{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.bigopt{
+  font-family:var(--head);font-weight:900;font-size:1.3rem;letter-spacing:2px;cursor:pointer;
+  background:#fff;border:3px solid #2b1c07;border-radius:14px;padding:14px 34px;
+  box-shadow:5px 5px 0 #2b1c07;color:var(--ink);transition:transform .07s,box-shadow .07s;
+}
+.bigopt:hover{background:#fff3d0}
+.bigopt:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.bigopt.good{background:#bdf0b0;border-color:var(--emerald)}
+.bigopt.bad{background:#ffc7d1;border-color:var(--crimson)}
+.bigopt[disabled]{cursor:default}
+
+/* ---------- juego 3: el wordle ---------- */
+.clueword{
+  font-family:var(--head);font-weight:900;font-size:1.25rem;letter-spacing:2px;color:#3d1470;
+  display:block;text-align:center;margin-bottom:14px;text-transform:uppercase;
+}
+/* FORGOTTEN tiene nueve letras: en un telefono la fila se sale de la pantalla
+   si los cuadrados son fijos, asi que miden segun el ancho disponible. */
+.wgrid{display:grid;gap:clamp(4px,1.2vw,7px);justify-content:center;margin-bottom:14px}
+.wrow{display:flex;gap:clamp(4px,1.2vw,7px);justify-content:center}
+.tile{
+  width:clamp(1.5rem,7.2vw,2.4rem);height:clamp(1.5rem,7.2vw,2.4rem);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--head);font-weight:900;font-size:clamp(.78rem,3.4vw,1.1rem);
+  border:3px solid #2b1c07;border-radius:8px;background:#fff;color:var(--ink);
+}
+.tile.hit{background:#bdf0b0}
+.tile.near{background:var(--gold-lt)}
+.tile.miss{background:#d9cdb4;color:#6b5a3a}
+.guessrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.guessrow input{width:11rem;text-align:center;font-family:var(--head);font-weight:700;letter-spacing:3px;text-transform:uppercase}
+
+/* ---------- juego 4: el tablero ---------- */
+.board{display:grid;grid-template-columns:repeat(3,4.4rem);gap:9px;justify-content:center;margin-bottom:16px}
+.sq{
+  width:4.4rem;height:4.4rem;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-family:var(--head);font-weight:900;font-size:2rem;
+  background:#fffdf4;border:3px solid #2b1c07;border-radius:12px;box-shadow:4px 4px 0 var(--gold-dk);
+}
+.sq.me{background:#bdf0b0;color:#14532d}
+.sq.cpu{background:#ffc7d1;color:#7a1024}
+.sq.win{box-shadow:0 0 0 4px var(--gold),4px 4px 0 var(--gold-dk)}
+
+/* ---------- juego 5: el reloj ---------- */
+.clock{
+  font-family:var(--head);font-weight:900;font-size:3rem;text-align:center;color:#3d1470;
+  line-height:1;margin-bottom:8px;
+}
+.clock.low{color:var(--crimson)}
+.timerbar{height:14px;border:3px solid var(--gold);border-radius:999px;overflow:hidden;background:rgba(0,0,0,.14);margin-bottom:14px}
+.timerbar span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold-lt),var(--gold));transition:width .1s linear}
+
+/* ---------- opciones y cierres compartidos ---------- */
+.opts{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+.opt{
+  font-family:var(--body);font-size:1rem;font-weight:600;cursor:pointer;background:#fff;
+  border:3px solid #2b1c07;border-radius:999px;padding:8px 20px;box-shadow:3px 3px 0 #2b1c07;
+  color:var(--ink);transition:transform .07s,box-shadow .07s;
+}
+.opt:hover{background:#fff3d0}
+.opt.good{background:#bdf0b0;border-color:var(--emerald)}
+.opt.bad{background:#ffc7d1;border-color:var(--crimson);text-decoration:line-through}
+.opt[disabled]{cursor:default}
+.final{text-align:center;padding:10px 4px}
+.final .big{font-family:var(--head);font-weight:900;font-size:3rem;color:#3d1470;line-height:1;margin:6px 0}
+.final .msg{font-family:var(--head);font-weight:700;color:#5c4a2c;font-size:1.05rem;letter-spacing:.5px}
+.flash{margin:12px 0 0;font-size:.9rem;line-height:1.5;color:#14532d;font-weight:500}
+.flash.no{color:#7a1024}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 14px}
+.dot{width:14px;height:14px;border-radius:50%;border:3px solid #a8956a;background:transparent}
+.dot.y{background:var(--emerald);border-color:var(--emerald)}
+.dot.n{background:var(--crimson);border-color:var(--crimson)}
+.dot.now{box-shadow:0 0 0 3px var(--gold)}
+.hud{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:10px}
+.chip{
+  font-family:var(--head);font-weight:700;font-size:.82rem;letter-spacing:.8px;
+  border:3px solid #2b1c07;border-radius:999px;padding:3px 14px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:#2b1c07;
+}
+.chip.streak{background:linear-gradient(180deg,#ff9db0,var(--crimson));color:#fff}
+.chip.left{background:linear-gradient(180deg,#9fe6ef,var(--teal));color:#04262b}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="chapter">Present Perfect Quest &middot; Stop VI</span>
+    <h1 class="big">The Sealed Door</h1>
+    <p>The last door of the quest has five seals on it, and behind each seal there is a game. Win a game and one digit of the code appears. Win the five and the door opens.</p>
+    <div class="verbline">ever &middot; never &middot; for &middot; since &middot; third forms</div>
+    <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
+  </div>
+
+  <div class="lockcard">
+    <h2>The lock</h2>
+    <p>Five digits, one for every seal. They appear here as you win the games.</p>
+    <div class="digits" id="digits"></div>
+    <div class="lockrow">
+      <input type="text" id="codeInput" maxlength="5" autocomplete="off" spellcheck="false" placeholder="- - - - -">
+      <button class="btn" id="codeBtn" type="button">Open the door</button>
+    </div>
+    <p class="lockmsg" id="codeMsg">No seal is broken yet.</p>
+  </div>
+
+  <!-- ============ SEAL 1 ============ -->
+  <section class="gamecard" id="g1">
+    <span class="tag">Seal I</span>
+    <h2>The Cracked Sentences<span class="done hidden" id="d1">digit won</span></h2>
+    <p class="sub">Every sentence below has exactly <b>one</b> wrong word. Click it. Sometimes the word is the wrong one, and sometimes it is a word that should not be there at all. Seven sentences out of nine and the first digit is yours.</p>
+    <div class="hud">
+      <span class="chip" id="g1score">0 / 9</span>
+      <span class="chip streak" id="g1lives">first try: 0</span>
+    </div>
+    <div class="dots" id="g1dots"></div>
+    <div class="qbox" id="g1box"></div>
+    <div class="btnrow">
+      <button class="btn" id="g1next" type="button" disabled>Next sentence</button>
+      <button class="btn ghost" id="g1again" type="button">Play again</button>
+    </div>
+  </section>
+
+  <!-- ============ SEAL 2 ============ -->
+  <section class="gamecard" id="g2">
+    <span class="tag">Seal II</span>
+    <h2>The Two Keys<span class="done hidden" id="d2">digit won</span></h2>
+    <p class="sub">One time expression at a time. Does it go with <b>for</b> or with <b>since</b>? Remember: <b>for</b> says how long something has lasted, <b>since</b> says the moment it started. Ten right out of twelve and the second digit is yours.</p>
+    <div class="hud">
+      <span class="chip" id="g2score">0 / 12</span>
+      <span class="chip left" id="g2which">card 1 of 12</span>
+    </div>
+    <div class="dots" id="g2dots"></div>
+    <div class="qbox" id="g2box"></div>
+    <div class="btnrow">
+      <button class="btn" id="g2next" type="button" disabled>Next card</button>
+      <button class="btn ghost" id="g2again" type="button">Play again</button>
+    </div>
+  </section>
+
+  <!-- ============ SEAL 3 ============ -->
+  <section class="gamecard" id="g3">
+    <span class="tag">Seal III</span>
+    <h2>The Third Form Hunt<span class="done hidden" id="d3">digit won</span></h2>
+    <p class="sub">Guess the third form of the verb on the card. Six tries. After each guess the tiles tell you: <b>green</b> means right letter in the right place, <b>gold</b> means right letter in the wrong place, <b>grey</b> means the letter is not in the word. Find three verbs and the third digit is yours.</p>
+    <div class="qbox" id="g3box">
+      <div><span class="clueword" id="g3clue"></span></div>
+      <div class="wgrid" id="g3grid"></div>
+      <div class="guessrow">
+        <input type="text" id="g3input" autocomplete="off" spellcheck="false" placeholder="your guess">
+        <button class="btn" id="g3go" type="button">Guess</button>
+        <button class="btn ghost" id="g3new" type="button">Another verb</button>
+      </div>
+      <p class="keyhint" id="g3hint"></p>
+      <div id="g3exp"></div>
+    </div>
+  </section>
+
+  <!-- ============ SEAL 4 ============ -->
+  <section class="gamecard" id="g4">
+    <span class="tag">Seal IV</span>
+    <h2>The Gatekeeper&rsquo;s Grid<span class="done hidden" id="d4">digit won</span></h2>
+    <p class="sub">Three in a row against the gatekeeper. Click an empty square and answer the question: if you are right the square is yours, if you are wrong the gatekeeper takes it. Beat him and the fourth digit is yours. A draw is not enough.</p>
+    <p class="turnmsg" id="g4msg">Pick a square to start.</p>
+    <div class="board" id="g4board"></div>
+    <div class="qbox hidden" id="g4box"></div>
+    <div class="btnrow">
+      <button class="btn ghost" id="g4again" type="button">New game</button>
+      <span class="score" id="g4score">0 wins</span>
+    </div>
+  </section>
+
+  <!-- ============ SEAL 5 ============ -->
+  <section class="gamecard" id="g5">
+    <span class="tag">Seal V</span>
+    <h2>Beat the Hourglass<span class="done hidden" id="d5">digit won</span></h2>
+    <p class="sub">Sixty seconds, one tap per question, everything from the quest mixed together. Ten correct answers and the last digit is yours. A wrong answer costs you three seconds, so read fast and keep going.</p>
+    <div class="clock" id="g5clock">60</div>
+    <div class="timerbar"><span id="g5bar"></span></div>
+    <div class="hud">
+      <span class="chip" id="g5score">0 correct</span>
+      <span class="chip streak" id="g5streak">streak 0</span>
+    </div>
+    <div class="qbox" id="g5box"></div>
+    <div class="btnrow">
+      <button class="btn" id="g5start" type="button">Start the clock</button>
+    </div>
+  </section>
+
+</div>
+
+<nav class="bottomnav">
+  <a class="btnlink" href="index.html">&laquo; Back to Present Perfect Quest</a>
+  <a class="btnlink alt" href="seven-gates.html">&laquo; The Seven Gates</a>
+</nav>
+
+<footer class="site">Copyright Prof Dan M. Mecikovsky</footer>
+
+<script id="data-block">
+/* ============================================================
+   SOLO CONTENIDO. Ni una referencia al DOM en este bloque.
+   ============================================================
+   LOS CINCO JUEGOS DE LA PUERTA SELLADA.
+
+   De donde salen los motores: del handoff de escape-the-grammar-lab,
+   la pagina de juegos que se hizo para la alumna de secundario. Los
+   mecanismos son agnosticos de la gramatica, asi que se reusan tal
+   cual y solo cambia el contenido. El juego 2 de aquella pagina era
+   "Comma Surgeon" y no tiene nada que ver con el present perfect: se
+   reemplazo por uno nuevo, FOR o SINCE, que es justo lo que el
+   profesor pidio entrenar.
+
+   >>> AVISO PARA EL PROFESOR <<<
+   Las oraciones de los cinco juegos son NUEVAS: no salen de ninguna
+   hoja. Lo que si se respeta es la lista de verbos de la unidad: cada
+   verbo que aparece aca ya esta en el material (pagina 159, los dos
+   Grammar: Plus y los siete mini tests). No se agrego ninguno.
+   ============================================================ */
+
+/* el codigo de la puerta: un digito por sello */
+var CODE = [5, 2, 8, 3, 6];
+var LABELS = ["The Cracked Sentences","The Two Keys","The Third Form Hunt","The Gatekeeper's Grid","Beat the Hourglass"];
+
+/* cuantos aciertos pide cada juego */
+var NEED1 = 7, NEED2 = 10, NEED3 = 3, NEED5 = 10;
+
+/* ============ SEAL 1 · una palabra mal por oracion ============ */
+var ERRORS = [
+  { words: ["I","have","went","to","the","new","bookshop."], bad: 2, fix: "gone",
+    why: "went is the past simple, and after have you always need the third form: gone.",
+    tip: "have went does not exist. When you see have or has, look for the third form." },
+  { words: ["She","has","never","not","eaten","sushi."], bad: 3, fix: "",
+    why: "never is already negative, so the sentence does not need not as well.",
+    tip: "One negative word is enough: has never eaten." },
+  { words: ["Have","you","never","ridden","a","horse?"], bad: 2, fix: "ever",
+    why: "This is a question about your life, and in questions the word is ever.",
+    tip: "ever lives in questions, never lives in statements." },
+  { words: ["We","have","been","here","since","six","years."], bad: 4, fix: "for",
+    why: "six years is a length of time, and lengths of time go with for.",
+    tip: "for answers how long. since answers from when." },
+  { words: ["My","brother","has","broke","his","arm."], bad: 3, fix: "broken",
+    why: "broke is the past simple. After has you need the third form: broken.",
+    tip: "break - broke - broken. Only the third one follows have or has." },
+  { words: ["Has","your","friends","ever","won","a","competition?"], bad: 0, fix: "Have",
+    why: "your friends is more than one person, so the question starts with Have.",
+    tip: "Has goes with he, she and it. Have goes with everybody else." },
+  { words: ["I","haven't","saw","him","today."], bad: 2, fix: "seen",
+    why: "After haven't the verb goes into the third form: seen.",
+    tip: "saw is the past simple, so haven't saw is always wrong." },
+  { words: ["They","have","ever","been","to","London."], bad: 2, fix: "never",
+    why: "There is no question mark here: it is a statement, and statements take never.",
+    tip: "If you can put a full stop at the end, the word is never." },
+  { words: ["My","mum","has","bought","a","car","yesterday."], bad: 6, fix: "",
+    why: "yesterday is a finished past time, and it cannot travel with the present perfect.",
+    tip: "yesterday, last week and two days ago all go with the past simple." }
+];
+
+/* ============ SEAL 2 · for o since ============ */
+var SINCEFOR = [
+  { word: "three years", answer: "FOR",
+    why: "three years is a length of time: you can count it, so it goes with for.",
+    tip: "If you can count the period, it is for." },
+  { word: "2019", answer: "SINCE",
+    why: "2019 is the moment it started, not how long it lasted, so it goes with since.",
+    tip: "A year is a point on the calendar: since 2019." },
+  { word: "Monday", answer: "SINCE",
+    why: "Monday names the day it started, so the word you need is since.",
+    tip: "Days of the week are points in time: since Monday, since Friday." },
+  { word: "ten minutes", answer: "FOR",
+    why: "ten minutes measures how long something has lasted, so it takes for.",
+    tip: "Minutes, hours, days and years are all lengths: for ten minutes." },
+  { word: "I was six", answer: "SINCE",
+    why: "I was six says when it started, so the sentence needs since.",
+    tip: "A whole little sentence about the past also takes since: since I was six." },
+  { word: "a long time", answer: "FOR",
+    why: "a long time has no number, but it is still a length of time, so it takes for.",
+    tip: "for a long time and for ages both work the same way." },
+  { word: "last summer", answer: "SINCE",
+    why: "last summer is the moment the action started, so it goes with since.",
+    tip: "last summer, last year and last Monday all point at a moment: since." },
+  { word: "two weeks", answer: "FOR",
+    why: "two weeks counts how long, so the word is for.",
+    tip: "Two of anything is a length: for two weeks, for two months." },
+  { word: "September", answer: "SINCE",
+    why: "September is a point on the calendar, so the sentence needs since.",
+    tip: "Months work like years: since September, since 2020." },
+  { word: "half an hour", answer: "FOR",
+    why: "half an hour is thirty minutes, and minutes measure how long, so it is for.",
+    tip: "If you could answer the question how long?, the word is for." },
+  { word: "breakfast", answer: "SINCE",
+    why: "breakfast is a moment of the day, so it goes with since.",
+    tip: "since breakfast, since lunch, since the bell rang." },
+  { word: "ages", answer: "FOR",
+    why: "ages is an informal way of saying a very long time, and that is a length: for ages.",
+    tip: "I haven't seen you for ages is what you say to a friend." }
+];
+
+/* ============ SEAL 3 · el wordle de terceras formas ============ */
+var VERBS = [
+  { base: "be", answer: "BEEN",
+    why: "be is irregular: be - was/were - been. The third form is been.",
+    tip: "After have or has there is only one option: been." },
+  { base: "break", answer: "BROKEN",
+    why: "break is irregular: break - broke - broken.",
+    tip: "broke is the past simple. The one that follows have is broken." },
+  { base: "buy", answer: "BOUGHT",
+    why: "buy is irregular: buy - bought - bought. The second and the third form are the same.",
+    tip: "bought is already past, so you never add -ed to it." },
+  { base: "do", answer: "DONE",
+    why: "do is irregular: do - did - done.",
+    tip: "did can never follow have. The word you need is done." },
+  { base: "eat", answer: "EATEN",
+    why: "eat is irregular: eat - ate - eaten.",
+    tip: "ate is the past simple. have ate is always wrong." },
+  { base: "fly", answer: "FLOWN",
+    why: "fly is irregular: fly - flew - flown.",
+    tip: "flied does not exist." },
+  { base: "forget", answer: "FORGOTTEN",
+    why: "forget is irregular: forget - forgot - forgotten. The third form doubles the t.",
+    tip: "Two t in forgotten." },
+  { base: "go", answer: "GONE",
+    why: "go is irregular: go - went - gone. The past simple looks nothing like the others.",
+    tip: "went can never follow have. You say I have gone." },
+  { base: "ride", answer: "RIDDEN",
+    why: "ride is irregular: ride - rode - ridden. The third form doubles the d.",
+    tip: "Two d in ridden." },
+  { base: "see", answer: "SEEN",
+    why: "see is irregular: see - saw - seen.",
+    tip: "saw is the past simple. After have you need seen." },
+  { base: "swim", answer: "SWUM",
+    why: "swim is irregular: swim - swam - swum. The vowel goes i, a, u.",
+    tip: "swum, with a u, is the one that follows have." },
+  { base: "write", answer: "WRITTEN",
+    why: "write is irregular: write - wrote - written. The third form doubles the t.",
+    tip: "Two t in written. wrote is the past simple." }
+];
+
+/* ============ SEAL 4 · el tablero, tres opciones ============ */
+var GRIDQ = [
+  { q: "I ___ never been to London.", options: ["have","has","am"], correct: "have",
+    why: "I always takes have, and never goes between have and the past participle.",
+    tip: "has is only for he, she and it." },
+  { q: "Has your sister ever ___ a horse?", options: ["rode","ridden","ride"], correct: "ridden",
+    why: "After Has ... ever the verb is the third form: ridden.",
+    tip: "rode is the past simple. Two d in ridden." },
+  { q: "We have been friends ___ 2018.", options: ["for","since","from"], correct: "since",
+    why: "2018 is the moment the friendship started, so the word is since.",
+    tip: "since + a point in time. for + a length of time." },
+  { q: "___ you ever eaten sushi?", options: ["Has","Have","Do"], correct: "Have",
+    why: "you always takes Have, and the question about your life uses ever.",
+    tip: "Do you eat sushi? is a different question, about your habits." },
+  { q: "He hasn't ___ his homework yet.", options: ["did","done","do"], correct: "done",
+    why: "After hasn't the verb goes into the third form, and do becomes done.",
+    tip: "did can never follow has or hasn't." },
+  { q: "They have lived here ___ ten years.", options: ["since","for","during"], correct: "for",
+    why: "ten years measures how long they have lived there, so it takes for.",
+    tip: "If you can count the period, use for." },
+  { q: "My mum has ___ a new car.", options: ["buy","bought","buyed"], correct: "bought",
+    why: "After has you need the third form, and buy is irregular: buy - bought - bought.",
+    tip: "buyed does not exist in English." },
+  { q: "I have ___ seen that film.", options: ["ever","never","yet"], correct: "never",
+    why: "This is a statement, so the negative word is never.",
+    tip: "ever belongs in questions, never in statements." },
+  { q: "Have you ___ been to Brazil?", options: ["never","ever","already"], correct: "ever",
+    why: "In a question about your whole life the word is ever.",
+    tip: "Have you ever...? is the normal way to ask about experiences." },
+  { q: "She has ___ in that school for six years.", options: ["been","being","be"], correct: "been",
+    why: "After has the verb is the third form of be, which is been.",
+    tip: "being is for actions in progress. been is the third form." },
+  { q: "We haven't ___ the news.", options: ["hear","heard","hearing"], correct: "heard",
+    why: "After haven't the verb is the third form, and hear is irregular: hear - heard - heard.",
+    tip: "heard is written with the same letters as hear, plus a d." },
+  { q: "___ he ever broken a window?", options: ["Have","Has","Did"], correct: "Has",
+    why: "he is one person, so the question starts with Has.",
+    tip: "Did he break...? is the past simple question, a different one." }
+];
+
+/* ============ SEAL 5 · contra el reloj, dos opciones ============ */
+var RAPID = [
+  { q: "I have ___ a horse.", options: ["ridden","rode"], correct: "ridden",
+    why: "After have you need the third form.", tip: "rode is the past simple." },
+  { q: "We have been here ___ Monday.", options: ["for","since"], correct: "since",
+    why: "Monday is a point in time.", tip: "since + when it started." },
+  { q: "___ you ever swum in a lake?", options: ["Have","Has"], correct: "Have",
+    why: "you takes Have.", tip: "Has is only for he, she and it." },
+  { q: "She has never ___ sushi.", options: ["eaten","ate"], correct: "eaten",
+    why: "After has never the verb is the third form.", tip: "ate is the past simple." },
+  { q: "They have lived here ___ five years.", options: ["since","for"], correct: "for",
+    why: "five years is a length of time.", tip: "for answers how long." },
+  { q: "He hasn't ___ his keys.", options: ["found","find"], correct: "found",
+    why: "After hasn't you need the third form.", tip: "find - found - found." },
+  { q: "Has your brother ___ a blog?", options: ["written","wrote"], correct: "written",
+    why: "After Has the verb is the third form.", tip: "Two t in written." },
+  { q: "I have ___ been to Paris.", options: ["never","ever"], correct: "never",
+    why: "It is a statement, not a question.", tip: "ever only in questions." },
+  { q: "___ your friends ever met a star?", options: ["Have","Has"], correct: "Have",
+    why: "your friends is plural.", tip: "Plural people take Have." },
+  { q: "We have known them ___ 2020.", options: ["since","for"], correct: "since",
+    why: "2020 is the moment it started.", tip: "A year always takes since." },
+  { q: "My dad has ___ to work.", options: ["gone","went"], correct: "gone",
+    why: "After has you need gone.", tip: "went can never follow has." },
+  { q: "She has ___ the window.", options: ["broken","broke"], correct: "broken",
+    why: "After has the verb is the third form.", tip: "broke is the past simple." },
+  { q: "I haven't ___ him since June.", options: ["seen","saw"], correct: "seen",
+    why: "After haven't the verb is the third form.", tip: "saw is the past simple." },
+  { q: "Has she ___ her homework?", options: ["done","did"], correct: "done",
+    why: "After Has the verb is done.", tip: "did never follows has." },
+  { q: "We have ___ the match.", options: ["won","win"], correct: "won",
+    why: "After have you need the third form: won.", tip: "win - won - won." },
+  { q: "He has ___ me the truth.", options: ["told","tell"], correct: "told",
+    why: "After has the verb is the third form: told.", tip: "tell - told - told." },
+  { q: "They have been friends ___ ages.", options: ["for","since"], correct: "for",
+    why: "ages means a very long time.", tip: "for ages is a length." },
+  { q: "Have you ___ finished?", options: ["already","yet"], correct: "already",
+    why: "already goes between have and the past participle.", tip: "yet goes at the end." }
+];
+</script>
+
+<script id="engine-block">
+(function(){
+"use strict";
+
+/* ---------- helpers ---------- */
+function el(tag, cls, txt){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(txt !== undefined && txt !== null) n.textContent = txt;
+  return n;
+}
+function shuffle(a){
+  var i, j, t;
+  for(i = a.length - 1; i > 0; i--){ j = Math.floor(Math.random() * (i + 1)); t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+/* La caja Why + Hero tip, igual que en el resto de la quest: aparece
+   SIEMPRE, este bien o mal. */
+function expBox(ok, answer, why, tip){
+  var box = el("div", "exp " + (ok ? "right" : "wrong"));
+  if(answer){
+    var p0 = el("p");
+    p0.appendChild(el("span", "sol", answer));
+    box.appendChild(p0);
+  }
+  var p1 = el("p");
+  p1.appendChild(el("b", "lab why", "Why"));
+  p1.appendChild(document.createTextNode(why));
+  box.appendChild(p1);
+  var p2 = el("p");
+  p2.appendChild(el("b", "lab tip", "Hero tip"));
+  p2.appendChild(document.createTextNode(tip));
+  box.appendChild(p2);
+  return box;
+}
+
+/* ---------- la puerta y sus cinco sellos ---------- */
+var won = [false, false, false, false, false];
+var digitsBox = document.getElementById("digits");
+var codeMsg = document.getElementById("codeMsg");
+
+function drawDigits(){
+  digitsBox.innerHTML = "";
+  for(var i = 0; i < CODE.length; i++){
+    var d = el("div", "digit" + (won[i] ? " got" : ""));
+    d.appendChild(document.createTextNode(won[i] ? String(CODE[i]) : "?"));
+    digitsBox.appendChild(d);
+  }
+}
+function unlock(i){
+  if(won[i]) return;
+  won[i] = true;
+  drawDigits();
+  document.getElementById("d" + (i + 1)).className = "done";
+  var missing = 0;
+  for(var k = 0; k < won.length; k++){ if(!won[k]) missing++; }
+  codeMsg.className = "lockmsg";
+  codeMsg.textContent = missing
+    ? (LABELS[i] + " is beaten. " + missing + " seal" + (missing === 1 ? "" : "s") + " to go.")
+    : "Every digit is yours. Type the code and open the door.";
+}
+drawDigits();
+
+document.getElementById("codeBtn").addEventListener("click", function(){
+  var v = document.getElementById("codeInput").value.replace(/\D/g, "");
+  if(v === CODE.join("")){
+    codeMsg.className = "lockmsg win";
+    codeMsg.textContent = "The door is open. You have finished the Present Perfect Quest.";
+  } else {
+    codeMsg.className = "lockmsg";
+    codeMsg.textContent = "That is not the code. Beat the games and the digits appear above.";
+  }
+});
+
+/* ============ SEAL 1 - THE CRACKED SENTENCES ============ */
+(function(){
+  var box = document.getElementById("g1box");
+  var dots = document.getElementById("g1dots");
+  var scoreEl = document.getElementById("g1score");
+  var livesEl = document.getElementById("g1lives");
+  var nextBtn = document.getElementById("g1next");
+  var againBtn = document.getElementById("g1again");
+  var order = [], idx = 0, right = 0, clean = 0, marks = [];
+
+  function drawDots(){
+    dots.innerHTML = "";
+    for(var i = 0; i < ERRORS.length; i++){
+      var cls = "dot";
+      if(marks[i] === true) cls = "dot y";
+      else if(marks[i] === false) cls = "dot n";
+      if(i === idx) cls += " now";
+      dots.appendChild(el("span", cls));
+    }
+  }
+
+  function finish(){
+    box.innerHTML = "";
+    var f = el("div", "final");
+    f.appendChild(el("div", "msg", right >= NEED1 ? "The first seal is broken." : "Not enough this time."));
+    f.appendChild(el("div", "big", right + " / " + ERRORS.length));
+    f.appendChild(el("div", "msg", right >= NEED1 ? "Look at the lock above." : "You need " + NEED1 + ". Play again."));
+    box.appendChild(f);
+    nextBtn.disabled = true;
+    if(right >= NEED1) unlock(0);
+    drawDots();
+  }
+
+  function render(){
+    box.innerHTML = "";
+    if(idx >= order.length){ finish(); return; }
+    var q = order[idx];
+    var p = el("p", "sentence");
+    var misses = 0;
+
+    function reveal(found){
+      var all = p.querySelectorAll(".word");
+      for(var z = 0; z < all.length; z++){ all[z].className = all[z].className.replace("word", "word dead"); }
+      all[q.bad].className = "word dead " + (found ? "good" : "bad");
+      if(found){
+        right++;
+        if(misses === 0) clean++;
+      }
+      marks[idx] = found;
+      scoreEl.textContent = right + " / " + ERRORS.length;
+      livesEl.textContent = "first try: " + clean;
+      var fixed = q.words.slice();
+      if(q.fix === "") fixed.splice(q.bad, 1);
+      else fixed[q.bad] = q.fix;
+      box.appendChild(el("p", "fixline", "Correct: " + fixed.join(" ")));
+      box.appendChild(expBox(found, q.fix === "" ? "The word " + q.words[q.bad] + " has to go." : q.words[q.bad] + "  ->  " + q.fix, q.why, q.tip));
+      nextBtn.disabled = false;
+      drawDots();
+    }
+
+    for(var i = 0; i < q.words.length; i++){
+      (function(k){
+        var w = el("span", "word", q.words[k]);
+        w.onclick = function(){
+          if(box.querySelector(".exp")) return;
+          if(k === q.bad){ reveal(true); return; }
+          w.className = "word bad";
+          misses++;
+          if(misses >= 2) reveal(false);
+        };
+        p.appendChild(w);
+        p.appendChild(document.createTextNode(" "));
+      })(i);
+    }
+    box.appendChild(p);
+    box.appendChild(el("p", "keyhint", "Click the word you think is wrong. Two wrong clicks and the sentence is lost, so read it all before you decide."));
+    nextBtn.disabled = true;
+    drawDots();
+  }
+
+  function start(){
+    order = shuffle(ERRORS.slice());
+    idx = 0; right = 0; clean = 0; marks = [];
+    scoreEl.textContent = "0 / " + ERRORS.length;
+    livesEl.textContent = "first try: 0";
+    render();
+  }
+  nextBtn.addEventListener("click", function(){ idx++; render(); });
+  againBtn.addEventListener("click", start);
+  start();
+})();
+
+/* ============================================================
+   SEAL 2 - FOR o SINCE
+   Mecanica nueva: en lugar de las comas del otro alumno, una carta
+   con una expresion de tiempo y dos botones. Es el mismo patron de
+   siempre: se elige, se corrige, y la explicacion aparece igual si
+   estuvo bien o mal.
+   ============================================================ */
+(function(){
+  var box = document.getElementById("g2box");
+  var dots = document.getElementById("g2dots");
+  var scoreEl = document.getElementById("g2score");
+  var whichEl = document.getElementById("g2which");
+  var nextBtn = document.getElementById("g2next");
+  var againBtn = document.getElementById("g2again");
+  var order = [], idx = 0, right = 0, marks = [];
+
+  function drawDots(){
+    dots.innerHTML = "";
+    for(var i = 0; i < SINCEFOR.length; i++){
+      var cls = "dot";
+      if(marks[i] === true) cls = "dot y";
+      else if(marks[i] === false) cls = "dot n";
+      if(i === idx) cls += " now";
+      dots.appendChild(el("span", cls));
+    }
+  }
+
+  function finish(){
+    box.innerHTML = "";
+    var f = el("div", "final");
+    f.appendChild(el("div", "msg", right >= NEED2 ? "The second seal is broken." : "Not enough this time."));
+    f.appendChild(el("div", "big", right + " / " + SINCEFOR.length));
+    f.appendChild(el("div", "msg", right >= NEED2 ? "Look at the lock above." : "You need " + NEED2 + ". Play again."));
+    box.appendChild(f);
+    nextBtn.disabled = true;
+    whichEl.textContent = "finished";
+    if(right >= NEED2) unlock(1);
+    drawDots();
+  }
+
+  function render(){
+    box.innerHTML = "";
+    if(idx >= order.length){ finish(); return; }
+    var d = order[idx];
+    whichEl.textContent = "card " + (idx + 1) + " of " + order.length;
+    box.appendChild(el("p", "keyhint", "Which word goes in front of this time expression?"));
+    box.appendChild(el("div", "timeword", d.word));
+
+    var row = el("div", "twobtn");
+    var botones = [];
+    ["FOR", "SINCE"].forEach(function(label){
+      var b = el("button", "bigopt", label);
+      b.type = "button";
+      b.addEventListener("click", function(){
+        if(box.querySelector(".exp")) return;
+        var ok = (label === d.answer);
+        for(var k = 0; k < botones.length; k++){
+          botones[k].disabled = true;
+          if(botones[k].textContent === d.answer) botones[k].className = "bigopt good";
+          else if(botones[k].textContent === label) botones[k].className = "bigopt bad";
+        }
+        if(ok) right++;
+        marks[idx] = ok;
+        scoreEl.textContent = right + " / " + SINCEFOR.length;
+        box.appendChild(el("p", "fixline", d.answer.toLowerCase() + " " + d.word));
+        box.appendChild(expBox(ok, null, d.why, d.tip));
+        nextBtn.disabled = false;
+        drawDots();
+      });
+      botones.push(b);
+      row.appendChild(b);
+    });
+    box.appendChild(row);
+    nextBtn.disabled = true;
+    drawDots();
+  }
+
+  function start(){
+    order = shuffle(SINCEFOR.slice());
+    idx = 0; right = 0; marks = [];
+    scoreEl.textContent = "0 / " + SINCEFOR.length;
+    render();
+  }
+  nextBtn.addEventListener("click", function(){ idx++; render(); });
+  againBtn.addEventListener("click", start);
+  start();
+})();
+
+/* ============ SEAL 3 - THE THIRD FORM HUNT ============ */
+(function(){
+  var clue = document.getElementById("g3clue");
+  var grid = document.getElementById("g3grid");
+  var input = document.getElementById("g3input");
+  var goBtn = document.getElementById("g3go");
+  var newBtn = document.getElementById("g3new");
+  var hint = document.getElementById("g3hint");
+  var expArea = document.getElementById("g3exp");
+  var target = null, tries = 0, solved = 0, over = false;
+  var MAX = 6;
+
+  function score(guess, word){
+    var res = [], left = {}, i, c;
+    for(i = 0; i < word.length; i++){
+      if(guess[i] === word[i]) res[i] = "hit";
+      else { res[i] = "miss"; c = word[i]; left[c] = (left[c] || 0) + 1; }
+    }
+    for(i = 0; i < word.length; i++){
+      if(res[i] === "hit") continue;
+      c = guess[i];
+      if(left[c]){ res[i] = "near"; left[c]--; }
+    }
+    return res;
+  }
+
+  function row(guess, marks){
+    var r = el("div", "wrow");
+    for(var i = 0; i < guess.length; i++){
+      r.appendChild(el("div", "tile " + marks[i], guess[i]));
+    }
+    return r;
+  }
+
+  function pick(){
+    var choice = VERBS[Math.floor(Math.random() * VERBS.length)];
+    while(VERBS.length > 1 && target && choice.base === target.base){
+      choice = VERBS[Math.floor(Math.random() * VERBS.length)];
+    }
+    target = choice;
+    tries = 0; over = false;
+    grid.innerHTML = ""; expArea.innerHTML = "";
+    input.value = "";
+    input.disabled = false; goBtn.disabled = false;
+    clue.textContent = "third form of: " + target.base;
+    hint.textContent = target.answer.length + " letters  ·  " + MAX + " tries left  ·  solved so far: " + solved + " of " + NEED3;
+  }
+
+  function finish(win){
+    over = true;
+    input.disabled = true; goBtn.disabled = true;
+    expArea.innerHTML = "";
+    expArea.appendChild(expBox(win, target.answer, target.why, target.tip));
+    if(win){
+      solved++;
+      hint.textContent = "solved so far: " + solved + " of " + NEED3;
+      if(solved >= NEED3){
+        unlock(2);
+        expArea.appendChild(el("p", "fixline", "Three verbs found. The third seal is broken: look at the lock above."));
+      } else {
+        expArea.appendChild(el("p", "fixline", "Press Another verb to hunt the next one."));
+      }
+    } else {
+      expArea.appendChild(el("p", "fixline", "Press Another verb and try a different one."));
+    }
+  }
+
+  function guess(){
+    if(over) return;
+    var g = input.value.toUpperCase().replace(/[^A-Z]/g, "");
+    if(g.length !== target.answer.length){
+      hint.textContent = "Your guess needs exactly " + target.answer.length + " letters. You wrote " + g.length + ".";
+      return;
+    }
+    tries++;
+    grid.appendChild(row(g, score(g, target.answer)));
+    input.value = "";
+    if(g === target.answer){ finish(true); return; }
+    if(tries >= MAX){ finish(false); return; }
+    hint.textContent = target.answer.length + " letters  ·  " + (MAX - tries) + " tries left  ·  solved so far: " + solved + " of " + NEED3;
+  }
+
+  goBtn.addEventListener("click", guess);
+  input.addEventListener("keydown", function(ev){ if(ev.key === "Enter") guess(); });
+  newBtn.addEventListener("click", pick);
+  pick();
+})();
+
+/* ============ SEAL 4 - THE GATEKEEPER'S GRID ============ */
+(function(){
+  var boardEl = document.getElementById("g4board");
+  var msgEl = document.getElementById("g4msg");
+  var qbox = document.getElementById("g4box");
+  var againBtn = document.getElementById("g4again");
+  var scoreEl = document.getElementById("g4score");
+  var board, pool, busy, wins = 0, over;
+  var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+  function winner(b){
+    for(var i = 0; i < LINES.length; i++){
+      var L = LINES[i];
+      if(b[L[0]] && b[L[0]] === b[L[1]] && b[L[1]] === b[L[2]]) return { who: b[L[0]], line: L };
+    }
+    return null;
+  }
+  function freeCells(b){
+    var f = [];
+    for(var i = 0; i < 9; i++){ if(!b[i]) f.push(i); }
+    return f;
+  }
+  function cpuMove(b){
+    var free = freeCells(b), i, t;
+    for(i = 0; i < free.length; i++){ t = b.slice(); t[free[i]] = "O"; if(winner(t)) return free[i]; }
+    for(i = 0; i < free.length; i++){ t = b.slice(); t[free[i]] = "X"; if(winner(t)) return free[i]; }
+    if(b[4] === "") return 4;
+    var corners = [0, 2, 6, 8].filter(function(c){ return b[c] === ""; });
+    if(corners.length) return corners[Math.floor(Math.random() * corners.length)];
+    return free[Math.floor(Math.random() * free.length)];
+  }
+
+  function paint(line){
+    var sq = boardEl.querySelectorAll(".sq");
+    for(var i = 0; i < 9; i++){
+      var cls = "sq";
+      if(board[i] === "X") cls += " me";
+      else if(board[i] === "O") cls += " cpu";
+      if(line && line.indexOf(i) >= 0) cls += " win";
+      sq[i].className = cls;
+      sq[i].textContent = board[i] === "X" ? "X" : (board[i] === "O" ? "O" : "");
+    }
+  }
+
+  function endGame(w){
+    over = true;
+    qbox.className = "qbox hidden";
+    paint(w ? w.line : null);
+    if(w && w.who === "X"){
+      wins++;
+      scoreEl.textContent = wins + (wins === 1 ? " win" : " wins");
+      msgEl.textContent = "Three in a row. The fourth seal is broken: look at the lock above.";
+      unlock(3);
+    } else if(w){
+      msgEl.textContent = "The gatekeeper got three in a row. Press New game.";
+    } else {
+      msgEl.textContent = "A draw, and a draw is not enough. Press New game.";
+    }
+  }
+
+  function afterMove(){
+    var w = winner(board);
+    if(w || freeCells(board).length === 0){ endGame(w); return; }
+    var m = cpuMove(board);
+    board[m] = "O";
+    paint();
+    w = winner(board);
+    if(w || freeCells(board).length === 0){ endGame(w); return; }
+    msgEl.textContent = "Your turn. Pick an empty square.";
+    busy = false;
+  }
+
+  function ask(cell){
+    if(busy || over || board[cell]) return;
+    busy = true;
+    var d = pool.pop();
+    if(!d){ pool = shuffle(GRIDQ.slice()); d = pool.pop(); }
+    qbox.className = "qbox";
+    qbox.innerHTML = "";
+    qbox.appendChild(el("p", "gq", d.q.replace("___", "............")));
+    var opts = el("div", "opts");
+    for(var i = 0; i < d.options.length; i++){
+      (function(word){
+        var b = el("button", "opt", word);
+        b.type = "button";
+        b.addEventListener("click", function(){
+          var all = opts.querySelectorAll("button");
+          for(var k = 0; k < all.length; k++){
+            all[k].disabled = true;
+            if(all[k].textContent === d.correct) all[k].className = "opt good";
+            else if(all[k].textContent === word) all[k].className = "opt bad";
+          }
+          var ok = (word === d.correct);
+          board[cell] = ok ? "X" : "O";
+          paint();
+          qbox.appendChild(expBox(ok, d.correct, d.why, d.tip));
+          msgEl.textContent = ok ? "Square won." : "The gatekeeper takes that square.";
+          setTimeout(afterMove, 900);
+        });
+        opts.appendChild(b);
+      })(d.options[i]);
+    }
+    qbox.appendChild(opts);
+  }
+
+  function start(){
+    board = ["","","","","","","","",""];
+    pool = shuffle(GRIDQ.slice());
+    busy = false; over = false;
+    qbox.className = "qbox hidden";
+    qbox.innerHTML = "";
+    msgEl.textContent = "Pick a square to start.";
+    boardEl.innerHTML = "";
+    for(var i = 0; i < 9; i++){
+      (function(k){
+        var s = el("div", "sq");
+        s.onclick = function(){ ask(k); };
+        boardEl.appendChild(s);
+      })(i);
+    }
+    paint();
+  }
+  againBtn.addEventListener("click", start);
+  start();
+})();
+
+/* ============ SEAL 5 - BEAT THE HOURGLASS ============ */
+(function(){
+  var box = document.getElementById("g5box");
+  var clockEl = document.getElementById("g5clock");
+  var barEl = document.getElementById("g5bar");
+  var scoreEl = document.getElementById("g5score");
+  var streakEl = document.getElementById("g5streak");
+  var startBtn = document.getElementById("g5start");
+  var TOTAL = 60, TARGET = NEED5;
+  var left = TOTAL, timer = null, pool = [], right = 0, streak = 0, best = 0, running = false;
+
+  function paintClock(){
+    clockEl.textContent = Math.ceil(left);
+    clockEl.className = left <= 10 ? "clock low" : "clock";
+    barEl.style.width = Math.max(0, (left / TOTAL) * 100) + "%";
+  }
+
+  function nextQ(){
+    if(!running) return;
+    if(!pool.length) pool = shuffle(RAPID.slice());
+    var d = pool.pop();
+    box.innerHTML = "";
+    box.appendChild(el("p", "gq", d.q.replace("___", "............")));
+    var opts = el("div", "opts");
+    for(var i = 0; i < d.options.length; i++){
+      (function(word){
+        var b = el("button", "opt", word);
+        b.type = "button";
+        b.addEventListener("click", function(){
+          if(!running) return;
+          var ok = (word === d.correct);
+          if(ok){ right++; streak++; if(streak > best) best = streak; }
+          else { streak = 0; left = Math.max(0, left - 3); paintClock(); }
+          scoreEl.textContent = right + " correct";
+          streakEl.textContent = "streak " + streak;
+          nextQ();
+          var flash = el("p", "flash" + (ok ? "" : " no"));
+          flash.appendChild(document.createTextNode((ok ? "Yes. " : "No: " + d.correct + ". ") + d.why + "  " + d.tip));
+          box.appendChild(flash);
+        });
+        opts.appendChild(b);
+      })(d.options[i]);
+    }
+    box.appendChild(opts);
+  }
+
+  function stop(){
+    running = false;
+    if(timer){ clearInterval(timer); timer = null; }
+    box.innerHTML = "";
+    var f = el("div", "final");
+    f.appendChild(el("div", "msg", right >= TARGET ? "The last seal is broken." : "Time is up."));
+    f.appendChild(el("div", "big", right));
+    f.appendChild(el("div", "msg", "correct answers  ·  longest streak " + best));
+    box.appendChild(f);
+    if(right >= TARGET){
+      unlock(4);
+      box.appendChild(el("p", "fixline", "You needed " + TARGET + ". Look at the lock above."));
+    } else {
+      box.appendChild(el("p", "fixline", "You needed " + TARGET + ". Press the button and go again."));
+    }
+    startBtn.disabled = false;
+    startBtn.textContent = "Start the clock";
+  }
+
+  startBtn.addEventListener("click", function(){
+    running = true;
+    left = TOTAL; right = 0; streak = 0; best = 0;
+    pool = shuffle(RAPID.slice());
+    scoreEl.textContent = "0 correct";
+    streakEl.textContent = "streak 0";
+    startBtn.disabled = true;
+    startBtn.textContent = "Running";
+    paintClock();
+    nextQ();
+    timer = setInterval(function(){
+      left -= 0.1;
+      if(left <= 0){ left = 0; paintClock(); stop(); return; }
+      paintClock();
+    }, 100);
+  });
+
+  box.appendChild(el("p", "gq", "Press the button and the first question appears. A wrong answer costs you three seconds."));
+  paintClock();
+})();
+
+})();
+</script>
+</body>
+</html>
