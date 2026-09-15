@@ -343,6 +343,14 @@ a.btnlink{
 a.btnlink:hover{filter:brightness(1.07)}
 a.btnlink:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
 a.btnlink.alt{background:var(--parch)}
+
+/* ---------- la misma oracion en negativa y en pregunta ---------- */
+.fline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:9px}
+.fline .flab{flex:0 0 auto}
+.gapline{display:flex;align-items:center;gap:.45em;flex-wrap:wrap;line-height:2.1}
+.exp p.solline{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px}
+
+input.w-xs{width:5.5rem}
 </style>
 </head>
 <body>
@@ -491,7 +499,15 @@ function mkInput(cls, ph){
 /* Caja Why + Hero tip. Se muestra SIEMPRE, este bien o mal. */
 function explainBox(ok, answerText, why, tip){
   var box = el("div", "exp " + (ok ? "right" : "wrong"));
-  if(answerText){
+  if(answerText && answerText.length && typeof answerText !== "string"){
+    /* tres respuestas, una por forma, cada una en su renglon */
+    for(var a = 0; a < answerText.length; a++){
+      var pa = el("p", "solline");
+      pa.appendChild(el("span", "flab " + answerText[a].label, answerText[a].label));
+      pa.appendChild(el("span", "sol", answerText[a].text));
+      box.appendChild(pa);
+    }
+  } else if(answerText){
     var p0 = el("p");
     p0.appendChild(el("span", "sol", "Answer: " + answerText));
     box.appendChild(p0);
@@ -690,10 +706,41 @@ function renderGap(st, t){
     txt.appendChild(el("span", "hintword", d.verb));
     line.appendChild(txt);
     item.appendChild(line);
+
+    /* la misma oracion, ya armada, en negativa y en pregunta */
+    var fields = [{ el: inp, answers: d.answers }];
+    if(d.neg){
+      var rowN = el("div", "fline");
+      rowN.appendChild(el("span", "flab negative", "Negative"));
+      var sN = el("span", "gapline");
+      sN.appendChild(document.createTextNode(d.neg.before + " "));
+      var iN = mkInput("w-m");
+      sN.appendChild(iN);
+      sN.appendChild(document.createTextNode(tail(d.neg.after)));
+      rowN.appendChild(sN);
+      item.appendChild(rowN);
+      fields.push({ el: iN, answers: d.neg.answers });
+
+      var rowQ = el("div", "fline");
+      rowQ.appendChild(el("span", "flab question", "Question"));
+      var sQ = el("span", "gapline");
+      var iA = mkInput("w-xs");
+      sQ.appendChild(iA);
+      sQ.appendChild(document.createTextNode(" " + d.que.subj + " "));
+      var iP = mkInput("w-s");
+      sQ.appendChild(iP);
+      sQ.appendChild(document.createTextNode(tail(d.que.after)));
+      rowQ.appendChild(sQ);
+      item.appendChild(rowQ);
+      fields.push({ el: iA, answers: d.que.auxAnswers });
+      fields.push({ el: iP, answers: d.que.partAnswers });
+    }
     st.body.appendChild(item);
-    st.entries.push({ kind: "input", inputs: [{ el: inp, answers: d.answers }], data: d, holder: item, exp: item });
+    st.entries.push({ kind: "input", inputs: fields, data: d, holder: item, exp: item });
   }
 }
+/* si lo que sigue al hueco arranca con un signo, no va espacio delante */
+function tail(s){ return (/^[.,!?;:]/.test(s) ? "" : " ") + s; }
 
 /* ---------- free ---------- */
 function renderFree(st, t){
@@ -764,6 +811,11 @@ function checkTrial(key){
       }
       if(e.holder.tagName === "TR") e.holder.className = allOk ? "rowok" : "rowno";
       var answer = e.verb ? (e.verb.f[0] + "  -  " + e.verb.f[1] + "  -  " + e.verb.f[2]) : e.data.solution;
+      if(e.data.neg){
+        answer = [{ label: "affirmative", text: e.data.solution },
+                  { label: "negative",    text: e.data.neg.solution },
+                  { label: "question",    text: e.data.que.solution }];
+      }
       var why = e.verb ? e.verb.why : e.data.why;
       var tip = e.verb ? e.verb.tip : e.data.tip;
       var boxNode = explainBox(allOk, answer, why, tip);
