@@ -351,6 +351,9 @@ a.btnlink.alt{background:var(--parch)}
 .exp p.solline{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px}
 
 input.w-xs{width:5.5rem}
+
+.starter{font-weight:600;color:#3d1470}
+.gapline .hintword{margin-left:.2em}
 </style>
 </head>
 <body>
@@ -409,7 +412,7 @@ meta: {"chapter": "The Seven Gates · Gate III", "title": "The Forest of Finding
 
 verbs: {"fight": {"f": ["FIGHT", "FOUGHT", "FOUGHT"], "a": [["fight"], ["fought"], ["fought"]], "why": "fight goes to -ought for both past forms: fought.", "tip": "fought, bought, brought and thought all rhyme."}, "find": {"f": ["FIND", "FOUND", "FOUND"], "a": [["find"], ["found"], ["found"]], "why": "find changes i into ou: found, for the past simple and for the participle.", "tip": "There is no -ed in this verb, and the two past forms are the same."}, "fly": {"f": ["FLY", "FLEW", "FLOWN"], "a": [["fly"], ["flew"], ["flown"]], "why": "fly belongs to the -ew / -own family: flew for the past simple and flown for the participle.", "tip": "flied does not exist."}, "forget": {"f": ["FORGET", "FORGOT", "FORGOTTEN"], "a": [["forget"], ["forgot"], ["forgotten"]], "why": "forget follows get, and the past participle doubles the t: forgotten.", "tip": "Two t in forgotten. With one t it is the past simple."}, "get": {"f": ["GET", "GOT", "GOT"], "a": [["get"], ["got"], ["got", "gotten"]], "why": "get changes e into o: got, for the past simple and for the participle.", "tip": "In British English the participle is got, exactly like the past simple."}, "give": {"f": ["GIVE", "GAVE", "GIVEN"], "a": [["give"], ["gave"], ["given"]], "why": "give changes i into a for the past simple and adds -n for the participle: given.", "tip": "gave is the past simple; given is the one that follows have or has."}, "go": {"f": ["GO", "WENT", "GONE"], "a": [["go"], ["went"], ["gone"]], "why": "go is special: the past simple, went, does not look like go at all, and the participle is gone.", "tip": "went can never follow have. You say I have gone."}, "grow": {"f": ["GROW", "GREW", "GROWN"], "a": [["grow"], ["grew"], ["grown"]], "why": "grow belongs to the -ew / -own family: grew for the past simple and grown for the participle.", "tip": "growed is not a word."}, "hang": {"f": ["HANG", "HUNG", "HUNG"], "a": [["hang"], ["hung"], ["hung"]], "why": "hang changes a into u: hung, for the past simple and for the participle.", "tip": "hung is the word for a coat or a picture."}, "have": {"f": ["HAVE", "HAD", "HAD"], "a": [["have"], ["had"], ["had"]], "why": "have becomes had for both past forms.", "tip": "In the present perfect you can see the two of them together: I have had."}, "hear": {"f": ["HEAR", "HEARD", "HEARD"], "a": [["hear"], ["heard"], ["heard"]], "why": "hear only adds a d, and the sound changes: heard, twice.", "tip": "It is written with the same letters as hear, plus a d."}, "hide": {"f": ["HIDE", "HID", "HIDDEN"], "a": [["hide"], ["hid"], ["hidden"]], "why": "hide drops the e for hid and doubles the d for hidden.", "tip": "Two d in hidden."}},
 
-trials: [{"key": "v1table", "icon": "scroll", "medal": "Table A", "title": "Version 1 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "give", "given": [0]}, {"n": 2, "verb": "forget", "given": [0]}, {"n": 3, "verb": "get", "given": [1]}, {"n": 4, "verb": "fight", "given": [0]}, {"n": 5, "verb": "hang", "given": [2]}, {"n": 6, "verb": "have", "given": [1]}, {"n": 7, "verb": "hear", "given": [2]}]}, {"key": "v1sent", "icon": "sword", "medal": "Sentences A", "title": "Version 1 · The Sentences", "sub": "Complete the sentence with the present perfect. Then fill in the same sentence in the negative, and the question that goes with it.", "type": "gap", "note": {"title": "The same sentence in three shapes", "lines": ["Affirmative -> person + have/has + past participle: The bell has rung.", "Negative -> person + haven't/hasn't + past participle: The bell hasn't rung.", "Question -> Have/Has + person + past participle...? : Has the bell rung?"], "warning": "In the negative and in the question you only write the short sentence, without the part that comes after the exclamation mark. The person never changes, and the past participle never changes either."}, "items": [{"n": 1, "before": "Luckily, I", "after": "my phone. I thought I lost it!", "verb": "(find)", "answers": ["have found", "'ve found"], "solution": "have found", "neg": {"before": "I", "after": " my phone.", "answers": ["haven’t found", "haven't found", "have not found"], "solution": "I haven’t found my phone."}, "que": {"subj": "I", "after": " my phone?", "auxAnswers": ["Have"], "partAnswers": ["found"], "solution": "Have I found my phone?"}, "why": "I takes have, and find is irregular: find - found - found.", "tip": "The second and the third form of find are the same word."}, {"n": 2, "before": "My little sister", "after": "so much in these last few months. She is very tall.", "verb": "(grow)", "answers": ["has grown", "'s grown"], "solution": "has grown", "neg": {"before": "My little sister", "after": " so much.", "answers": ["hasn’t grown", "hasn't grown", "has not grown"], "solution": "My little sister hasn’t grown so much."}, "que": {"subj": "my little sister", "after": " so much?", "auxAnswers": ["Has"], "partAnswers": ["grown"], "solution": "Has my little sister grown so much?"}, "why": "My little sister is one person, so we use has, and grow is irregular: grow - grew - grown.", "tip": "these last few months are not finished, so the present perfect is the right tense."}, {"n": 3, "before": "I", "after": "my friend’s folder. It’s a joke!", "verb": "(hide)", "answers": ["have hidden", "'ve hidden"], "solution": "have hidden", "neg": {"before": "I", "after": " my friend’s folder.", "answers": ["haven’t hidden", "haven't hidden", "have not hidden"], "solution": "I haven’t hidden my friend’s folder."}, "que": {"subj": "I", "after": " my friend’s folder?", "auxAnswers": ["Have"], "partAnswers": ["hidden"], "solution": "Have I hidden my friend’s folder?"}, "why": "I takes have, and hide is irregular: hide - hid - hidden.", "tip": "Two d in hidden. With one d it is the past simple."}, {"n": 4, "before": "The plane", "after": "for ten hours. It’s going to arrive at the airport soon.", "verb": "(fly)", "answers": ["has flown", "'s flown"], "solution": "has flown", "neg": {"before": "The plane", "after": " for ten hours.", "answers": ["hasn’t flown", "hasn't flown", "has not flown"], "solution": "The plane hasn’t flown for ten hours."}, "que": {"subj": "the plane", "after": " for ten hours?", "auxAnswers": ["Has"], "partAnswers": ["flown"], "solution": "Has the plane flown for ten hours?"}, "why": "The plane is one thing, so we use has, and fly is irregular: fly - flew - flown.", "tip": "The plane is still in the air, and that is why we use the present perfect."}, {"n": 5, "before": "My dad isn’t at home, he", "after": "shopping.", "verb": "(go)", "answers": ["has gone", "'s gone"], "solution": "has gone", "neg": {"before": "He", "after": " shopping.", "answers": ["hasn’t gone", "hasn't gone", "has not gone"], "solution": "He hasn’t gone shopping."}, "que": {"subj": "he", "after": " shopping?", "auxAnswers": ["Has"], "partAnswers": ["gone"], "solution": "Has he gone shopping?"}, "why": "he is one person, so we use has, and go is irregular: go - went - gone.", "tip": "has gone means he is not here now. went can never follow has."}]}, {"key": "v2table", "icon": "shield", "medal": "Table B", "title": "Version 2 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "find", "given": [0]}, {"n": 2, "verb": "fly", "given": [0]}, {"n": 3, "verb": "get", "given": [2]}, {"n": 4, "verb": "give", "given": [0]}, {"n": 5, "verb": "go", "given": [1]}, {"n": 6, "verb": "grow", "given": [2]}, {"n": 7, "verb": "hide", "given": [0]}]}, {"key": "v2sent", "icon": "crown", "medal": "Sentences B", "title": "Version 2 · The Sentences", "sub": "Complete the sentence with the present perfect. Then fill in the same sentence in the negative, and the question that goes with it.", "type": "gap", "note": {"title": "The same sentence in three shapes", "lines": ["Affirmative -> person + have/has + past participle: The bell has rung.", "Negative -> person + haven't/hasn't + past participle: The bell hasn't rung.", "Question -> Have/Has + person + past participle...? : Has the bell rung?"], "warning": "In the negative and in the question you only write the short sentence, without the part that comes after the exclamation mark. The person never changes, and the past participle never changes either."}, "items": [{"n": 1, "before": "I", "after": "with my best friend recently. I’m very sad.", "verb": "(fight)", "answers": ["have fought", "'ve fought"], "solution": "have fought", "neg": {"before": "I", "after": " with my best friend.", "answers": ["haven’t fought", "haven't fought", "have not fought"], "solution": "I haven’t fought with my best friend."}, "que": {"subj": "I", "after": " with my best friend?", "auxAnswers": ["Have"], "partAnswers": ["fought"], "solution": "Have I fought with my best friend?"}, "why": "I takes have, and fight is irregular: fight - fought - fought.", "tip": "recently is a present perfect word: it does not say exactly when."}, {"n": 2, "before": "Peter and tom", "after": "sushi for the first time last night. It was amazing!", "verb": "(have)", "answers": ["have had", "'ve had"], "solution": "have had", "neg": {"before": "Peter and tom", "after": " sushi.", "answers": ["haven’t had", "haven't had", "have not had"], "solution": "Peter and tom haven’t had sushi."}, "que": {"subj": "Peter and tom", "after": " sushi?", "auxAnswers": ["Have"], "partAnswers": ["had"], "solution": "Have Peter and tom had sushi?"}, "why": "Peter and tom are two people, so we use have, and the verb have is irregular: have - had - had.", "tip": "In have had, the first have is the helper and had is the past participle."}, {"n": 3, "before": "The children", "after": "a wonderful story during the storytelling class today.", "verb": "(hear)", "answers": ["have heard", "'ve heard"], "solution": "have heard", "neg": {"before": "The children", "after": " a wonderful story.", "answers": ["haven’t heard", "haven't heard", "have not heard"], "solution": "The children haven’t heard a wonderful story."}, "que": {"subj": "the children", "after": " a wonderful story?", "auxAnswers": ["Have"], "partAnswers": ["heard"], "solution": "Have the children heard a wonderful story?"}, "why": "The children is plural, so we use have, and hear is irregular: hear - heard - heard.", "tip": "today is not finished, so the present perfect works here."}, {"n": 4, "before": "Oh no! The teacher", "after": "his marker. Have you got one?", "verb": "(forget)", "answers": ["has forgotten", "'s forgotten"], "solution": "has forgotten", "neg": {"before": "The teacher", "after": " his marker.", "answers": ["hasn’t forgotten", "hasn't forgotten", "has not forgotten"], "solution": "The teacher hasn’t forgotten his marker."}, "que": {"subj": "the teacher", "after": " his marker?", "auxAnswers": ["Has"], "partAnswers": ["forgotten"], "solution": "Has the teacher forgotten his marker?"}, "why": "The teacher is one person, so we use has, and forget is irregular: forget - forgot - forgotten.", "tip": "Two t in forgotten."}, {"n": 5, "before": "My mum", "after": "her coat behind the door before going in.", "verb": "(hang)", "answers": ["has hung", "'s hung"], "solution": "has hung", "neg": {"before": "My mum", "after": " her coat behind the door.", "answers": ["hasn’t hung", "hasn't hung", "has not hung"], "solution": "My mum hasn’t hung her coat behind the door."}, "que": {"subj": "my mum", "after": " her coat behind the door?", "auxAnswers": ["Has"], "partAnswers": ["hung"], "solution": "Has my mum hung her coat behind the door?"}, "why": "My mum is one person, so we use has, and hang is irregular: hang - hung - hung.", "tip": "hung is the word for coats and pictures."}]}],
+trials: [{"key": "v1table", "icon": "scroll", "medal": "Table A", "title": "Version 1 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "give", "given": [0]}, {"n": 2, "verb": "forget", "given": [0]}, {"n": 3, "verb": "get", "given": [1]}, {"n": 4, "verb": "fight", "given": [0]}, {"n": 5, "verb": "hang", "given": [2]}, {"n": 6, "verb": "have", "given": [1]}, {"n": 7, "verb": "hear", "given": [2]}]}, {"key": "v1sent", "icon": "sword", "medal": "Sentences A", "title": "Version 1 · The Sentences", "sub": "Five sentences, and each one asks for a different shape. Look at the label before you write: affirmative, negative or question.", "type": "gap", "note": {"title": "One sentence, three possible shapes", "lines": ["Affirmative -> person + have/has + past participle: The bell has rung.", "Negative -> person + haven't/hasn't + past participle: The bell hasn't rung.", "Question -> Have/Has + person + past participle...? : Has the bell rung?"], "warning": "The person never changes and the past participle never changes either. The only thing that moves is have or has."}, "items": [{"n": 1, "form": "affirmative", "parts": [{"t": "Luckily, I "}, {"w": "w-m", "a": ["have found", "'ve found"]}, {"t": " my phone. I thought I lost it!"}], "verb": "(find)", "solution": "Luckily, I have found my phone. I thought I lost it!", "why": "I takes have, and find is irregular: find - found - found.", "tip": "The second and the third form of find are the same word."}, {"n": 2, "form": "question", "parts": [{"w": "w-xs", "a": ["Has"]}, {"t": " my little sister "}, {"w": "w-s", "a": ["grown"]}, {"t": " so much?"}], "verb": "(grow)", "solution": "Has my little sister grown so much?", "why": "My little sister is one person, so we use has, and grow is irregular: grow - grew - grown. In the question, Have or Has jumps to the front of the sentence and the past participle stays exactly the same.", "tip": "these last few months are not finished, so the present perfect is the right tense."}, {"n": 3, "form": "negative", "parts": [{"t": "I "}, {"w": "w-m", "a": ["haven’t hidden", "haven't hidden", "have not hidden"]}, {"t": " my friend’s folder."}], "verb": "(hide)", "solution": "I haven’t hidden my friend’s folder.", "why": "I takes have, and hide is irregular: hide - hid - hidden. In the negative, have or has takes n't and the past participle does not change at all.", "tip": "Two d in hidden. With one d it is the past simple."}, {"n": 4, "form": "affirmative", "parts": [{"t": "The plane "}, {"w": "w-m", "a": ["has flown", "'s flown"]}, {"t": " for ten hours. It’s going to arrive at the airport soon."}], "verb": "(fly)", "solution": "The plane has flown for ten hours. It’s going to arrive at the airport soon.", "why": "The plane is one thing, so we use has, and fly is irregular: fly - flew - flown.", "tip": "The plane is still in the air, and that is why we use the present perfect."}, {"n": 5, "form": "question", "parts": [{"w": "w-xs", "a": ["Has"]}, {"t": " he "}, {"w": "w-s", "a": ["gone"]}, {"t": " shopping?"}], "verb": "(go)", "solution": "Has he gone shopping?", "why": "he is one person, so we use has, and go is irregular: go - went - gone. In the question, Have or Has jumps to the front of the sentence and the past participle stays exactly the same.", "tip": "has gone means he is not here now. went can never follow has."}]}, {"key": "v2table", "icon": "shield", "medal": "Table B", "title": "Version 2 · The Verb Table", "sub": "Complete the table with the missing verbs in the infinitive, simple past or past participle form.", "type": "table", "note": {"title": "The three columns", "lines": ["Infinitive -> the verb with no ending at all: go, eat, write.", "Simple past -> the second form, for something finished: went, ate, wrote.", "Past participle -> the third form, the one that follows have or has: gone, eaten, written."], "warning": "You only write the words that are missing. The ones that are already there do not change."}, "rows": [{"n": 1, "verb": "find", "given": [0]}, {"n": 2, "verb": "fly", "given": [0]}, {"n": 3, "verb": "get", "given": [2]}, {"n": 4, "verb": "give", "given": [0]}, {"n": 5, "verb": "go", "given": [1]}, {"n": 6, "verb": "grow", "given": [2]}, {"n": 7, "verb": "hide", "given": [0]}]}, {"key": "v2sent", "icon": "crown", "medal": "Sentences B", "title": "Version 2 · The Sentences", "sub": "Five sentences, and each one asks for a different shape. Look at the label before you write: affirmative, negative or question.", "type": "gap", "note": {"title": "One sentence, three possible shapes", "lines": ["Affirmative -> person + have/has + past participle: The bell has rung.", "Negative -> person + haven't/hasn't + past participle: The bell hasn't rung.", "Question -> Have/Has + person + past participle...? : Has the bell rung?"], "warning": "The person never changes and the past participle never changes either. The only thing that moves is have or has."}, "items": [{"n": 1, "form": "negative", "parts": [{"t": "I "}, {"w": "w-m", "a": ["haven’t fought", "haven't fought", "have not fought"]}, {"t": " with my best friend."}], "verb": "(fight)", "solution": "I haven’t fought with my best friend.", "why": "I takes have, and fight is irregular: fight - fought - fought. In the negative, have or has takes n't and the past participle does not change at all.", "tip": "recently is a present perfect word: it does not say exactly when."}, {"n": 2, "form": "affirmative", "parts": [{"t": "Peter and tom "}, {"w": "w-m", "a": ["have had", "'ve had"]}, {"t": " sushi for the first time last night. It was amazing!"}], "verb": "(have)", "solution": "Peter and tom have had sushi for the first time last night. It was amazing!", "why": "Peter and tom are two people, so we use have, and the verb have is irregular: have - had - had.", "tip": "In have had, the first have is the helper and had is the past participle."}, {"n": 3, "form": "affirmative", "parts": [{"t": "The children "}, {"w": "w-m", "a": ["have heard", "'ve heard"]}, {"t": " a wonderful story during the storytelling class today."}], "verb": "(hear)", "solution": "The children have heard a wonderful story during the storytelling class today.", "why": "The children is plural, so we use have, and hear is irregular: hear - heard - heard.", "tip": "today is not finished, so the present perfect works here."}, {"n": 4, "form": "question", "parts": [{"w": "w-xs", "a": ["Has"]}, {"t": " the teacher "}, {"w": "w-s", "a": ["forgotten"]}, {"t": " his marker?"}], "verb": "(forget)", "solution": "Has the teacher forgotten his marker?", "why": "The teacher is one person, so we use has, and forget is irregular: forget - forgot - forgotten. In the question, Have or Has jumps to the front of the sentence and the past participle stays exactly the same.", "tip": "Two t in forgotten."}, {"n": 5, "form": "negative", "parts": [{"t": "My mum "}, {"w": "w-m", "a": ["hasn’t hung", "hasn't hung", "has not hung"]}, {"t": " her coat behind the door."}], "verb": "(hang)", "solution": "My mum hasn’t hung her coat behind the door.", "why": "My mum is one person, so we use has, and hang is irregular: hang - hung - hung. In the negative, have or has takes n't and the past participle does not change at all.", "tip": "hung is the word for coats and pictures."}]}],
 
 codex: ["fight", "find", "fly", "forget", "get", "give", "go", "grow", "hang", "have", "hear", "hide"]
 
@@ -701,52 +704,31 @@ function renderGap(st, t){
     var id = REG.push({ data: d }) - 1;
     var item = el("div", "item");
     item.setAttribute("data-id", String(id));
-    var line = el("div", "sline");
-    line.appendChild(el("span", "rn", String(d.n)));
-    var txt = el("span");
-    txt.appendChild(document.createTextNode(d.before + " "));
-    var inp = mkInput("w-m");
-    txt.appendChild(inp);
-    /* si lo que sigue al hueco arranca con un signo, no va espacio delante */
-    txt.appendChild(document.createTextNode((/^[.,!?;:]/.test(d.after) ? "" : " ") + d.after));
-    txt.appendChild(el("span", "hintword", d.verb));
-    line.appendChild(txt);
-    item.appendChild(line);
 
-    /* la misma oracion, ya armada, en negativa y en pregunta */
-    var fields = [{ el: inp, answers: d.answers }];
-    if(d.neg){
-      var rowN = el("div", "fline");
-      rowN.appendChild(el("span", "flab negative", "Negative"));
-      var sN = el("span", "gapline");
-      sN.appendChild(document.createTextNode(d.neg.before + " "));
-      var iN = mkInput("w-m");
-      sN.appendChild(iN);
-      sN.appendChild(document.createTextNode(tail(d.neg.after)));
-      rowN.appendChild(sN);
-      item.appendChild(rowN);
-      fields.push({ el: iN, answers: d.neg.answers });
+    var head = el("div", "formhead");
+    head.appendChild(el("span", "rn", String(d.n)));
+    head.appendChild(el("span", "flab " + d.form, d.form));
+    item.appendChild(head);
 
-      var rowQ = el("div", "fline");
-      rowQ.appendChild(el("span", "flab question", "Question"));
-      var sQ = el("span", "gapline");
-      var iA = mkInput("w-xs");
-      sQ.appendChild(iA);
-      sQ.appendChild(document.createTextNode(" " + d.que.subj + " "));
-      var iP = mkInput("w-s");
-      sQ.appendChild(iP);
-      sQ.appendChild(document.createTextNode(tail(d.que.after)));
-      rowQ.appendChild(sQ);
-      item.appendChild(rowQ);
-      fields.push({ el: iA, answers: d.que.auxAnswers });
-      fields.push({ el: iP, answers: d.que.partAnswers });
+    /* la oracion es una lista de trozos: texto fijo y huecos */
+    var line = el("div", "gapline");
+    var fields = [];
+    for(var p = 0; p < d.parts.length; p++){
+      var part = d.parts[p];
+      if(part.t !== undefined){
+        line.appendChild(document.createTextNode(part.t));
+      }else{
+        var inp = mkInput(part.w);
+        line.appendChild(inp);
+        fields.push({ el: inp, answers: part.a });
+      }
     }
+    line.appendChild(el("span", "hintword", d.verb));
+    item.appendChild(line);
     st.body.appendChild(item);
     st.entries.push({ kind: "input", inputs: fields, data: d, holder: item, exp: item });
   }
 }
-/* si lo que sigue al hueco arranca con un signo, no va espacio delante */
-function tail(s){ return (/^[.,!?;:]/.test(s) ? "" : " ") + s; }
 
 /* ---------- free ---------- */
 function renderFree(st, t){
@@ -760,9 +742,6 @@ function renderFree(st, t){
   vb.appendChild(chips);
   st.body.appendChild(vb);
 
-  var PH = { affirmative: "Write an affirmative sentence.",
-             negative: "Write a negative sentence.",
-             question: "Write a question." };
   for(var i = 0; i < t.lines.length; i++){
     var ln = t.lines[i];
     var id = REG.push({ data: ln }) - 1;
@@ -772,8 +751,12 @@ function renderFree(st, t){
     head.appendChild(el("span", "rn", String(ln.n)));
     head.appendChild(el("span", "flab " + ln.form, ln.form));
     item.appendChild(head);
-    var inp = mkInput("w-l", PH[ln.form]);
-    item.appendChild(inp);
+    var line = el("div", "gapline");
+    line.appendChild(el("span", "starter", ln.starter));
+    var inp = mkInput("w-l", "Finish the sentence with a verb from the box.");
+    line.appendChild(inp);
+    line.appendChild(document.createTextNode(ln.tail));
+    item.appendChild(line);
     st.body.appendChild(item);
     st.entries.push({ kind: "free", inputs: [{ el: inp }], data: ln, holder: item, exp: null });
   }
@@ -799,6 +782,7 @@ function participleUsed(sentence, pool){
 function checkTrial(key){
   var st = TR[key], t = st.data, i, j;
   var got = 0, total = 0;
+  var usados = [];   /* participios ya usados en la escritura libre */
 
   var old = st.body.querySelectorAll(".exp");
   for(i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
@@ -817,10 +801,8 @@ function checkTrial(key){
       }
       if(e.holder.tagName === "TR") e.holder.className = allOk ? "rowok" : "rowno";
       var answer = e.verb ? (e.verb.f[0] + "  -  " + e.verb.f[1] + "  -  " + e.verb.f[2]) : e.data.solution;
-      if(e.data.neg){
-        answer = [{ label: "affirmative", text: e.data.solution },
-                  { label: "negative",    text: e.data.neg.solution },
-                  { label: "question",    text: e.data.que.solution }];
+      if(e.data.form){
+        answer = [{ label: e.data.form, text: e.data.solution }];
       }
       var why = e.verb ? e.verb.why : e.data.why;
       var tip = e.verb ? e.verb.tip : e.data.tip;
@@ -837,36 +819,24 @@ function checkTrial(key){
     if(e.kind === "free"){
       var s = e.inputs[0].el.value;
       var notEmpty = normalize(s) !== "";
-      var ex = expand(s);
-      var usesAux = hasWord(s, "have") || hasWord(s, "has");
-      var hasNot = hasWord(s, "not");
-      var startsAux = /^(have|has)\b/.test(ex);
-      var endsQ = /\?\s*$/.test(String(s));
       var part = participleUsed(s, t.pool);
-      var longEnough = wordCount(s) >= 5;
-      var formOk;
-      if(e.data.form === "affirmative")   formOk = usesAux && !hasNot && !endsQ;
-      else if(e.data.form === "negative") formOk = usesAux && hasNot && !endsQ;
-      else                                formOk = startsAux && endsQ;
-      var lineOk = notEmpty && formOk && part !== null && longEnough;
+      var fresh = part !== null && usados.indexOf(part) < 0;
+      if(part) usados.push(part);
+      var longEnough = wordCount(s) >= 3;
+      var lineOk = notEmpty && part !== null && fresh && longEnough;
       markInput(e.inputs[0].el, lineOk);
       total++;
       if(lineOk) got++;
 
-      var FORMTXT = {
-        affirmative: "It is affirmative: it uses have or has, and there is no not in it.",
-        negative: "It is negative: it uses haven't or hasn't.",
-        question: "It is a question: it starts with Have or Has and ends with a question mark."
-      };
       var cl = el("div", "checklist " + (lineOk ? "right" : "wrong"));
-      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n + " · " + e.data.form));
+      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n + " \u00b7 " + e.data.form));
       var ul = document.createElement("ul");
-      ul.appendChild(el("li", null, (notEmpty ? "✓ " : "✗ ") + "You wrote a sentence."));
-      ul.appendChild(el("li", null, (formOk ? "✓ " : "✗ ") + FORMTXT[e.data.form]));
-      ul.appendChild(el("li", null, (part ? "✓ " : "✗ ") + (part
+      ul.appendChild(el("li", null, (notEmpty ? "\u2713 " : "\u2717 ") + "You finished the sentence."));
+      ul.appendChild(el("li", null, (part ? "\u2713 " : "\u2717 ") + (part
         ? "It uses the past participle " + part + "."
         : "It uses a past participle from the box.")));
-      ul.appendChild(el("li", null, (longEnough ? "✓ " : "✗ ") + "It has at least five words."));
+      ul.appendChild(el("li", null, (fresh ? "\u2713 " : "\u2717 ") + "That verb is not repeated from another line."));
+      ul.appendChild(el("li", null, (longEnough ? "\u2713 " : "\u2717 ") + "You wrote at least three words."));
       cl.appendChild(ul);
       var wrapItem2 = el("div", "expitem");
       wrapItem2.appendChild(el("span", "en", String(e.data.n)));
