@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Sealed Door &middot; Present Perfect Quest</title>
+<title>The Citadel of Five Doors &middot; Present Perfect Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -485,27 +485,27 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
 
   <div class="hero">
     <span class="chapter">Present Perfect Quest &middot; Stop VI</span>
-    <h1 class="big">The Sealed Door</h1>
-    <p>The last door of the quest has five seals on it, and behind each seal there is a game. Win a game and one digit of the code appears. Win the five and the door opens.</p>
+    <h1 class="big">The Citadel of Five Doors</h1>
+    <p>Hero, this is the last stop of the quest. Five doors stand between you and the treasure, and behind every door there is a game waiting for you. Win a game, the door opens and one digit of the code is yours. Open the five doors, type the code and take what the citadel has been hiding all this time.</p>
     <div class="verbline">ever &middot; never &middot; for &middot; since &middot; third forms</div>
     <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
   </div>
 
   <div class="lockcard">
-    <h2>The lock</h2>
-    <p>Five digits, one for every seal. They appear here as you win the games, and the door only moves when the five seals are broken.</p>
+    <h2>The lock of the treasure</h2>
+    <p>Five digits, one for every door. They appear here as you win the games, and the lock only turns when the five doors are open.</p>
     <div class="digits" id="digits"></div>
     <div class="lockrow">
       <input type="text" id="codeInput" maxlength="5" autocomplete="off" spellcheck="false" placeholder="- - - - -">
-      <button class="btn" id="codeBtn" type="button">Open the door</button>
+      <button class="btn" id="codeBtn" type="button">Open the treasure</button>
     </div>
-    <p class="lockmsg" id="codeMsg">No seal is broken yet.</p>
+    <p class="lockmsg" id="codeMsg">No door is open yet.</p>
     <div class="lockrow" id="rewardRow" hidden></div>
   </div>
 
-  <!-- ============ SEAL 1 ============ -->
+  <!-- ============ DOOR 1 ============ -->
   <section class="gamecard" id="g1">
-    <span class="tag">Seal I</span>
+    <span class="tag">Door I</span>
     <h2>The Cracked Sentences<span class="done hidden" id="d1">digit won</span></h2>
     <p class="sub">Every sentence below has exactly <b>one</b> wrong word. Click it. Sometimes the word is the wrong one, and sometimes it is a word that should not be there at all. Seven sentences out of nine and the first digit is yours.</p>
     <div class="hud">
@@ -520,9 +520,9 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
     </div>
   </section>
 
-  <!-- ============ SEAL 2 ============ -->
+  <!-- ============ DOOR 2 ============ -->
   <section class="gamecard" id="g2">
-    <span class="tag">Seal II</span>
+    <span class="tag">Door II</span>
     <h2>The Two Keys<span class="done hidden" id="d2">digit won</span></h2>
     <p class="sub">One time expression at a time. Does it go with <b>for</b> or with <b>since</b>? Remember: <b>for</b> says how long something has lasted, <b>since</b> says the moment it started. Ten right out of twelve and the second digit is yours.</p>
     <div class="hud">
@@ -537,9 +537,9 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
     </div>
   </section>
 
-  <!-- ============ SEAL 3 ============ -->
+  <!-- ============ DOOR 3 ============ -->
   <section class="gamecard" id="g3">
-    <span class="tag">Seal III</span>
+    <span class="tag">Door III</span>
     <h2>The Third Form Hunt<span class="done hidden" id="d3">digit won</span></h2>
     <p class="sub">Guess the third form of the verb on the card. Six tries. After each guess the tiles tell you: <b>green</b> means right letter in the right place, <b>gold</b> means right letter in the wrong place, <b>grey</b> means the letter is not in the word. Find three verbs and the third digit is yours.</p>
     <div class="qbox" id="g3box">
@@ -555,9 +555,9 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
     </div>
   </section>
 
-  <!-- ============ SEAL 4 ============ -->
+  <!-- ============ DOOR 4 ============ -->
   <section class="gamecard" id="g4">
-    <span class="tag">Seal IV</span>
+    <span class="tag">Door IV</span>
     <h2>The Gatekeeper&rsquo;s Grid<span class="done hidden" id="d4">digit won</span></h2>
     <p class="sub">Three in a row against the gatekeeper. Click an empty square and answer the question: if you are right the square is yours, if you are wrong the gatekeeper takes it. Beat him and the fourth digit is yours. A draw is not enough, but he does make mistakes.</p>
     <p class="turnmsg" id="g4msg">Pick a square to start.</p>
@@ -569,9 +569,9 @@ a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
     </div>
   </section>
 
-  <!-- ============ SEAL 5 ============ -->
+  <!-- ============ DOOR 5 ============ -->
   <section class="gamecard" id="g5">
-    <span class="tag">Seal V</span>
+    <span class="tag">Door V</span>
     <h2>Beat the Hourglass<span class="done hidden" id="d5">digit won</span></h2>
     <p class="sub">Sixty seconds, one tap per question, everything from the quest mixed together. Ten correct answers and the last digit is yours. A wrong answer costs you three seconds, so read fast and keep going.</p>
     <div class="clock" id="g5clock">60</div>
@@ -630,7 +630,7 @@ var SLOPPY = 0.3;
 /* cuantos aciertos pide cada juego */
 var NEED1 = 7, NEED2 = 10, NEED3 = 3, NEED5 = 10;
 
-/* ============ SEAL 1 · una palabra mal por oracion ============ */
+/* ============ DOOR 1 · una palabra mal por oracion ============ */
 var ERRORS = [
   { words: ["I","have","went","to","the","new","bookshop."], bad: 2, fix: "gone",
     why: "went is the past simple, and after have you always need the third form: gone.",
@@ -661,7 +661,7 @@ var ERRORS = [
     tip: "yesterday, last week and two days ago all go with the past simple." }
 ];
 
-/* ============ SEAL 2 · for o since ============ */
+/* ============ DOOR 2 · for o since ============ */
 var SINCEFOR = [
   { word: "three years", answer: "FOR",
     why: "three years is a length of time: you can count it, so it goes with for.",
@@ -701,7 +701,7 @@ var SINCEFOR = [
     tip: "I haven't seen you for ages is what you say to a friend." }
 ];
 
-/* ============ SEAL 3 · el wordle de terceras formas ============ */
+/* ============ DOOR 3 · el wordle de terceras formas ============ */
 var VERBS = [
   { base: "be", answer: "BEEN",
     why: "be is irregular: be - was/were - been. The third form is been.",
@@ -741,7 +741,7 @@ var VERBS = [
     tip: "Two t in written. wrote is the past simple." }
 ];
 
-/* ============ SEAL 4 · el tablero, tres opciones ============ */
+/* ============ DOOR 4 · el tablero, tres opciones ============ */
 var GRIDQ = [
   { q: "I ___ never been to London.", options: ["have","has","am"], correct: "have",
     why: "I always takes have, and never goes between have and the past participle.",
@@ -781,7 +781,7 @@ var GRIDQ = [
     tip: "Did he break...? is the past simple question, a different one." }
 ];
 
-/* ============ SEAL 5 · contra el reloj, dos opciones ============ */
+/* ============ DOOR 5 · contra el reloj, dos opciones ============ */
 var RAPID = [
   { q: "I have ___ a horse.", options: ["ridden","rode"], correct: "ridden",
     why: "After have you need the third form.", tip: "rode is the past simple." },
@@ -880,8 +880,8 @@ function unlock(i){
   for(var k = 0; k < won.length; k++){ if(!won[k]) missing++; }
   codeMsg.className = "lockmsg";
   codeMsg.textContent = missing
-    ? (LABELS[i] + " is beaten. " + missing + " seal" + (missing === 1 ? "" : "s") + " to go.")
-    : "Every digit is yours. Type the code and open the door.";
+    ? (LABELS[i] + " is beaten. " + missing + " door" + (missing === 1 ? "" : "s") + " still closed.")
+    : "Every door is open. Type the code and the treasure is yours.";
 }
 drawDigits();
 
@@ -893,12 +893,12 @@ document.getElementById("codeBtn").addEventListener("click", function(){
     /* El codigo se puede copiar de un companero: la puerta pide ademas que
        los cinco juegos esten ganados en esta pantalla. */
     codeMsg.className = "lockmsg";
-    codeMsg.textContent = "The code is right, but the door does not move: "
-      + cerrados + (cerrados === 1 ? " seal is" : " seals are")
+    codeMsg.textContent = "The code is right, but nothing moves: "
+      + cerrados + (cerrados === 1 ? " door is" : " doors are")
       + " still closed. Win the games yourself.";
   } else if(v === CODE.join("")){
     codeMsg.className = "lockmsg win";
-    codeMsg.textContent = "The door is open. You have finished the Present Perfect Quest.";
+    codeMsg.textContent = "The treasure is yours. You have finished the Present Perfect Quest.";
     /* del otro lado hay un premio: primero el boton, por si el navegador no
        deja saltar solo, y dos segundos despues la puerta se cruza sola. */
     var row = document.getElementById("rewardRow");
@@ -906,7 +906,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
       var a = document.createElement("a");
       a.className = "btnlink";
       a.href = REWARD;
-      a.textContent = "Go through the door";
+      a.textContent = "Take the treasure";
       row.appendChild(a);
     }
     row.hidden = false;
@@ -917,7 +917,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
   }
 });
 
-/* ============ SEAL 1 - THE CRACKED SENTENCES ============ */
+/* ============ DOOR 1 - THE CRACKED SENTENCES ============ */
 (function(){
   var box = document.getElementById("g1box");
   var dots = document.getElementById("g1dots");
@@ -941,7 +941,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
   function finish(){
     box.innerHTML = "";
     var f = el("div", "final");
-    f.appendChild(el("div", "msg", right >= NEED1 ? "The first seal is broken." : "Not enough this time."));
+    f.appendChild(el("div", "msg", right >= NEED1 ? "The first door is open." : "Not enough this time."));
     f.appendChild(el("div", "big", right + " / " + ERRORS.length));
     f.appendChild(el("div", "msg", right >= NEED1 ? "Look at the lock above." : "You need " + NEED1 + ". Play again."));
     box.appendChild(f);
@@ -1010,7 +1010,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
 })();
 
 /* ============================================================
-   SEAL 2 - FOR o SINCE
+   DOOR 2 - FOR o SINCE
    Mecanica nueva: en lugar de las comas del otro alumno, una carta
    con una expresion de tiempo y dos botones. Es el mismo patron de
    siempre: se elige, se corrige, y la explicacion aparece igual si
@@ -1039,7 +1039,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
   function finish(){
     box.innerHTML = "";
     var f = el("div", "final");
-    f.appendChild(el("div", "msg", right >= NEED2 ? "The second seal is broken." : "Not enough this time."));
+    f.appendChild(el("div", "msg", right >= NEED2 ? "The second door is open." : "Not enough this time."));
     f.appendChild(el("div", "big", right + " / " + SINCEFOR.length));
     f.appendChild(el("div", "msg", right >= NEED2 ? "Look at the lock above." : "You need " + NEED2 + ". Play again."));
     box.appendChild(f);
@@ -1097,7 +1097,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
   start();
 })();
 
-/* ============ SEAL 3 - THE THIRD FORM HUNT ============ */
+/* ============ DOOR 3 - THE THIRD FORM HUNT ============ */
 (function(){
   var clue = document.getElementById("g3clue");
   var grid = document.getElementById("g3grid");
@@ -1155,7 +1155,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
       hint.textContent = "solved so far: " + solved + " of " + NEED3;
       if(solved >= NEED3){
         unlock(2);
-        expArea.appendChild(el("p", "fixline", "Three verbs found. The third seal is broken: look at the lock above."));
+        expArea.appendChild(el("p", "fixline", "Three verbs found. The third door is open: look at the lock above."));
       } else {
         expArea.appendChild(el("p", "fixline", "Press Another verb to hunt the next one."));
       }
@@ -1185,7 +1185,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
   pick();
 })();
 
-/* ============ SEAL 4 - THE GATEKEEPER'S GRID ============ */
+/* ============ DOOR 4 - THE GATEKEEPER'S GRID ============ */
 (function(){
   var boardEl = document.getElementById("g4board");
   var msgEl = document.getElementById("g4msg");
@@ -1239,7 +1239,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
     if(w && w.who === "X"){
       wins++;
       scoreEl.textContent = wins + (wins === 1 ? " win" : " wins");
-      msgEl.textContent = "Three in a row. The fourth seal is broken: look at the lock above.";
+      msgEl.textContent = "Three in a row. The fourth door is open: look at the lock above.";
       unlock(3);
     } else if(w){
       msgEl.textContent = "The gatekeeper got three in a row. Press New game.";
@@ -1316,7 +1316,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
   start();
 })();
 
-/* ============ SEAL 5 - BEAT THE HOURGLASS ============ */
+/* ============ DOOR 5 - BEAT THE HOURGLASS ============ */
 (function(){
   var box = document.getElementById("g5box");
   var clockEl = document.getElementById("g5clock");
@@ -1371,7 +1371,7 @@ document.getElementById("codeBtn").addEventListener("click", function(){
     if(timer){ clearInterval(timer); timer = null; }
     box.innerHTML = "";
     var f = el("div", "final");
-    f.appendChild(el("div", "msg", right >= TARGET ? "The last seal is broken." : "Time is up."));
+    f.appendChild(el("div", "msg", right >= TARGET ? "The last door is open." : "Time is up."));
     f.appendChild(el("div", "big", right));
     f.appendChild(el("div", "msg", "correct answers  ·  longest streak " + best));
     box.appendChild(f);
