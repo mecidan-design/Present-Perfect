@@ -1696,5 +1696,494 @@ buildTrials();
 
 })();
 </script>
+<style id="report-style">
+/* =========================================================
+   LA TARJETA DEL INFORME
+   Se estila sola: no depende de ninguna clase de la pagina,
+   solo de las variables de color, que estan en las catorce.
+   ========================================================= */
+.rpcard{
+  background:var(--parch);
+  border:4px solid #2b1c07;
+  border-radius:18px;
+  padding:26px;
+  margin:0 0 26px;
+  color:var(--ink);
+  box-shadow:10px 10px 0 var(--royal);
+  transform:rotate(.25deg);
+  position:relative;
+}
+.rpcard h2{
+  font-family:var(--head);font-weight:900;font-size:1.5rem;line-height:1.15;
+  letter-spacing:.6px;margin:.1rem 0 .3rem;color:var(--ink);
+}
+.rpcard .sub{font-size:.92rem;color:#5c4a2c;margin:0 0 16px;line-height:1.5}
+.rpcard .tag{
+  display:inline-block;font-family:var(--head);font-weight:900;font-size:.72rem;
+  letter-spacing:2px;text-transform:uppercase;background:var(--gold-lt);
+  border:3px solid #2b1c07;border-radius:999px;padding:2px 14px;margin-bottom:10px;
+}
+.rprow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.rprow label{
+  flex:1 1 180px;display:flex;flex-direction:column;gap:5px;
+  font-family:var(--head);font-weight:700;font-size:.76rem;letter-spacing:1.4px;
+  text-transform:uppercase;color:#8a6a2a;
+}
+.rprow input{
+  font-family:var(--body);font-size:1rem;font-weight:600;color:var(--ink);
+  background:#fffdf4;border:3px solid #2b1c07;border-radius:10px;padding:8px 11px;width:100%;
+}
+.rprow input:focus{outline:0;background:#fff;box-shadow:0 0 0 4px var(--gold)}
+.rppre{
+  font-family:ui-monospace,"Consolas","Courier New",monospace;
+  font-size:.8rem;line-height:1.55;white-space:pre-wrap;word-break:break-word;
+  background:#fffdf4;border:3px solid #2b1c07;border-radius:12px;
+  padding:12px 13px;margin:0;max-height:260px;overflow:auto;
+}
+.rppre.empty{color:#8a7a5c;font-style:italic;font-family:var(--body);font-size:.9rem}
+.rpmsg{
+  margin:12px 0 0;font-family:var(--head);font-weight:700;font-size:.95rem;
+  letter-spacing:.4px;min-height:1.2em;
+}
+.rpmsg.ok{color:#14663a}
+.rpmsg.no{color:#8f1230}
+.rpfine{margin:10px 0 0;font-size:.78rem;color:#7a6647;line-height:1.5}
+
+/* el home no tiene .btn propio: la tarjeta trae los suyos */
+.rpcard .btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.rpcard .btn{
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;
+  color:#2b1c07;background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;cursor:pointer;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+.rpcard .btn:hover{filter:brightness(1.07)}
+.rpcard .btn:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.rpcard .btn.ghost{background:#fffdf4}
+.rpcard .btn:disabled{opacity:.6;cursor:default}
+</style>
+<script id="report-block">
+/* ============================================================
+   EL INFORME PARA LA DOCENTE
+   ============================================================
+   Un solo modulo para las catorce paginas. NO toca ningun motor:
+   lee lo que ya esta en pantalla cuando el alumno aprieta "Check
+   my answers" (las medallas, los carteles de explicacion, los
+   inputs marcados en rojo) y lo guarda en el navegador.
+
+   Todo el sitio vive en el mismo dominio, asi que el home puede
+   juntar lo de todas las paradas y mandar un solo informe.
+
+   Se manda a un Google Form: un POST comun y silencioso, sin
+   backend. No se puede leer la respuesta (es cross-origin), asi
+   que ademas siempre esta el boton de copiar, que nunca falla.
+   ============================================================ */
+(function(){
+"use strict";
+
+/* ---------- el formulario de la profesora ---------- */
+var FORM = {
+  action:  "",            /* .../forms/d/e/<id>/formResponse */
+  student: "",            /* entry.XXXXXXX */
+  klass:   "",
+  stop:    "",
+  score:   "",
+  detail:  ""
+};
+var PUEDE_ENVIAR = !!FORM.action;
+
+var KEY = "ppq.report.v1";
+var wrap = document.querySelector(".wrap");
+if(!wrap) return;
+
+/* ---------- memoria del navegador, siempre con red ---------- */
+function leer(){
+  try{
+    var raw = window.localStorage.getItem(KEY);
+    var o = raw ? JSON.parse(raw) : null;
+    if(!o || typeof o !== "object") o = {};
+    if(!o.stops) o.stops = {};
+    return o;
+  }catch(e){ return { stops: {} }; }
+}
+function guardar(o){
+  try{ window.localStorage.setItem(KEY, JSON.stringify(o)); }catch(e){}
+}
+
+/* ---------- que pagina es esta ---------- */
+function slug(){
+  var p = window.location.pathname.split("/").pop() || "index.html";
+  return p.replace(/\.html?$/i, "") || "index";
+}
+var SLUG = slug();
+/* El home se reconoce por sus tarjetas de parada, no por el nombre del
+   archivo: abierto desde un pendrive la URL no sirve de nada. */
+var ES_HOME = !!document.querySelector(".stop a.enter");
+function tituloPagina(){
+  var h = document.querySelector(".hero h1") || document.querySelector("h1");
+  return h ? h.textContent.trim() : document.title;
+}
+
+/* ---------- helpers ---------- */
+function texto(n){ return n ? String(n.textContent).replace(/\s+/g, " ").trim() : ""; }
+function parseScore(s){
+  var m = /(\d+)\s*\/\s*(\d+)/.exec(s || "");
+  return m ? { got: parseInt(m[1], 10), total: parseInt(m[2], 10) } : null;
+}
+
+/* ============================================================
+   LEER LA PANTALLA
+   Cinco de las seis clases de pagina muestran las medallas con
+   el nombre del trial y el puntaje; los errores salen de las
+   cajas de explicacion en rojo.
+   ============================================================ */
+function numeroDe(caja){
+  /* la caja pegada al item: el numero esta en el .rn de arriba */
+  var it = caja.closest ? caja.closest(".item") : null;
+  if(it){
+    var rn = it.querySelector(".rn");
+    if(rn) return { n: texto(rn), cont: it };
+  }
+  /* la caja del panel numerado: el numero es el hermano .en */
+  var pi = caja.parentNode;
+  if(pi && pi.className && String(pi.className).indexOf("expitem") >= 0){
+    var en = pi.querySelector(".en");
+    return { n: texto(en), cont: null };
+  }
+  return { n: "", cont: null };
+}
+function loQueEscribio(cont, n, tarjeta){
+  var partes = [], i;
+  /* lo que quedo marcado en rojo dentro del item */
+  var malos = cont ? cont.querySelectorAll("input.no, select.no, .schip.no") : [];
+  for(i = 0; i < malos.length; i++){
+    var v = malos[i].value !== undefined ? malos[i].value : texto(malos[i]);
+    partes.push(String(v).trim() || "-");
+  }
+  if(partes.length) return partes.join(" + ");
+  /* si la explicacion vive en el panel, se busca el item por su numero */
+  if(!cont && tarjeta && n){
+    var marcas = tarjeta.querySelectorAll(".rn, .sn, .gn");
+    for(i = 0; i < marcas.length; i++){
+      if(texto(marcas[i]) === n){
+        var padre = marcas[i].parentNode;
+        if(padre && padre.className && String(padre.className).indexOf("schip") >= 0){
+          /* la piedra guarda la columna en .value; el texto de la piedra va
+             despues del numerito, y el numerito se saca por su largo (no con
+             una expresion, que se comeria una piedra como "2019") */
+          var col = String(padre.value || "").trim();
+          var etiqueta = texto(padre);
+          var sn = padre.querySelector(".sn");
+          if(sn) etiqueta = etiqueta.slice(texto(sn).length).trim();
+          return col ? (col + " " + etiqueta) : "-";
+        }
+        var caja2 = padre ? padre.parentNode : null;
+        var ins = caja2 ? caja2.querySelectorAll("input.no, .pickbtn.bad") : [];
+        if(ins.length){
+          var out = [];
+          for(var k = 0; k < ins.length; k++){
+            out.push(String(ins[k].value !== undefined && ins[k].value !== "" ? ins[k].value : texto(ins[k])).trim() || "-");
+          }
+          return out.join(" + ");
+        }
+      }
+    }
+  }
+  return "-";
+}
+function mirarPantalla(){
+  var partes = [], errores = [], i;
+
+  var medallas = document.querySelectorAll(".medal");
+  for(i = 0; i < medallas.length; i++){
+    var nom = texto(medallas[i].querySelector(".mt"));
+    var sc = parseScore(texto(medallas[i].querySelector(".ms")));
+    if(nom) partes.push({ name: nom, got: sc ? sc.got : null, total: sc ? sc.total : null });
+  }
+
+  /* si no hay medallas, vale cualquier marcador de la pagina */
+  if(!partes.length){
+    var lineas = document.querySelectorAll(".scoreline");
+    for(i = 0; i < lineas.length; i++){
+      var s2 = parseScore(texto(lineas[i]));
+      if(s2) partes.push({ name: "Exercise " + (partes.length + 1), got: s2.got, total: s2.total });
+    }
+  }
+
+  /* las puertas de la ciudadela: cada juego ganado deja su insignia */
+  var insignias = document.querySelectorAll(".gamecard .done");
+  if(insignias.length){
+    var abiertas = 0;
+    for(i = 0; i < insignias.length; i++){
+      if(String(insignias[i].className).indexOf("hidden") < 0) abiertas++;
+    }
+    partes.push({ name: "Doors open", got: abiertas, total: insignias.length });
+  }
+
+  var malas = document.querySelectorAll(".exp.wrong");
+  for(i = 0; i < malas.length; i++){
+    var caja = malas[i];
+    var tarjeta = caja.closest ? caja.closest(".card") : null;
+    var quien = tarjeta ? texto(tarjeta.querySelector("h2")) : "";
+    var d = numeroDe(caja);
+    var sol = texto(caja.querySelector(".sol")).replace(/^Answer:\s*/i, "");
+    errores.push({
+      trial: quien,
+      n: d.n,
+      right: sol,
+      was: loQueEscribio(d.cont, d.n, tarjeta)
+    });
+  }
+
+  var got = 0, total = 0;
+  for(i = 0; i < partes.length; i++){
+    if(partes[i].total){ got += partes[i].got || 0; total += partes[i].total; }
+  }
+  /* Entrar a una pagina no es haberla hecho: hasta que no corrige algo o gana
+     algo, no hay nada que contar. Si no, la ciudadela recien abierta ya
+     informaria "0 / 5 puertas". */
+  var hizo = (got > 0) || document.querySelectorAll(".exp").length > 0;
+  return { parts: partes, wrong: errores, got: got, total: total, hizo: hizo };
+}
+
+/* ---------- guardar lo de esta parada ---------- */
+function anotar(){
+  if(ES_HOME) return null;
+  var r = mirarPantalla();
+  if(!r.total || !r.hizo) return r;
+  var o = leer();
+  o.stops[SLUG] = {
+    title: tituloPagina(),
+    got: r.got, total: r.total,
+    parts: r.parts, wrong: r.wrong,
+    when: new Date().toISOString().slice(0, 10)
+  };
+  guardar(o);
+  return r;
+}
+
+/* ============================================================
+   EL TEXTO DEL INFORME
+   ============================================================ */
+function bloque(titulo, d){
+  var L = [], i;
+  L.push(titulo.toUpperCase() + "  -  " + d.got + " / " + d.total);
+  for(i = 0; i < d.parts.length; i++){
+    var p = d.parts[i];
+    if(p.total) L.push("   " + p.name + ": " + p.got + " / " + p.total);
+  }
+  if(d.wrong && d.wrong.length){
+    L.push("   To look at again:");
+    for(i = 0; i < d.wrong.length; i++){
+      var w = d.wrong[i];
+      L.push("    - " + (w.trial ? w.trial + " " : "") + (w.n ? "(" + w.n + ") " : "")
+             + "wrote: " + w.was + "  ->  right: " + w.right);
+    }
+  }
+  return L.join("\n");
+}
+function informe(){
+  var o = leer(), L = [], k;
+  if(ES_HOME){
+    var hubo = false, got = 0, total = 0;
+    for(k in o.stops){
+      if(Object.prototype.hasOwnProperty.call(o.stops, k)){
+        var d = o.stops[k];
+        L.push(bloque(d.title + "  (" + d.when + ")", d));
+        L.push("");
+        got += d.got; total += d.total;
+        hubo = true;
+      }
+    }
+    if(!hubo) return null;
+    L.unshift("WHOLE QUEST: " + got + " / " + total + "\n");
+    return { texto: L.join("\n"), got: got, total: total, stop: "Whole quest" };
+  }
+  var r = mirarPantalla();
+  if(!r.total || !r.hizo) return null;
+  return { texto: bloque(tituloPagina(), r), got: r.got, total: r.total, stop: tituloPagina() };
+}
+
+/* ============================================================
+   LA TARJETA
+   ============================================================ */
+var o0 = leer();
+var card = document.createElement("section");
+card.className = "card rpcard";
+card.innerHTML =
+  '<span class="tag">Your report</span>' +
+  '<h2>' + (PUEDE_ENVIAR
+    ? (ES_HOME ? "Send your quest to your teacher" : "Send your results to your teacher")
+    : (ES_HOME ? "Your quest so far" : "Your report")) + '</h2>' +
+  '<p class="sub">' + (PUEDE_ENVIAR
+    ? (ES_HOME
+       ? "This is everything you have done in the quest on this computer. Write your name, press the button and your teacher gets it."
+       : "Check your answers first, then write your name and press the button. Your teacher sees how many you got right and which ones to look at again.")
+    : (ES_HOME
+       ? "This is everything you have done in the quest on this computer. Write your name and copy it to give it to your teacher."
+       : "Check your answers first, then write your name and copy your report. It says how many you got right and which ones to look at again.")) +
+  '</p>' +
+  '<div class="rprow">' +
+    '<label>Name<input type="text" id="rpName" autocomplete="off" placeholder="Your name"></label>' +
+    '<label>Class<input type="text" id="rpClass" autocomplete="off" placeholder="6th"></label>' +
+  '</div>' +
+  '<pre class="rppre" id="rpPre"></pre>' +
+  '<div class="btnrow">' +
+    (PUEDE_ENVIAR ? '<button class="btn" id="rpSend" type="button">Send to my teacher</button>' : "") +
+    '<button class="btn ghost" id="rpCopy" type="button">Copy my report</button>' +
+  '</div>' +
+  '<p class="rpmsg" id="rpMsg"></p>' +
+  '<p class="rpfine">Only your name, your class and your answers go to your teacher. Nothing else.</p>';
+
+var nav = document.querySelector("nav.bottomnav");
+if(nav && nav.parentNode === wrap) wrap.insertBefore(card, nav);
+else wrap.appendChild(card);
+
+var elName = document.getElementById("rpName");
+var elClass = document.getElementById("rpClass");
+var elPre = document.getElementById("rpPre");
+var elMsg = document.getElementById("rpMsg");
+var elCopy = document.getElementById("rpCopy");
+var elSend = document.getElementById("rpSend");
+
+elName.value = o0.name || "";
+elClass.value = o0.klass || "";
+function recordarNombre(){
+  var o = leer();
+  o.name = elName.value.trim();
+  o.klass = elClass.value.trim();
+  guardar(o);
+}
+elName.addEventListener("input", recordarNombre);
+elClass.addEventListener("input", recordarNombre);
+
+function pintar(){
+  var r = informe();
+  elPre.textContent = r ? r.texto : (ES_HOME
+    ? "Nothing yet. Walk into a stop, check your answers and come back here."
+    : "Nothing yet. Answer the exercises and press Check my answers.");
+  elPre.className = r ? "rppre" : "rppre empty";
+}
+
+/* cada click puede cambiar el puntaje: se vuelve a mirar la pantalla */
+var pend = null;
+document.addEventListener("click", function(){
+  if(pend) window.clearTimeout(pend);
+  pend = window.setTimeout(function(){ anotar(); pintar(); }, 250);
+}, true);
+window.addEventListener("pagehide", function(){ anotar(); });
+
+/* ---------- copiar ---------- */
+elCopy.addEventListener("click", function(){
+  var r = informe();
+  if(!r){ aviso("There is nothing to send yet.", false); return; }
+  var t = cabecera(r) + "\n" + r.texto;
+  var ok = false;
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t);
+      ok = true;
+    }
+  }catch(e){}
+  if(!ok){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = t;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+    }catch(e2){ ok = false; }
+  }
+  aviso(ok ? "Copied. Now paste it wherever your teacher asks you to."
+           : "Select the text above and copy it by hand.", ok);
+});
+
+function cabecera(r){
+  return "PRESENT PERFECT QUEST\n" +
+         "Student: " + (elName.value.trim() || "(no name)") +
+         "   Class: " + (elClass.value.trim() || "-") +
+         "   Date: " + new Date().toISOString().slice(0, 10);
+}
+function aviso(t, bien){
+  elMsg.textContent = t;
+  elMsg.className = "rpmsg " + (bien ? "ok" : "no");
+}
+
+/* ---------- enviar ---------- */
+if(elSend){
+  elSend.addEventListener("click", function(){
+    var r = informe();
+    if(!elName.value.trim()){ aviso("Write your name first.", false); elName.focus(); return; }
+    if(!r){ aviso("There is nothing to send yet. Check your answers first.", false); return; }
+    recordarNombre();
+    var datos = {};
+    datos[FORM.student] = elName.value.trim();
+    datos[FORM.klass]   = elClass.value.trim();
+    datos[FORM.stop]    = r.stop;
+    datos[FORM.score]   = r.got + " / " + r.total;
+    datos[FORM.detail]  = r.texto;
+
+    var cuerpo = [];
+    for(var k in datos){
+      if(Object.prototype.hasOwnProperty.call(datos, k) && k){
+        cuerpo.push(encodeURIComponent(k) + "=" + encodeURIComponent(datos[k]));
+      }
+    }
+    var body = cuerpo.join("&");
+
+    elSend.disabled = true;
+    aviso("Sending...", true);
+    var listo = function(){
+      elSend.disabled = false;
+      aviso("Sent. Your teacher has it. You can send it again later if you do more.", true);
+    };
+    try{
+      window.fetch(FORM.action, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body
+      }).then(listo, function(){ porIframe(body, listo); });
+    }catch(e){
+      porIframe(body, listo);
+    }
+  });
+}
+/* si fetch no esta o falla, se manda con un formulario de toda la vida */
+function porIframe(body, listo){
+  var f = document.createElement("form");
+  f.action = FORM.action;
+  f.method = "POST";
+  f.target = "rpSink";
+  f.style.display = "none";
+  var partes = body.split("&"), i;
+  for(i = 0; i < partes.length; i++){
+    var kv = partes[i].split("=");
+    var inp = document.createElement("input");
+    inp.type = "hidden";
+    inp.name = decodeURIComponent(kv[0]);
+    inp.value = decodeURIComponent((kv[1] || "").replace(/\+/g, "%20"));
+    f.appendChild(inp);
+  }
+  var ifr = document.getElementById("rpSink");
+  if(!ifr){
+    ifr = document.createElement("iframe");
+    ifr.name = "rpSink";
+    ifr.id = "rpSink";
+    ifr.style.display = "none";
+    document.body.appendChild(ifr);
+  }
+  document.body.appendChild(f);
+  f.submit();
+  window.setTimeout(function(){ if(f.parentNode) f.parentNode.removeChild(f); listo(); }, 900);
+}
+
+anotar();
+pintar();
+})();
+</script>
 </body>
 </html>
