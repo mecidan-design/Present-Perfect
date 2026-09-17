@@ -1238,7 +1238,6 @@ function informe(){
 /* ============================================================
    LA TARJETA
    ============================================================ */
-var o0 = leer();
 var opciones = "";
 for(var di = 0; di < DOCENTES.length; di++){
   opciones += '<option value="' + DOCENTES[di].mail + '">' + DOCENTES[di].nombre + '</option>';
@@ -1300,21 +1299,20 @@ var elMsg = document.getElementById("rpMsg");
 var elSend = document.getElementById("rpSend");
 var elCopy = document.getElementById("rpCopy");
 
-elName.value = o0.name || "";
-/* el curso guardado de antes puede ser texto libre: si no es uno de los tres
-   de la lista, el desplegable queda sin elegir y el chico lo elige */
-if(o0.klass) elClass.value = o0.klass;
-if(elTeacher && o0.teacher) elTeacher.value = o0.teacher;
-function recordar(){
+/* Las tres casillas arrancan VACIAS, siempre, en todas las paginas.
+   Antes se recordaban para que el chico escribiera su nombre una sola vez, y
+   estaba mal: estas maquinas se comparten. El que se sentaba despues se
+   encontraba el nombre, el curso y la docente del anterior ya puestos, y con
+   apretar el boton mandaba su trabajo con el nombre de otro, o a la docente
+   equivocada. Se escribe cada vez: son cinco segundos. */
+(function limpiarViejo(){
+  /* y se borra lo que haya quedado guardado de la version anterior */
   var o = leer();
-  o.name = elName.value.trim();
-  o.klass = elClass.value;
-  if(elTeacher) o.teacher = elTeacher.value;
-  guardar(o);
-}
-elName.addEventListener("input", recordar);
-elClass.addEventListener("change", recordar);
-if(elTeacher) elTeacher.addEventListener("change", recordar);
+  if(o.name || o.klass || o.teacher){
+    delete o.name; delete o.klass; delete o.teacher;
+    guardar(o);
+  }
+})();
 
 /* ---------- el boton que baja hasta la tarjeta ----------
    Va en la misma fila que "Check my answers", que es donde el alumno esta
@@ -1416,7 +1414,6 @@ if(elSend){
     if(!elClass.value){ aviso("Choose your class first.", false); elClass.focus(); return; }
     if(!elTeacher.value){ aviso("Choose your teacher first.", false); elTeacher.focus(); return; }
     if(!r){ aviso("There is nothing to send yet. Check your answers first.", false); return; }
-    recordar();
 
     var datos = {
       nombre_alumno: elName.value.trim(),
