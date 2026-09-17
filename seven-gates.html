@@ -510,11 +510,12 @@ a.btnlink.alt{background:var(--parch)}
   font-family:var(--head);font-weight:700;font-size:.76rem;letter-spacing:1.4px;
   text-transform:uppercase;color:#8a6a2a;
 }
-.rprow input{
+.rprow input,.rprow select{
   font-family:var(--body);font-size:1rem;font-weight:600;color:var(--ink);
   background:#fffdf4;border:3px solid #2b1c07;border-radius:10px;padding:8px 11px;width:100%;
 }
-.rprow input:focus{outline:0;background:#fff;box-shadow:0 0 0 4px var(--gold)}
+.rprow select{cursor:pointer;height:46px}
+.rprow input:focus,.rprow select:focus{outline:0;background:#fff;box-shadow:0 0 0 4px var(--gold)}
 .rppre{
   font-family:ui-monospace,"Consolas","Courier New",monospace;
   font-size:.8rem;line-height:1.55;white-space:pre-wrap;word-break:break-word;
@@ -555,23 +556,30 @@ a.btnlink.alt{background:var(--parch)}
    Todo el sitio vive en el mismo dominio, asi que el home puede
    juntar lo de todas las paradas y mandar un solo informe.
 
-   Se manda a un Google Form: un POST comun y silencioso, sin
-   backend. No se puede leer la respuesta (es cross-origin), asi
-   que ademas siempre esta el boton de copiar, que nunca falla.
+   El envio va a un Web App de Apps Script pegado a la planilla de
+   resultados: escribe la fila y le manda el mail a la docente que
+   el alumno elige. Como el pedido es no-cors la respuesta no se
+   puede leer, asi que ademas siempre esta el boton de copiar.
    ============================================================ */
 (function(){
 "use strict";
 
-/* ---------- el formulario de la profesora ---------- */
-var FORM = {
-  action:  "",            /* .../forms/d/e/<id>/formResponse */
-  student: "",            /* entry.XXXXXXX */
-  klass:   "",
-  stop:    "",
-  score:   "",
-  detail:  ""
+/* ---------- a donde va el resultado ----------
+   Un Web App de Apps Script pegado a la planilla "Present Perfect -
+   Resultados": escribe la fila y le manda el mail a la docente elegida.
+   Mientras esta vacio, la tarjeta solo deja copiar el informe. */
+var APPS = {
+  url: ""
 };
-var PUEDE_ENVIAR = !!FORM.action;
+var PUEDE_ENVIAR = !!APPS.url;
+
+/* Las tres docentes. El alumno ve el nombre; lo que viaja es el mail, y el
+   script del otro lado solo acepta estos tres. */
+var DOCENTES = [
+  { nombre: "Ani",  mail: "anabella_ld@buber.edu.ar" },
+  { nombre: "Pao",  mail: "paolafreiberg@buber.edu.ar" },
+  { nombre: "Mari", mail: "marisaolivero@buber.edu.ar" }
+];
 
 var KEY = "ppq.report.v1";
 var wrap = document.querySelector(".wrap");
@@ -708,12 +716,13 @@ function mirarPantalla(){
     var quien = tarjeta ? texto(tarjeta.querySelector("h2")) : "";
     var d = numeroDe(caja);
     var sol = texto(caja.querySelector(".sol")).replace(/^Answer:\s*/i, "");
-    errores.push({
-      trial: quien,
-      n: d.n,
-      right: sol,
-      was: loQueEscribio(d.cont, d.n, tarjeta)
-    });
+    var escribio = loQueEscribio(d.cont, d.n, tarjeta);
+    /* El speed run del Vault muestra su explicacion sin numero ni linea de
+       respuesta: sin eso el renglon no le dice nada a la docente, asi que no
+       va. El puntaje de la carrera igual queda arriba. */
+    if(sol || escribio !== "-"){
+      errores.push({ trial: quien, n: d.n, right: sol, was: escribio });
+    }
   }
 
   var got = 0, total = 0;
@@ -789,17 +798,22 @@ function informe(){
    LA TARJETA
    ============================================================ */
 var o0 = leer();
+var opciones = "";
+for(var di = 0; di < DOCENTES.length; di++){
+  opciones += '<option value="' + DOCENTES[di].mail + '">' + DOCENTES[di].nombre + '</option>';
+}
+
 var card = document.createElement("section");
 card.className = "card rpcard";
 card.innerHTML =
   '<span class="tag">Your report</span>' +
   '<h2>' + (PUEDE_ENVIAR
-    ? (ES_HOME ? "Send your quest to your teacher" : "Send your results to your teacher")
+    ? (ES_HOME ? "Send your quest to your teacher" : "Send your result to your teacher")
     : (ES_HOME ? "Your quest so far" : "Your report")) + '</h2>' +
   '<p class="sub">' + (PUEDE_ENVIAR
     ? (ES_HOME
-       ? "This is everything you have done in the quest on this computer. Write your name, press the button and your teacher gets it."
-       : "Check your answers first, then write your name and press the button. Your teacher sees how many you got right and which ones to look at again.")
+       ? "This is everything you have done in the quest on this computer. Write your name, choose your teacher and press the button."
+       : "Check your answers first. Then write your name, choose your teacher and press the button: she gets your score and the words to look at again.")
     : (ES_HOME
        ? "This is everything you have done in the quest on this computer. Write your name and copy it to give it to your teacher."
        : "Check your answers first, then write your name and copy your report. It says how many you got right and which ones to look at again.")) +
@@ -807,6 +821,9 @@ card.innerHTML =
   '<div class="rprow">' +
     '<label>Name<input type="text" id="rpName" autocomplete="off" placeholder="Your name"></label>' +
     '<label>Class<input type="text" id="rpClass" autocomplete="off" placeholder="6th"></label>' +
+    (PUEDE_ENVIAR ? '<label>Teacher<select id="rpTeacher">' +
+      '<option value="">Choose your teacher</option>' + opciones +
+    '</select></label>' : "") +
   '</div>' +
   '<pre class="rppre" id="rpPre"></pre>' +
   '<div class="btnrow">' +
@@ -814,14 +831,21 @@ card.innerHTML =
     '<button class="btn ghost" id="rpCopy" type="button">Copy my report</button>' +
   '</div>' +
   '<p class="rpmsg" id="rpMsg"></p>' +
-  '<p class="rpfine">Only your name, your class and your answers go to your teacher. Nothing else.</p>';
+  '<p class="rpfine">Only your name, your class and your answers go to the teacher you choose. Nothing else.</p>';
 
+/* Va donde termina el resultado: pegada al final de los trials y antes del
+   codex, no al final de todo. */
+var trials = document.getElementById("trials");
+var codex = document.getElementById("codexCard");
 var nav = document.querySelector("nav.bottomnav");
-if(nav && nav.parentNode === wrap) wrap.insertBefore(card, nav);
+if(trials && trials.parentNode === wrap && trials.nextSibling) wrap.insertBefore(card, trials.nextSibling);
+else if(codex && codex.parentNode === wrap) wrap.insertBefore(card, codex);
+else if(nav && nav.parentNode === wrap) wrap.insertBefore(card, nav);
 else wrap.appendChild(card);
 
 var elName = document.getElementById("rpName");
 var elClass = document.getElementById("rpClass");
+var elTeacher = document.getElementById("rpTeacher");
 var elPre = document.getElementById("rpPre");
 var elMsg = document.getElementById("rpMsg");
 var elCopy = document.getElementById("rpCopy");
@@ -829,14 +853,48 @@ var elSend = document.getElementById("rpSend");
 
 elName.value = o0.name || "";
 elClass.value = o0.klass || "";
-function recordarNombre(){
+if(elTeacher && o0.teacher) elTeacher.value = o0.teacher;
+function recordar(){
   var o = leer();
   o.name = elName.value.trim();
   o.klass = elClass.value.trim();
+  if(elTeacher) o.teacher = elTeacher.value;
   guardar(o);
 }
-elName.addEventListener("input", recordarNombre);
-elClass.addEventListener("input", recordarNombre);
+elName.addEventListener("input", recordar);
+elClass.addEventListener("input", recordar);
+if(elTeacher) elTeacher.addEventListener("change", recordar);
+
+/* ---------- el boton que baja hasta la tarjeta ----------
+   Va en la misma fila que "Check my answers", que es donde el alumno esta
+   mirando cuando aparece el puntaje. */
+function ponerAtajos(){
+  var cards = document.querySelectorAll("#trials .card, .gamecard");
+  for(var i = 0; i < cards.length; i++){
+    var c = cards[i];
+    if(c === card || c.querySelector(".rpjump")) continue;
+    /* Hay resultado cuando el marcador tiene un numero (los trials) o cuando
+       la insignia de puerta ganada dejo de estar oculta (la ciudadela). */
+    var marcador = c.querySelector(".scoreline");
+    var insignia = c.querySelector(".done");
+    var hay = (marcador && /[0-9]/.test(texto(marcador))) ||
+              (insignia && String(insignia.className).indexOf("hidden") < 0);
+    if(!hay) continue;
+    var fila = c.querySelector(".btnrow");
+    if(!fila) continue;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "btn ghost rpjump";
+    b.textContent = PUEDE_ENVIAR ? "Send this to my teacher" : "See my report";
+    b.addEventListener("click", function(){
+      card.scrollIntoView({ block: "start" });
+      elName.focus();
+    });
+    fila.appendChild(b);
+  }
+}
+
+var enviado = null;   /* el texto del ultimo informe que salio */
 
 function pintar(){
   var r = informe();
@@ -844,6 +902,14 @@ function pintar(){
     ? "Nothing yet. Walk into a stop, check your answers and come back here."
     : "Nothing yet. Answer the exercises and press Check my answers.");
   elPre.className = r ? "rppre" : "rppre empty";
+  ponerAtajos();
+  /* Si el alumno siguio trabajando despues de enviar, el boton vuelve.
+     Lo que se evita es mandar dos veces LO MISMO, no que entregue el trial
+     que hizo despues. */
+  if(elSend && enviado !== null && r && r.texto !== enviado){
+    elSend.disabled = false;
+    elSend.textContent = "Send my new result";
+  }
 }
 
 /* cada click puede cambiar el puntaje: se vuelve a mirar la pantalla */
@@ -854,11 +920,22 @@ document.addEventListener("click", function(){
 }, true);
 window.addEventListener("pagehide", function(){ anotar(); });
 
-/* ---------- copiar ---------- */
+function cabecera(){
+  return "PRESENT PERFECT QUEST\n" +
+         "Student: " + (elName.value.trim() || "(no name)") +
+         "   Class: " + (elClass.value.trim() || "-") +
+         "   Date: " + new Date().toISOString().slice(0, 10);
+}
+function aviso(t, bien){
+  elMsg.textContent = t;
+  elMsg.className = "rpmsg " + (bien ? "ok" : "no");
+}
+
+/* ---------- copiar: funciona siempre, hasta sin internet ---------- */
 elCopy.addEventListener("click", function(){
   var r = informe();
   if(!r){ aviso("There is nothing to send yet.", false); return; }
-  var t = cabecera(r) + "\n" + r.texto;
+  var t = cabecera() + "\n" + r.texto;
   var ok = false;
   try{
     if(navigator.clipboard && navigator.clipboard.writeText){
@@ -882,84 +959,61 @@ elCopy.addEventListener("click", function(){
            : "Select the text above and copy it by hand.", ok);
 });
 
-function cabecera(r){
-  return "PRESENT PERFECT QUEST\n" +
-         "Student: " + (elName.value.trim() || "(no name)") +
-         "   Class: " + (elClass.value.trim() || "-") +
-         "   Date: " + new Date().toISOString().slice(0, 10);
-}
-function aviso(t, bien){
-  elMsg.textContent = t;
-  elMsg.className = "rpmsg " + (bien ? "ok" : "no");
-}
-
-/* ---------- enviar ---------- */
+/* ============================================================
+   ENVIAR AL WEB APP
+   ============================================================ */
 if(elSend){
   elSend.addEventListener("click", function(){
     var r = informe();
     if(!elName.value.trim()){ aviso("Write your name first.", false); elName.focus(); return; }
+    if(!elTeacher.value){ aviso("Choose your teacher first.", false); elTeacher.focus(); return; }
     if(!r){ aviso("There is nothing to send yet. Check your answers first.", false); return; }
-    recordarNombre();
-    var datos = {};
-    datos[FORM.student] = elName.value.trim();
-    datos[FORM.klass]   = elClass.value.trim();
-    datos[FORM.stop]    = r.stop;
-    datos[FORM.score]   = r.got + " / " + r.total;
-    datos[FORM.detail]  = r.texto;
+    recordar();
 
-    var cuerpo = [];
-    for(var k in datos){
-      if(Object.prototype.hasOwnProperty.call(datos, k) && k){
-        cuerpo.push(encodeURIComponent(k) + "=" + encodeURIComponent(datos[k]));
-      }
-    }
-    var body = cuerpo.join("&");
+    var datos = {
+      nombre_alumno: elName.value.trim(),
+      curso: elClass.value.trim(),
+      docente: elTeacher.value,
+      docente_nombre: elTeacher.options[elTeacher.selectedIndex].textContent,
+      pagina: r.stop,
+      puntaje: r.got + " / " + r.total,
+      resultado: r.texto,
+      timestamp: new Date().toISOString()
+    };
 
     elSend.disabled = true;
     aviso("Sending...", true);
-    var listo = function(){
+
+    /* ================== LEER ESTO ==================
+       El pedido va en modo no-cors, asi que la respuesta es OPACA: el
+       navegador no nos deja ver ni el codigo de estado ni el cuerpo. Que el
+       fetch no tire excepcion significa solamente que el pedido SALIO del
+       navegador. NO prueba que el servidor lo haya recibido, ni que la fila
+       se haya escrito, ni que el mail se haya mandado.
+       O sea: el "Sent" que ve el alumno es optimista. La unica prueba de
+       verdad esta en la planilla.
+       =============================================== */
+    var bien = function(){
+      enviado = r.texto;
+      elSend.textContent = "Sent";
+      aviso("Sent to " + datos.docente_nombre + ". If you do more, the button comes back.", true);
+    };
+    var mal = function(){
       elSend.disabled = false;
-      aviso("Sent. Your teacher has it. You can send it again later if you do more.", true);
+      aviso("It did not go. Check the internet and press the button again, or copy your report.", false);
     };
     try{
-      window.fetch(FORM.action, {
+      window.fetch(APPS.url, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: body
-      }).then(listo, function(){ porIframe(body, listo); });
-    }catch(e){
-      porIframe(body, listo);
-    }
+        /* En no-cors el navegador solo acepta unos pocos Content-Type: con
+           application/json ni sale el pedido. Va como texto plano y del otro
+           lado Apps Script lo lee igual con JSON.parse. */
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(datos)
+      }).then(bien, mal);
+    }catch(e){ mal(); }
   });
-}
-/* si fetch no esta o falla, se manda con un formulario de toda la vida */
-function porIframe(body, listo){
-  var f = document.createElement("form");
-  f.action = FORM.action;
-  f.method = "POST";
-  f.target = "rpSink";
-  f.style.display = "none";
-  var partes = body.split("&"), i;
-  for(i = 0; i < partes.length; i++){
-    var kv = partes[i].split("=");
-    var inp = document.createElement("input");
-    inp.type = "hidden";
-    inp.name = decodeURIComponent(kv[0]);
-    inp.value = decodeURIComponent((kv[1] || "").replace(/\+/g, "%20"));
-    f.appendChild(inp);
-  }
-  var ifr = document.getElementById("rpSink");
-  if(!ifr){
-    ifr = document.createElement("iframe");
-    ifr.name = "rpSink";
-    ifr.id = "rpSink";
-    ifr.style.display = "none";
-    document.body.appendChild(ifr);
-  }
-  document.body.appendChild(f);
-  f.submit();
-  window.setTimeout(function(){ if(f.parentNode) f.parentNode.removeChild(f); listo(); }, 900);
 }
 
 anotar();
