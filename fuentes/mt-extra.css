@@ -1,0 +1,86 @@
+
+/* ---------- tabla de verbos ---------- */
+/* La tabla es lo unico que puede ser mas ancha que la pantalla, asi que se
+   scrollea sola adentro de su caja. El cuerpo de la pagina nunca scrollea
+   en horizontal. */
+.tablewrap{overflow-x:auto;border:4px solid #2b1c07;border-radius:16px;background:#fffdf4}
+.vtable{border-collapse:collapse;width:100%;min-width:430px}
+.vtable th{
+  font-family:var(--head);font-weight:900;font-size:.74rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:#2b1c07;
+  border-bottom:3px solid #2b1c07;padding:9px 10px;text-align:left;white-space:nowrap;
+}
+.vtable th.cn,.vtable td.cn{width:2.6rem;text-align:center}
+.vtable td{border-bottom:2px solid #d9c9a4;padding:7px 10px;vertical-align:middle}
+.vtable tbody tr:last-child td{border-bottom:0}
+.vtable td.cn{
+  font-family:var(--head);font-weight:700;font-size:.78rem;color:#8a6a2a;
+}
+.vtable td.givencell{background:#f4ead2}
+.giventext{
+  font-family:var(--head);font-weight:900;font-size:1rem;letter-spacing:1.4px;color:#3d1470;
+}
+input.cellinput{width:100%;min-width:110px;padding:5px 8px;font-size:.95rem}
+.vtable tr.rowok td.givencell{background:#dff3d6}
+.vtable tr.rowno td.givencell{background:#fbe0e6}
+
+/* ---------- oraciones y produccion libre ---------- */
+input.w-m{width:min(100%,15rem)}
+.checklist{
+  border:3px solid #2b1c07;border-radius:13px;padding:11px 13px;background:#fffdf4;
+  font-size:.92rem;line-height:1.55;flex:1;
+}
+.checklist.right{background:#eaf8e5}
+.checklist.wrong{background:#fdeef1}
+.checklist ul{margin:6px 0 0;padding-left:20px}
+.checklist li{margin-bottom:4px}
+.needtitle{font-family:var(--head);font-weight:900;font-size:.88rem;letter-spacing:.6px;display:block;margin-bottom:2px}
+.modelbox{
+  border:3px dashed #2b1c07;border-radius:13px;padding:11px 13px;background:#eaf8e5;
+  font-size:.92rem;line-height:1.55;margin-top:6px;
+}
+.modelbox p{margin:.3em 0 0}
+.selfnote{font-style:italic;color:#5c4a2c;font-size:.85rem;margin-top:8px;display:block}
+
+.homelink + .homelink{margin-left:9px}
+
+/* ---------- etiquetas de forma en la produccion libre ---------- */
+.formhead{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.flab{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;
+  border:2px solid #2b1c07;border-radius:999px;padding:2px 12px;white-space:nowrap;
+}
+.flab.affirmative{background:#bdf0b0}
+.flab.negative{background:#ffc7d1}
+.flab.question{background:#a8e4ec}
+.modelbox p{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+
+/* ---------- boton de vuelta al pie de cada pagina ---------- */
+.bottomnav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:4px 0 32px}
+a.btnlink{
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.btnlink:hover{filter:brightness(1.07)}
+a.btnlink:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+a.btnlink.alt{background:var(--parch)}
+
+/* ---------- la misma oracion en negativa y en pregunta ---------- */
+.fline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:9px}
+.fline .flab{flex:0 0 auto}
+.gapline{display:flex;align-items:center;gap:.45em;flex-wrap:wrap;line-height:2.1}
+.exp p.solline{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px}
+
+input.w-xs{width:5.5rem}
+
+.starter{font-weight:600;color:#3d1470}
+.gapline .hintword{margin-left:.2em}
+
+.markword{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:#d7b6ff;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px;margin-left:.4em;
+  display:inline-block;vertical-align:2px;
+}

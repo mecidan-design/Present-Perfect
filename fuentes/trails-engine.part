@@ -1,0 +1,287 @@
+
+/* ============================================================
+   DUO: una oracion con DOS huecos.
+   El primero suele ser el verbo en present perfect y el segundo
+   for o since. checkTrial ya recorre e.inputs, asi que con dos
+   inputs en la misma entrada corrige los dos y da un solo
+   cartel de explicacion.
+   ============================================================ */
+function renderDuo(st, t){
+  var i;
+  var w1 = t.w1 || "w-m", w2 = t.w2 || "w-s";
+  var hintAfter = t.hintAfter || 1;
+
+  if(t.example){
+    var ex = t.example;
+    var m = el("div", "item model");
+    var l = el("div", "sline");
+    l.appendChild(el("span", "rn zero", String(ex.n)));
+    var s = el("span");
+    s.appendChild(document.createTextNode(ex.before + " "));
+    s.appendChild(el("span", "donetext", ex.gap1));
+    if(hintAfter === 1 && ex.verb) s.appendChild(el("span", "hintword", ex.verb));
+    s.appendChild(document.createTextNode(" " + ex.mid + " "));
+    s.appendChild(el("span", "donetext", ex.gap2));
+    if(hintAfter === 2 && ex.verb) s.appendChild(el("span", "hintword", ex.verb));
+    s.appendChild(document.createTextNode(" " + ex.after));
+    s.appendChild(el("span", "exampletag", "example"));
+    l.appendChild(s);
+    m.appendChild(l);
+    st.body.appendChild(m);
+  }
+
+  for(i = 0; i < t.items.length; i++){
+    var d = t.items[i];
+    var id = REG.push({ data: d }) - 1;
+    var item = el("div", "item");
+    item.setAttribute("data-id", String(id));
+    var line = el("div", "sline");
+    line.appendChild(el("span", "rn", String(d.n)));
+    var txt = el("span");
+    txt.appendChild(document.createTextNode(d.before + " "));
+    var i1 = mkInput(w1);
+    txt.appendChild(i1);
+    if(hintAfter === 1 && d.verb) txt.appendChild(el("span", "hintword", d.verb));
+    txt.appendChild(document.createTextNode(" " + d.mid + " "));
+    var i2 = mkInput(w2);
+    txt.appendChild(i2);
+    if(hintAfter === 2 && d.verb) txt.appendChild(el("span", "hintword", d.verb));
+    txt.appendChild(document.createTextNode(" " + d.after));
+    line.appendChild(txt);
+    item.appendChild(line);
+    st.body.appendChild(item);
+    st.entries.push({ kind: "input",
+      inputs: [{ el: i1, answers: d.answers1 }, { el: i2, answers: d.answers2 }],
+      data: d, holder: item, exp: item });
+  }
+}
+
+/* ============================================================
+   SORT: la tabla de dos columnas.
+   Se elige la piedra y despues la columna, sin arrastrar: con el
+   dedo funciona igual que con el mouse.
+   Truco para no tocar el corrector: la piedra GUARDA su columna
+   en .value, asi que para checkTrial es un input mas y se pinta
+   sola de verde o de rojo.
+   ============================================================ */
+function renderSort(st, t){
+  var i, j;
+  var sel = null;
+
+  var bank = el("div", "sortbank");
+  var bt = el("div", "bt");
+  bt.appendChild(icon("scroll"));
+  bt.appendChild(document.createTextNode(" The stones"));
+  bank.appendChild(bt);
+  var chips = el("div", "schips");
+  bank.appendChild(chips);
+  st.body.appendChild(bank);
+
+  var cols = el("div", "scols");
+  var lists = {};
+  for(j = 0; j < t.columns.length; j++){
+    var c = t.columns[j];
+    var box = el("div", "scol " + (c.key === "for" ? "forr" : c.key));
+    box.appendChild(el("h4", "sh", c.label));
+    box.appendChild(el("p", "shint", c.hint));
+    var list = el("div", "slist");
+    box.appendChild(list);
+    cols.appendChild(box);
+    lists[c.key] = { list: list, box: box };
+    /* el ejemplo del libro ya viene puesto en cada columna */
+    for(i = 0; i < t.examples.length; i++){
+      if(t.examples[i].col === c.key) list.appendChild(el("span", "sdone", t.examples[i].text));
+    }
+  }
+  st.body.appendChild(cols);
+
+  function arm(on){
+    for(var k in lists){
+      if(Object.prototype.hasOwnProperty.call(lists, k)){
+        if(on) lists[k].box.classList.add("armed");
+        else lists[k].box.classList.remove("armed");
+      }
+    }
+  }
+  function select(chip){
+    if(sel === chip){ sel.classList.remove("sel"); sel = null; arm(false); return; }
+    if(sel) sel.classList.remove("sel");
+    sel = chip;
+    sel.classList.add("sel");
+    arm(true);
+  }
+  function place(chip, key){
+    chip.value = key;
+    chip.classList.remove("sel", "ok", "no");
+    lists[key].list.appendChild(chip);
+    sel = null;
+    arm(false);
+  }
+  function unplace(chip){
+    chip.value = "";
+    chip.classList.remove("sel", "ok", "no");
+    chips.appendChild(chip);
+    sel = null;
+    arm(false);
+  }
+
+  /* el orden del banco se sortea: escritas seguidas, las de since y
+     las de for quedarian agrupadas y se resolveria mirando el orden */
+  var orden = [];
+  for(i = 0; i < t.items.length; i++) orden.push(t.items[i]);
+  for(i = orden.length - 1; i > 0; i--){
+    j = Math.floor(Math.random() * (i + 1));
+    var tmp = orden[i]; orden[i] = orden[j]; orden[j] = tmp;
+  }
+
+  for(i = 0; i < orden.length; i++){
+    (function(d){
+      var id = REG.push({ data: d }) - 1;
+      var chip = el("button", "schip");
+      chip.type = "button";
+      chip.setAttribute("data-id", String(id));
+      chip.appendChild(el("span", "sn", String(d.n)));
+      chip.appendChild(document.createTextNode(d.text));
+      chip.value = "";
+      chip.addEventListener("click", function(){
+        if(chip.parentNode !== chips){
+          /* si ya hay una piedra elegida, el click es para la columna */
+          if(sel) return;
+          unplace(chip);
+        }else{
+          select(chip);
+        }
+      });
+      chips.appendChild(chip);
+      st.entries.push({ kind: "input", inputs: [{ el: chip, answers: [d.col] }],
+        data: d, holder: chip, exp: null });
+    })(orden[i]);
+  }
+
+  for(j = 0; j < t.columns.length; j++){
+    (function(key){
+      lists[key].box.addEventListener("click", function(){
+        if(sel) place(sel, key);
+      });
+    })(t.columns[j].key);
+  }
+}
+
+/* ============================================================
+   LINEA DE TIEMPO
+   No se corrige nada: se mira. La misma flecha contada de dos
+   maneras, para que vean que since y for dicen lo mismo.
+   El año de hoy sale del reloj, asi la pagina no envejece.
+   ============================================================ */
+(function buildTimeline(){
+  var tl = DATA.timeline;
+  if(!tl) return;
+  document.getElementById("tlTitle").textContent = tl.title;
+  document.getElementById("tlSub").textContent = tl.sub;
+  var host = document.getElementById("tlBody");
+  var NOW = new Date().getFullYear();
+
+  var wrap = el("div", "tlwrap");
+  var track = el("div", "tltrack");
+  var line = el("div", "tlline");
+
+  var fill = el("div", "tlfill");
+  line.appendChild(fill);
+  var k;
+  for(k = 0; k <= tl.max; k++){
+    var tick = el("div", "tltick");
+    tick.style.left = (100 - (k * 100 / tl.max)) + "%";
+    line.appendChild(tick);
+  }
+  var stone = el("div", "tlstone");
+  line.appendChild(stone);
+  var year = el("div", "tlyear");
+  line.appendChild(year);
+  var span = el("div", "tlspan");
+  line.appendChild(span);
+  var left = el("div", "tlend l", String(NOW - tl.max));
+  var right = el("div", "tlend r", tl.nowLabel);
+  line.appendChild(left);
+  line.appendChild(right);
+  track.appendChild(line);
+  wrap.appendChild(track);
+
+  var ctrl = el("div", "tlctrl");
+  var lab = el("label", null, "Move the starting stone");
+  lab.setAttribute("for", "tlRange");
+  var range = document.createElement("input");
+  range.type = "range";
+  range.id = "tlRange";
+  /* El control mide desde la IZQUIERDA de la linea, no "hace cuantos años":
+     asi el pulgar y la piedra se mueven para el mismo lado. */
+  range.min = "0";
+  range.max = String(tl.max - tl.min);
+  range.step = "1";
+  range.value = String(tl.max - tl.start);
+  ctrl.appendChild(lab);
+  ctrl.appendChild(range);
+  wrap.appendChild(ctrl);
+
+  var chipRow = el("div", "tlchips");
+  var chipS = el("div", "tlchip since");
+  chipS.appendChild(el("span", "k", "Since"));
+  var chipSv = el("span", "v");
+  chipS.appendChild(chipSv);
+  var chipF = el("div", "tlchip forr");
+  chipF.appendChild(el("span", "k", "For"));
+  var chipFv = el("span", "v");
+  chipF.appendChild(chipFv);
+  chipRow.appendChild(chipS);
+  chipRow.appendChild(chipF);
+  wrap.appendChild(chipRow);
+
+  var sents = el("div", "tlsents");
+  sents.setAttribute("aria-live", "polite");
+  var s1 = el("p", "tlsent");
+  var s2 = el("p", "tlsent");
+  sents.appendChild(s1);
+  sents.appendChild(s2);
+  wrap.appendChild(sents);
+  wrap.appendChild(el("p", "tlask", tl.question));
+  wrap.appendChild(el("p", "tlhint", tl.hint));
+  wrap.appendChild(el("p", "tlnote", tl.note));
+
+  host.appendChild(wrap);
+
+  function paint(){
+    var v = parseInt(range.value, 10);
+    if(isNaN(v)) v = tl.max - tl.start;
+    var n = tl.max - v;
+    if(n < tl.min) n = tl.min;
+    if(n > tl.max) n = tl.max;
+    var pos = 100 - (n * 100 / tl.max);
+    var startYear = String(NOW - n);
+    var howLong = tl.words[n - 1] + (n === 1 ? " year" : " years");
+
+    fill.style.left = pos + "%";
+    stone.style.left = pos + "%";
+    year.style.left = pos + "%";
+    year.textContent = startYear;
+    span.style.left = pos + "%";
+
+    /* cuando la piedra llega al principio, el cartel del extremo diria el
+       mismo año dos veces */
+    left.style.visibility = (n >= tl.max) ? "hidden" : "visible";
+
+    chipSv.textContent = startYear;
+    chipFv.textContent = howLong;
+
+    clear(s1);
+    s1.appendChild(document.createTextNode(tl.sentence + " "));
+    s1.appendChild(el("b", "since", "since " + startYear));
+    s1.appendChild(document.createTextNode("."));
+
+    clear(s2);
+    s2.appendChild(document.createTextNode(tl.sentence + " "));
+    s2.appendChild(el("b", "forr", "for " + howLong));
+    s2.appendChild(document.createTextNode("."));
+  }
+  range.addEventListener("input", paint);
+  range.addEventListener("change", paint);
+  paint();
+})();

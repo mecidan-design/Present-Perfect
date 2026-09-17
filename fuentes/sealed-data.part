@@ -1,0 +1,226 @@
+<script id="data-block">
+/* ============================================================
+   SOLO CONTENIDO. Ni una referencia al DOM en este bloque.
+   ============================================================
+   LOS CINCO JUEGOS DE LA PUERTA SELLADA.
+
+   De donde salen los motores: del handoff de escape-the-grammar-lab,
+   la pagina de juegos que se hizo para la alumna de secundario. Los
+   mecanismos son agnosticos de la gramatica, asi que se reusan tal
+   cual y solo cambia el contenido. El juego 2 de aquella pagina era
+   "Comma Surgeon" y no tiene nada que ver con el present perfect: se
+   reemplazo por uno nuevo, FOR o SINCE, que es justo lo que el
+   profesor pidio entrenar.
+
+   >>> AVISO PARA EL PROFESOR <<<
+   Las oraciones de los cinco juegos son NUEVAS: no salen de ninguna
+   hoja. Lo que si se respeta es la lista de verbos de la unidad: cada
+   verbo que aparece aca ya esta en el material (pagina 159, los dos
+   Grammar: Plus y los siete mini tests). No se agrego ninguno.
+   ============================================================ */
+
+/* lo que hay del otro lado de la puerta */
+var REWARD = "https://www.youtube.com/watch?v=l0tOJ3gyokk";
+
+/* el codigo de la puerta: un digito por sello */
+var CODE = [5, 2, 8, 3, 6];
+var LABELS = ["The Cracked Sentences","The Two Keys","The Third Form Hunt","The Gatekeeper's Grid","Beat the Hourglass"];
+
+/* Cada cuanto el guardian del tateti juega cualquier cosa en vez de su
+   mejor jugada. 0 = imbatible, 0.3 = falla tres de cada diez. */
+var SLOPPY = 0.3;
+
+/* cuantos aciertos pide cada juego */
+var NEED1 = 7, NEED2 = 10, NEED3 = 3, NEED5 = 10;
+
+/* ============ DOOR 1 · una palabra mal por oracion ============ */
+var ERRORS = [
+  { words: ["I","have","went","to","the","new","bookshop."], bad: 2, fix: "gone",
+    why: "went is the past simple, and after have you always need the third form: gone.",
+    tip: "have went does not exist. When you see have or has, look for the third form." },
+  { words: ["She","has","never","not","eaten","sushi."], bad: 3, fix: "",
+    why: "never is already negative, so the sentence does not need not as well.",
+    tip: "One negative word is enough: has never eaten." },
+  { words: ["Have","you","never","ridden","a","horse?"], bad: 2, fix: "ever",
+    why: "This is a question about your life, and in questions the word is ever.",
+    tip: "ever lives in questions, never lives in statements." },
+  { words: ["We","have","been","here","since","six","years."], bad: 4, fix: "for",
+    why: "six years is a length of time, and lengths of time go with for.",
+    tip: "for answers how long. since answers from when." },
+  { words: ["My","brother","has","broke","his","arm."], bad: 3, fix: "broken",
+    why: "broke is the past simple. After has you need the third form: broken.",
+    tip: "break - broke - broken. Only the third one follows have or has." },
+  { words: ["Has","your","friends","ever","won","a","competition?"], bad: 0, fix: "Have",
+    why: "your friends is more than one person, so the question starts with Have.",
+    tip: "Has goes with he, she and it. Have goes with everybody else." },
+  { words: ["I","haven't","saw","him","today."], bad: 2, fix: "seen",
+    why: "After haven't the verb goes into the third form: seen.",
+    tip: "saw is the past simple, so haven't saw is always wrong." },
+  { words: ["They","have","ever","been","to","London."], bad: 2, fix: "never",
+    why: "There is no question mark here: it is a statement, and statements take never.",
+    tip: "If you can put a full stop at the end, the word is never." },
+  { words: ["My","mum","has","bought","a","car","yesterday."], bad: 6, fix: "",
+    why: "yesterday is a finished past time, and it cannot travel with the present perfect.",
+    tip: "yesterday, last week and two days ago all go with the past simple." }
+];
+
+/* ============ DOOR 2 · for o since ============ */
+var SINCEFOR = [
+  { word: "three years", answer: "FOR",
+    why: "three years is a length of time: you can count it, so it goes with for.",
+    tip: "If you can count the period, it is for." },
+  { word: "2019", answer: "SINCE",
+    why: "2019 is the moment it started, not how long it lasted, so it goes with since.",
+    tip: "A year is a point on the calendar: since 2019." },
+  { word: "Monday", answer: "SINCE",
+    why: "Monday names the day it started, so the word you need is since.",
+    tip: "Days of the week are points in time: since Monday, since Friday." },
+  { word: "ten minutes", answer: "FOR",
+    why: "ten minutes measures how long something has lasted, so it takes for.",
+    tip: "Minutes, hours, days and years are all lengths: for ten minutes." },
+  { word: "I was six", answer: "SINCE",
+    why: "I was six says when it started, so the sentence needs since.",
+    tip: "A whole little sentence about the past also takes since: since I was six." },
+  { word: "a long time", answer: "FOR",
+    why: "a long time has no number, but it is still a length of time, so it takes for.",
+    tip: "for a long time and for ages both work the same way." },
+  { word: "last summer", answer: "SINCE",
+    why: "last summer is the moment the action started, so it goes with since.",
+    tip: "last summer, last year and last Monday all point at a moment: since." },
+  { word: "two weeks", answer: "FOR",
+    why: "two weeks counts how long, so the word is for.",
+    tip: "Two of anything is a length: for two weeks, for two months." },
+  { word: "September", answer: "SINCE",
+    why: "September is a point on the calendar, so the sentence needs since.",
+    tip: "Months work like years: since September, since 2020." },
+  { word: "half an hour", answer: "FOR",
+    why: "half an hour is thirty minutes, and minutes measure how long, so it is for.",
+    tip: "If you could answer the question how long?, the word is for." },
+  { word: "breakfast", answer: "SINCE",
+    why: "breakfast is a moment of the day, so it goes with since.",
+    tip: "since breakfast, since lunch, since the bell rang." },
+  { word: "ages", answer: "FOR",
+    why: "ages is an informal way of saying a very long time, and that is a length: for ages.",
+    tip: "I haven't seen you for ages is what you say to a friend." }
+];
+
+/* ============ DOOR 3 · el wordle de terceras formas ============ */
+var VERBS = [
+  { base: "be", answer: "BEEN",
+    why: "be is irregular: be - was/were - been. The third form is been.",
+    tip: "After have or has there is only one option: been." },
+  { base: "break", answer: "BROKEN",
+    why: "break is irregular: break - broke - broken.",
+    tip: "broke is the past simple. The one that follows have is broken." },
+  { base: "buy", answer: "BOUGHT",
+    why: "buy is irregular: buy - bought - bought. The second and the third form are the same.",
+    tip: "bought is already past, so you never add -ed to it." },
+  { base: "do", answer: "DONE",
+    why: "do is irregular: do - did - done.",
+    tip: "did can never follow have. The word you need is done." },
+  { base: "eat", answer: "EATEN",
+    why: "eat is irregular: eat - ate - eaten.",
+    tip: "ate is the past simple. have ate is always wrong." },
+  { base: "fly", answer: "FLOWN",
+    why: "fly is irregular: fly - flew - flown.",
+    tip: "flied does not exist." },
+  { base: "forget", answer: "FORGOTTEN",
+    why: "forget is irregular: forget - forgot - forgotten. The third form doubles the t.",
+    tip: "Two t in forgotten." },
+  { base: "go", answer: "GONE",
+    why: "go is irregular: go - went - gone. The past simple looks nothing like the others.",
+    tip: "went can never follow have. You say I have gone." },
+  { base: "ride", answer: "RIDDEN",
+    why: "ride is irregular: ride - rode - ridden. The third form doubles the d.",
+    tip: "Two d in ridden." },
+  { base: "see", answer: "SEEN",
+    why: "see is irregular: see - saw - seen.",
+    tip: "saw is the past simple. After have you need seen." },
+  { base: "swim", answer: "SWUM",
+    why: "swim is irregular: swim - swam - swum. The vowel goes i, a, u.",
+    tip: "swum, with a u, is the one that follows have." },
+  { base: "write", answer: "WRITTEN",
+    why: "write is irregular: write - wrote - written. The third form doubles the t.",
+    tip: "Two t in written. wrote is the past simple." }
+];
+
+/* ============ DOOR 4 · el tablero, tres opciones ============ */
+var GRIDQ = [
+  { q: "I ___ never been to London.", options: ["have","has","am"], correct: "have",
+    why: "I always takes have, and never goes between have and the past participle.",
+    tip: "has is only for he, she and it." },
+  { q: "Has your sister ever ___ a horse?", options: ["rode","ridden","ride"], correct: "ridden",
+    why: "After Has ... ever the verb is the third form: ridden.",
+    tip: "rode is the past simple. Two d in ridden." },
+  { q: "We have been friends ___ 2018.", options: ["for","since","from"], correct: "since",
+    why: "2018 is the moment the friendship started, so the word is since.",
+    tip: "since + a point in time. for + a length of time." },
+  { q: "___ you ever eaten sushi?", options: ["Has","Have","Do"], correct: "Have",
+    why: "you always takes Have, and the question about your life uses ever.",
+    tip: "Do you eat sushi? is a different question, about your habits." },
+  { q: "He hasn't ___ his homework yet.", options: ["did","done","do"], correct: "done",
+    why: "After hasn't the verb goes into the third form, and do becomes done.",
+    tip: "did can never follow has or hasn't." },
+  { q: "They have lived here ___ ten years.", options: ["since","for","during"], correct: "for",
+    why: "ten years measures how long they have lived there, so it takes for.",
+    tip: "If you can count the period, use for." },
+  { q: "My mum has ___ a new car.", options: ["buy","bought","buyed"], correct: "bought",
+    why: "After has you need the third form, and buy is irregular: buy - bought - bought.",
+    tip: "buyed does not exist in English." },
+  { q: "I have ___ seen that film.", options: ["ever","never","yet"], correct: "never",
+    why: "This is a statement, so the negative word is never.",
+    tip: "ever belongs in questions, never in statements." },
+  { q: "Have you ___ been to Brazil?", options: ["never","ever","already"], correct: "ever",
+    why: "In a question about your whole life the word is ever.",
+    tip: "Have you ever...? is the normal way to ask about experiences." },
+  { q: "She has ___ in that school for six years.", options: ["been","being","be"], correct: "been",
+    why: "After has the verb is the third form of be, which is been.",
+    tip: "being is for actions in progress. been is the third form." },
+  { q: "We haven't ___ the news.", options: ["hear","heard","hearing"], correct: "heard",
+    why: "After haven't the verb is the third form, and hear is irregular: hear - heard - heard.",
+    tip: "heard is written with the same letters as hear, plus a d." },
+  { q: "___ he ever broken a window?", options: ["Have","Has","Did"], correct: "Has",
+    why: "he is one person, so the question starts with Has.",
+    tip: "Did he break...? is the past simple question, a different one." }
+];
+
+/* ============ DOOR 5 · contra el reloj, dos opciones ============ */
+var RAPID = [
+  { q: "I have ___ a horse.", options: ["ridden","rode"], correct: "ridden",
+    why: "After have you need the third form.", tip: "rode is the past simple." },
+  { q: "We have been here ___ Monday.", options: ["for","since"], correct: "since",
+    why: "Monday is a point in time.", tip: "since + when it started." },
+  { q: "___ you ever swum in a lake?", options: ["Have","Has"], correct: "Have",
+    why: "you takes Have.", tip: "Has is only for he, she and it." },
+  { q: "She has never ___ sushi.", options: ["eaten","ate"], correct: "eaten",
+    why: "After has never the verb is the third form.", tip: "ate is the past simple." },
+  { q: "They have lived here ___ five years.", options: ["since","for"], correct: "for",
+    why: "five years is a length of time.", tip: "for answers how long." },
+  { q: "He hasn't ___ his keys.", options: ["found","find"], correct: "found",
+    why: "After hasn't you need the third form.", tip: "find - found - found." },
+  { q: "Has your brother ___ a blog?", options: ["written","wrote"], correct: "written",
+    why: "After Has the verb is the third form.", tip: "Two t in written." },
+  { q: "I have ___ been to Paris.", options: ["never","ever"], correct: "never",
+    why: "It is a statement, not a question.", tip: "ever only in questions." },
+  { q: "___ your friends ever met a star?", options: ["Have","Has"], correct: "Have",
+    why: "your friends is plural.", tip: "Plural people take Have." },
+  { q: "We have known them ___ 2020.", options: ["since","for"], correct: "since",
+    why: "2020 is the moment it started.", tip: "A year always takes since." },
+  { q: "My dad has ___ to work.", options: ["gone","went"], correct: "gone",
+    why: "After has you need gone.", tip: "went can never follow has." },
+  { q: "She has ___ the window.", options: ["broken","broke"], correct: "broken",
+    why: "After has the verb is the third form.", tip: "broke is the past simple." },
+  { q: "I haven't ___ him since June.", options: ["seen","saw"], correct: "seen",
+    why: "After haven't the verb is the third form.", tip: "saw is the past simple." },
+  { q: "Has she ___ her homework?", options: ["done","did"], correct: "done",
+    why: "After Has the verb is done.", tip: "did never follows has." },
+  { q: "We have ___ the match.", options: ["won","win"], correct: "won",
+    why: "After have you need the third form: won.", tip: "win - won - won." },
+  { q: "He has ___ me the truth.", options: ["told","tell"], correct: "told",
+    why: "After has the verb is the third form: told.", tip: "tell - told - told." },
+  { q: "They have been friends ___ ages.", options: ["for","since"], correct: "for",
+    why: "ages means a very long time.", tip: "for ages is a length." },
+  { q: "Have you ___ finished?", options: ["already","yet"], correct: "already",
+    why: "already goes between have and the past participle.", tip: "yet goes at the end." }
+];
+</script>

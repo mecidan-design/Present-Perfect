@@ -1,0 +1,152 @@
+
+/* =========================================================
+   LOS CINCO JUEGOS. Los motores son los de escape-the-grammar-lab
+   (otro alumno, otra estetica): aca se les pone la ropa de la quest.
+   ========================================================= */
+
+/* ---------- la puerta y sus cinco sellos ---------- */
+.lockcard{
+  background:linear-gradient(158deg,#1a0f3d 0%,#3b1a5e 58%,#0f3a4a 100%);
+  border:5px solid var(--gold);border-radius:22px;
+  box-shadow:0 0 0 4px #150c2f, 13px 13px 0 rgba(0,0,0,.45);
+  padding:22px 26px;margin-bottom:30px;
+}
+.lockcard h2{font-family:var(--head);font-weight:900;color:#fff9e8;font-size:1.5rem;margin:.1rem 0 .4rem;letter-spacing:.6px}
+.lockcard p{color:#d8c7f5;font-size:.95rem;line-height:1.55;margin:0 0 14px}
+.digits{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.digit{
+  font-family:var(--head);font-weight:900;font-size:1.9rem;color:#7a6aa8;
+  width:3rem;height:3.6rem;display:flex;align-items:center;justify-content:center;
+  background:rgba(10,6,28,.72);border:3px solid #4a3a7a;border-radius:12px;
+}
+.digit.got{color:#fff9e8;border-color:var(--gold);background:rgba(60,36,6,.75)}
+.lockrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.lockrow input{width:9rem;text-align:center;font-family:var(--head);font-weight:900;font-size:1.2rem;letter-spacing:4px}
+.lockmsg{font-family:var(--head);font-weight:700;color:#ffe9b0;font-size:.95rem;margin:12px 0 0;letter-spacing:.5px}
+.lockmsg.win{color:var(--green,#bdf0b0)}
+
+/* ---------- tarjeta de juego ---------- */
+.gamecard{
+  background:
+    radial-gradient(rgba(150,110,40,.075) 1px, transparent 1.6px) 0 0/13px 13px,
+    linear-gradient(180deg,#fdf6e3 0%,#f6e9cd 100%);
+  border:4px solid #2b1c07;border-radius:18px;padding:22px 22px 24px;margin-bottom:34px;
+}
+.gamecard:nth-of-type(3n+1){box-shadow:10px 10px 0 var(--gold-dk);transform:rotate(-.4deg)}
+.gamecard:nth-of-type(3n+2){box-shadow:10px 10px 0 var(--crimson);transform:rotate(.35deg)}
+.gamecard:nth-of-type(3n+3){box-shadow:10px 10px 0 var(--teal);transform:rotate(-.25deg)}
+.gamecard h2{font-family:var(--head);font-weight:900;font-size:1.45rem;margin:.1rem 0 .3rem;letter-spacing:.6px}
+.gamecard .done{
+  font-family:var(--head);font-weight:700;font-size:.66rem;letter-spacing:1.4px;text-transform:uppercase;
+  background:#bdf0b0;border:2px solid #2b1c07;border-radius:999px;padding:2px 10px;margin-left:10px;
+  display:inline-block;vertical-align:4px;
+}
+.hidden{display:none}
+
+/* ---------- caja de juego ---------- */
+.qbox{border:4px solid var(--gold);border-radius:16px;padding:16px;background:#fffdf4;margin-top:4px}
+.gq{font-size:1.06rem;font-weight:500;line-height:1.6;margin:0 0 14px}
+.keyhint{font-size:.85rem;color:#5c4a2c;line-height:1.5;margin:12px 0 0}
+.fixline{font-family:var(--body);font-weight:700;color:#3d1470;margin:10px 0 0;font-size:.95rem}
+.turnmsg{font-family:var(--head);font-weight:700;color:#5c4a2c;letter-spacing:.5px;margin:0 0 12px}
+.score{font-family:var(--head);font-weight:700;font-size:1rem;letter-spacing:.5px}
+
+/* ---------- juego 1: palabras clickeables ---------- */
+.sentence{font-size:1.12rem;line-height:2.2;margin:0}
+.word{
+  cursor:pointer;padding:2px 6px;border-radius:7px;border:2px solid transparent;
+  transition:background .08s,border-color .08s;
+}
+.word:hover{background:#fff3d0;border-color:#2b1c07}
+.word.dead{cursor:default}
+.word.dead:hover{background:transparent;border-color:transparent}
+.word.good{background:#bdf0b0;border-color:var(--emerald)}
+.word.bad{background:#ffc7d1;border-color:var(--crimson);text-decoration:line-through}
+
+/* ---------- juego 2: for o since ---------- */
+.timeword{
+  font-family:var(--head);font-weight:900;font-size:clamp(1.8rem,7vw,2.8rem);letter-spacing:2px;
+  text-align:center;color:#3d1470;margin:6px 0 18px;line-height:1.2;
+}
+.twobtn{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.bigopt{
+  font-family:var(--head);font-weight:900;font-size:1.3rem;letter-spacing:2px;cursor:pointer;
+  background:#fff;border:3px solid #2b1c07;border-radius:14px;padding:14px 34px;
+  box-shadow:5px 5px 0 #2b1c07;color:var(--ink);transition:transform .07s,box-shadow .07s;
+}
+.bigopt:hover{background:#fff3d0}
+.bigopt:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.bigopt.good{background:#bdf0b0;border-color:var(--emerald)}
+.bigopt.bad{background:#ffc7d1;border-color:var(--crimson)}
+.bigopt[disabled]{cursor:default}
+
+/* ---------- juego 3: el wordle ---------- */
+.clueword{
+  font-family:var(--head);font-weight:900;font-size:1.25rem;letter-spacing:2px;color:#3d1470;
+  display:block;text-align:center;margin-bottom:14px;text-transform:uppercase;
+}
+/* FORGOTTEN tiene nueve letras: en un telefono la fila se sale de la pantalla
+   si los cuadrados son fijos, asi que miden segun el ancho disponible. */
+.wgrid{display:grid;gap:clamp(4px,1.2vw,7px);justify-content:center;margin-bottom:14px}
+.wrow{display:flex;gap:clamp(4px,1.2vw,7px);justify-content:center}
+.tile{
+  width:clamp(1.5rem,7.2vw,2.4rem);height:clamp(1.5rem,7.2vw,2.4rem);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--head);font-weight:900;font-size:clamp(.78rem,3.4vw,1.1rem);
+  border:3px solid #2b1c07;border-radius:8px;background:#fff;color:var(--ink);
+}
+.tile.hit{background:#bdf0b0}
+.tile.near{background:var(--gold-lt)}
+.tile.miss{background:#d9cdb4;color:#6b5a3a}
+.guessrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.guessrow input{width:11rem;text-align:center;font-family:var(--head);font-weight:700;letter-spacing:3px;text-transform:uppercase}
+
+/* ---------- juego 4: el tablero ---------- */
+.board{display:grid;grid-template-columns:repeat(3,4.4rem);gap:9px;justify-content:center;margin-bottom:16px}
+.sq{
+  width:4.4rem;height:4.4rem;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-family:var(--head);font-weight:900;font-size:2rem;
+  background:#fffdf4;border:3px solid #2b1c07;border-radius:12px;box-shadow:4px 4px 0 var(--gold-dk);
+}
+.sq.me{background:#bdf0b0;color:#14532d}
+.sq.cpu{background:#ffc7d1;color:#7a1024}
+.sq.win{box-shadow:0 0 0 4px var(--gold),4px 4px 0 var(--gold-dk)}
+
+/* ---------- juego 5: el reloj ---------- */
+.clock{
+  font-family:var(--head);font-weight:900;font-size:3rem;text-align:center;color:#3d1470;
+  line-height:1;margin-bottom:8px;
+}
+.clock.low{color:var(--crimson)}
+.timerbar{height:14px;border:3px solid var(--gold);border-radius:999px;overflow:hidden;background:rgba(0,0,0,.14);margin-bottom:14px}
+.timerbar span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold-lt),var(--gold));transition:width .1s linear}
+
+/* ---------- opciones y cierres compartidos ---------- */
+.opts{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+.opt{
+  font-family:var(--body);font-size:1rem;font-weight:600;cursor:pointer;background:#fff;
+  border:3px solid #2b1c07;border-radius:999px;padding:8px 20px;box-shadow:3px 3px 0 #2b1c07;
+  color:var(--ink);transition:transform .07s,box-shadow .07s;
+}
+.opt:hover{background:#fff3d0}
+.opt.good{background:#bdf0b0;border-color:var(--emerald)}
+.opt.bad{background:#ffc7d1;border-color:var(--crimson);text-decoration:line-through}
+.opt[disabled]{cursor:default}
+.final{text-align:center;padding:10px 4px}
+.final .big{font-family:var(--head);font-weight:900;font-size:3rem;color:#3d1470;line-height:1;margin:6px 0}
+.final .msg{font-family:var(--head);font-weight:700;color:#5c4a2c;font-size:1.05rem;letter-spacing:.5px}
+.flash{margin:12px 0 0;font-size:.9rem;line-height:1.5;color:#14532d;font-weight:500}
+.flash.no{color:#7a1024}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 14px}
+.dot{width:14px;height:14px;border-radius:50%;border:3px solid #a8956a;background:transparent}
+.dot.y{background:var(--emerald);border-color:var(--emerald)}
+.dot.n{background:var(--crimson);border-color:var(--crimson)}
+.dot.now{box-shadow:0 0 0 3px var(--gold)}
+.hud{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:10px}
+.chip{
+  font-family:var(--head);font-weight:700;font-size:.82rem;letter-spacing:.8px;
+  border:3px solid #2b1c07;border-radius:999px;padding:3px 14px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:#2b1c07;
+}
+.chip.streak{background:linear-gradient(180deg,#ff9db0,var(--crimson));color:#fff}
+.chip.left{background:linear-gradient(180deg,#9fe6ef,var(--teal));color:#04262b}

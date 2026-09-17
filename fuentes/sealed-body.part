@@ -1,0 +1,114 @@
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="chapter">Present Perfect Quest &middot; Stop VI</span>
+    <h1 class="big">The Citadel of Five Doors</h1>
+    <p>Hero, this is the last stop of the quest. Five doors stand between you and the treasure, and behind every door there is a game waiting for you. Win a game, the door opens and one digit of the code is yours. Open the five doors, type the code and take what the citadel has been hiding all this time.</p>
+    <div class="verbline">ever &middot; never &middot; for &middot; since &middot; third forms</div>
+    <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
+  </div>
+
+  <div class="lockcard">
+    <h2>The lock of the treasure</h2>
+    <p>Five digits, one for every door. They appear here as you win the games, and the lock only turns when the five doors are open.</p>
+    <div class="digits" id="digits"></div>
+    <div class="lockrow">
+      <input type="text" id="codeInput" maxlength="5" autocomplete="off" spellcheck="false" placeholder="- - - - -">
+      <button class="btn" id="codeBtn" type="button">Open the treasure</button>
+    </div>
+    <p class="lockmsg" id="codeMsg">No door is open yet.</p>
+    <div class="lockrow" id="rewardRow" hidden></div>
+  </div>
+
+  <!-- ============ DOOR 1 ============ -->
+  <section class="gamecard" id="g1">
+    <span class="tag">Door I</span>
+    <h2>The Cracked Sentences<span class="done hidden" id="d1">digit won</span></h2>
+    <p class="sub">Every sentence below has exactly <b>one</b> wrong word. Click it. Sometimes the word is the wrong one, and sometimes it is a word that should not be there at all. Seven sentences out of nine and the first digit is yours.</p>
+    <div class="hud">
+      <span class="chip" id="g1score">0 / 9</span>
+      <span class="chip streak" id="g1lives">first try: 0</span>
+    </div>
+    <div class="dots" id="g1dots"></div>
+    <div class="qbox" id="g1box"></div>
+    <div class="btnrow">
+      <button class="btn" id="g1next" type="button" disabled>Next sentence</button>
+      <button class="btn ghost" id="g1again" type="button">Play again</button>
+    </div>
+  </section>
+
+  <!-- ============ DOOR 2 ============ -->
+  <section class="gamecard" id="g2">
+    <span class="tag">Door II</span>
+    <h2>The Two Keys<span class="done hidden" id="d2">digit won</span></h2>
+    <p class="sub">One time expression at a time. Does it go with <b>for</b> or with <b>since</b>? Remember: <b>for</b> says how long something has lasted, <b>since</b> says the moment it started. Ten right out of twelve and the second digit is yours.</p>
+    <div class="hud">
+      <span class="chip" id="g2score">0 / 12</span>
+      <span class="chip left" id="g2which">card 1 of 12</span>
+    </div>
+    <div class="dots" id="g2dots"></div>
+    <div class="qbox" id="g2box"></div>
+    <div class="btnrow">
+      <button class="btn" id="g2next" type="button" disabled>Next card</button>
+      <button class="btn ghost" id="g2again" type="button">Play again</button>
+    </div>
+  </section>
+
+  <!-- ============ DOOR 3 ============ -->
+  <section class="gamecard" id="g3">
+    <span class="tag">Door III</span>
+    <h2>The Third Form Hunt<span class="done hidden" id="d3">digit won</span></h2>
+    <p class="sub">Guess the third form of the verb on the card. Six tries. After each guess the tiles tell you: <b>green</b> means right letter in the right place, <b>gold</b> means right letter in the wrong place, <b>grey</b> means the letter is not in the word. Find three verbs and the third digit is yours.</p>
+    <div class="qbox" id="g3box">
+      <div><span class="clueword" id="g3clue"></span></div>
+      <div class="wgrid" id="g3grid"></div>
+      <div class="guessrow">
+        <input type="text" id="g3input" autocomplete="off" spellcheck="false" placeholder="your guess">
+        <button class="btn" id="g3go" type="button">Guess</button>
+        <button class="btn ghost" id="g3new" type="button">Another verb</button>
+      </div>
+      <p class="keyhint" id="g3hint"></p>
+      <div id="g3exp"></div>
+    </div>
+  </section>
+
+  <!-- ============ DOOR 4 ============ -->
+  <section class="gamecard" id="g4">
+    <span class="tag">Door IV</span>
+    <h2>The Gatekeeper&rsquo;s Grid<span class="done hidden" id="d4">digit won</span></h2>
+    <p class="sub">Three in a row against the gatekeeper. Click an empty square and answer the question: if you are right the square is yours, if you are wrong the gatekeeper takes it. Beat him and the fourth digit is yours. A draw is not enough, but he does make mistakes.</p>
+    <p class="turnmsg" id="g4msg">Pick a square to start.</p>
+    <div class="board" id="g4board"></div>
+    <div class="qbox hidden" id="g4box"></div>
+    <div class="btnrow">
+      <button class="btn ghost" id="g4again" type="button">New game</button>
+      <span class="score" id="g4score">0 wins</span>
+    </div>
+  </section>
+
+  <!-- ============ DOOR 5 ============ -->
+  <section class="gamecard" id="g5">
+    <span class="tag">Door V</span>
+    <h2>Beat the Hourglass<span class="done hidden" id="d5">digit won</span></h2>
+    <p class="sub">Sixty seconds, one tap per question, everything from the quest mixed together. Ten correct answers and the last digit is yours. A wrong answer costs you three seconds, so read fast and keep going.</p>
+    <div class="clock" id="g5clock">60</div>
+    <div class="timerbar"><span id="g5bar"></span></div>
+    <div class="hud">
+      <span class="chip" id="g5score">0 correct</span>
+      <span class="chip streak" id="g5streak">streak 0</span>
+    </div>
+    <div class="qbox" id="g5box"></div>
+    <div class="btnrow">
+      <button class="btn" id="g5start" type="button">Start the clock</button>
+    </div>
+  </section>
+
+</div>
+
+<nav class="bottomnav">
+  <a class="btnlink" href="index.html">&laquo; Back to Present Perfect Quest</a>
+  <a class="btnlink alt" href="seven-gates.html">&laquo; The Seven Gates</a>
+</nav>
+
+<footer class="site">Copyright Prof Dan M. Mecikovsky</footer>

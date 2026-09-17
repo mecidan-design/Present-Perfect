@@ -1,0 +1,287 @@
+<script id="data-block">
+/* ============================================================
+   SOLO CONTENIDO. Ni una referencia al DOM en este bloque.
+   ============================================================
+   PREPARE SECOND EDITION LEVEL 3 - UNIT 14 GRAMMAR: PLUS.
+   Insumo unico: la hoja fotocopiable que mando el profesor.
+   Estan los ejercicios 1, 2, 3, 4 y 6. El 5 es de PRONUNCIATION
+   (entonacion de preguntas y afirmaciones, audio 08) y se saco a
+   pedido del profesor: necesita el audio, no se puede resolver
+   ni autocorregir en pantalla.
+
+   El item 1 de cada ejercicio viene resuelto en la hoja, asi que
+   aca aparece como ejemplo y no suma puntos, igual que en el papel.
+
+   >>> DOS AVISOS PARA EL PROFESOR <<<
+   1) Ejercicio 2 numero 2 y ejercicio 4 numero 5: la hoja da el
+      verbo GO, y con el present perfect conviven been y gone
+      ("We haven't been to the new bookshop yet" es lo que suena
+      natural; "gone" sale de la palabra que da la consigna).
+      El corrector ACEPTA LAS DOS y lo explica en el Hero tip.
+      Si la clave del libro pide una sola, se corrige el array
+      "answers" de esos dos items y nada mas.
+   2) Ejercicio 6 hueco 6 ("I think I ___ go to the new bookshop"):
+      la respuesta del libro es will, pero might y may tambien
+      funcionan. El corrector las acepta y muestra will como
+      respuesta modelo.
+   ============================================================ */
+var DATA = {
+
+meta: {
+  chapter: "Unit 14 · Grammar Plus",
+  title: "The Market of Just, Already and Yet",
+  sub: "Five trials from the Grammar: Plus worksheet. just is for something that happened a moment ago, already is for something finished sooner than expected, and yet lives in negatives and questions.",
+  verbs: "just &middot; already &middot; yet &middot; have / has + past participle"
+},
+
+trials: [
+
+/* ---------- Ejercicio 1 ---------- */
+{
+  key: "t1", icon: "star",
+  medal: "Brackets",
+  title: "The Word in Brackets",
+  sub: "Rewrite the sentences using the word in brackets. Number 1 is done for you.",
+  type: "write",
+  note: {
+    title: "Where the three words go",
+    lines: [
+      "just -> between have/has and the past participle: has just paid.",
+      "already -> in the same place: have already played.",
+      "yet -> at the very end of the sentence, and only in negatives and questions: ... yet?"
+    ],
+    warning: "Do not change anything else. Only put the new word in its place."
+  },
+  example: { n: 1, prompt: "My parents have opened a bakery in the old town. (just)", gap: "My parents have just opened a bakery in the old town." },
+  items: [
+    { n: 2, prompt: "We've done this exercise three times!", keyword: "already",
+      answers: ["we've already done this exercise three times","we have already done this exercise three times"],
+      solution: "We've already done this exercise three times!",
+      why: "already goes between the auxiliary and the past participle, so it slides in between We've and done.",
+      tip: "already says the action is finished, and often earlier than people expected." },
+    { n: 3, prompt: "Have you been to the new department store?", keyword: "yet",
+      answers: ["have you been to the new department store yet"],
+      solution: "Have you been to the new department store yet?",
+      why: "yet is different from the other two: it goes at the end of the sentence, and this is a question, which is where yet belongs.",
+      tip: "In a question, yet means 'up to now'. It is always the last word before the question mark." },
+    { n: 4, prompt: "I haven't bought Mum's birthday present.", keyword: "yet",
+      answers: ["i haven't bought mum's birthday present yet","i have not bought mum's birthday present yet"],
+      solution: "I haven't bought Mum's birthday present yet.",
+      why: "The sentence is negative, and yet goes at the end: it means the present is still not bought.",
+      tip: "yet only works in negatives and questions. In a positive sentence you use already." },
+    { n: 5, prompt: "Sam has paid for our snacks so don't worry.", keyword: "just",
+      answers: ["sam has just paid for our snacks so don't worry","sam's just paid for our snacks so don't worry"],
+      solution: "Sam has just paid for our snacks so don't worry.",
+      why: "just goes straight after has, before the past participle paid.",
+      tip: "just means 'a very short time ago'. It never goes at the end of the sentence." },
+    { n: 6, prompt: "My brothers have played golf several times this week.", keyword: "already",
+      answers: ["my brothers have already played golf several times this week","my brothers've already played golf several times this week"],
+      solution: "My brothers have already played golf several times this week.",
+      why: "already goes between have and played, and the rest of the sentence does not move.",
+      tip: "several times this week stays where it is. Only the new word changes position." },
+    { n: 7, prompt: "I've told him how to get to the supermarket.", keyword: "just",
+      answers: ["i've just told him how to get to the supermarket","i have just told him how to get to the supermarket"],
+      solution: "I've just told him how to get to the supermarket.",
+      why: "I've is short for I have, so just goes right after it and before told.",
+      tip: "tell is irregular: tell - told - told. The past participle does not change here." }
+  ]
+},
+
+/* ---------- Ejercicio 2 ---------- */
+{
+  key: "t2", icon: "sword",
+  medal: "Sentences",
+  title: "Words into Sentences",
+  sub: "Use the words to write complete sentences. Number 1 is done for you.",
+  type: "write",
+  note: {
+    title: "How to build them",
+    lines: [
+      "person + have/has + just/already + past participle -> for positive sentences.",
+      "person + haven't/hasn't + past participle + yet -> for negative sentences.",
+      "Have/Has + person + past participle + ... yet? -> for questions."
+    ],
+    warning: "The words are already in the right order. You only change the verb and add have or has."
+  },
+  example: { n: 1, prompt: "I / just / see / Anna / outside the newsagent's", gap: "I've just seen Anna outside the newsagent's." },
+  items: [
+    { n: 2, prompt: "We / not / go / to / the new bookshop / yet",
+      answers: ["we haven't been to the new bookshop yet","we have not been to the new bookshop yet",
+                "we haven't gone to the new bookshop yet","we have not gone to the new bookshop yet"],
+      solution: "We haven't been to the new bookshop yet.",
+      why: "not plus yet gives a negative sentence, so we use haven't, and yet goes at the very end.",
+      tip: "With places we normally say have been to. Your teacher also accepts have gone to here." },
+    { n: 3, prompt: "Mark / already / see / the new Star Wars film / five times",
+      answers: ["mark has already seen the new star wars film five times","mark's already seen the new star wars film five times"],
+      solution: "Mark has already seen the new Star Wars film five times.",
+      why: "Mark is one person, so we use has, already goes in the middle, and see is irregular: see - saw - seen.",
+      tip: "five times counts the experiences, and that is exactly what the present perfect is for." },
+    { n: 4, prompt: "you / buy / any / summer clothes / yet",
+      answers: ["have you bought any summer clothes yet"],
+      solution: "Have you bought any summer clothes yet?",
+      why: "yet tells you this is a question, so it starts with Have, and buy is irregular: buy - bought - bought.",
+      tip: "any is normal in questions and negatives. In this sentence it does not move." },
+    { n: 5, prompt: "I / not / do / my homework / yet",
+      answers: ["i haven't done my homework yet","i have not done my homework yet"],
+      solution: "I haven't done my homework yet.",
+      why: "not gives a negative sentence with haven't, and do is irregular: do - did - done.",
+      tip: "done, not did. did can never come after have or haven't." },
+    { n: 6, prompt: "I / just / hear / the news / about Tom",
+      answers: ["i've just heard the news about tom","i have just heard the news about tom"],
+      solution: "I've just heard the news about Tom.",
+      why: "just goes between I've and the verb, and hear is irregular: hear - heard - heard.",
+      tip: "heard sounds like 'herd' and is written with -ear-, not -eard- twice." },
+    { n: 7, prompt: "Unfortunately / they / already / sell / all the tickets",
+      answers: ["unfortunately they have already sold all the tickets","unfortunately they've already sold all the tickets",
+                "unfortunately, they have already sold all the tickets","unfortunately, they've already sold all the tickets"],
+      solution: "Unfortunately, they have already sold all the tickets.",
+      why: "Unfortunately opens the sentence, they is plural so it takes have, and sell is irregular: sell - sold - sold.",
+      tip: "A word like Unfortunately at the start does not change the verb. It only sets the mood." }
+  ]
+},
+
+/* ---------- Ejercicio 3 ---------- */
+{
+  key: "t3", icon: "scroll",
+  medal: "Match",
+  title: "Match and Complete",
+  sub: "Complete the sentences with the verb in brackets in its correct form, and then match each beginning with its ending. Number 1 is done for you.",
+  type: "match",
+  endings: [
+    { letter: "A", text: "some sun cream for his trip?" },
+    { letter: "B", text: "the magazine you want to buy yet?" },
+    { letter: "C", text: "supermarket to buy some milk." },
+    { letter: "D", text: "the apples from the market." },
+    { letter: "E", text: "at the chemist's to get some medicine." },
+    { letter: "F", text: "their neighbour's new shop yet." }
+  ],
+  example: { n: 1, before: "I have just", gap: "been", after: "(go) to the", letter: "C" },
+  items: [
+    { n: 2, before: "They haven't", verb: "(see)", answers: ["seen"], solution: "seen", letter: "F",
+      why: "After haven't we need the past participle, and see is irregular: see - saw - seen. The ending with yet is F, because yet goes with negative sentences.",
+      tip: "Look for yet at the end of an ending: it can only follow a negative or a question." },
+    { n: 3, before: "We have already", verb: "(eat)", answers: ["eaten"], solution: "eaten", letter: "D",
+      why: "eat is irregular: eat - ate - eaten, and the only ending you can eat is D, the apples from the market.",
+      tip: "Match by meaning: ask yourself what the verb can go with." },
+    { n: 4, before: "My mum has just", verb: "(stop)", answers: ["stopped"], solution: "stopped", letter: "E",
+      why: "stop is regular and doubles the p: stopped. You stop at a place, so the ending is E, at the chemist's.",
+      tip: "stop at + place. The little word at in the ending is the clue." },
+    { n: 5, before: "Have you", verb: "(choose)", answers: ["chosen"], solution: "chosen", letter: "B",
+      why: "choose is irregular: choose - chose - chosen. This is a question, so it fits the ending with yet, which is B.",
+      tip: "chosen has one o. chose is the past simple and cannot follow have." },
+    { n: 6, before: "Has he already", verb: "(buy)", answers: ["bought"], solution: "bought", letter: "A",
+      why: "buy is irregular: buy - bought - bought, and you buy sun cream, so the ending is A.",
+      tip: "already and yet never appear together. A sentence with already takes an ending without yet." }
+  ]
+},
+
+/* ---------- Ejercicio 4 ---------- */
+{
+  key: "t4", icon: "shield",
+  medal: "Mistakes",
+  title: "Hunt the Mistake",
+  sub: "Find and correct the mistakes in the sentences. Write the whole sentence again. Number 1 is done for you.",
+  type: "write",
+  note: {
+    title: "The three usual mistakes",
+    lines: [
+      "already in a negative sentence -> it has to be yet: We have not decided yet.",
+      "past simple with just or already -> it has to be the present perfect: We have just been.",
+      "the base form after have -> it has to be the past participle: have already cooked."
+    ],
+    warning: "Copy the rest of the sentence exactly as it is. Only the mistake changes."
+  },
+  example: { n: 1, prompt: "We have not already decided.", gap: "We have not decided yet." },
+  items: [
+    { n: 2, prompt: "I already saw the new café. It looks great.",
+      answers: ["i have already seen the new café it looks great","i've already seen the new café it looks great",
+                "i have already seen the new cafe it looks great","i've already seen the new cafe it looks great"],
+      solution: "I have already seen the new café. It looks great.",
+      why: "saw is the past simple, and already goes with the present perfect, so it becomes have already seen.",
+      tip: "already, just and yet are friends of have and has, never of the past simple." },
+    { n: 3, prompt: "You have already cook dinner for this evening.",
+      answers: ["you have already cooked dinner for this evening","you've already cooked dinner for this evening"],
+      solution: "You have already cooked dinner for this evening.",
+      why: "cook is in its base form, and after have already we need the past participle: cooked.",
+      tip: "cook is regular, so the past participle only adds -ed." },
+    { n: 4, prompt: "I didn't collect my trainers from the shoe shop yet.",
+      answers: ["i haven't collected my trainers from the shoe shop yet","i have not collected my trainers from the shoe shop yet"],
+      solution: "I haven't collected my trainers from the shoe shop yet.",
+      why: "yet needs the present perfect, so didn't collect becomes haven't collected.",
+      tip: "If you see yet at the end, look at the beginning: it must say haven't or hasn't." },
+    { n: 5, prompt: "We just went to the market.",
+      answers: ["we have just been to the market","we've just been to the market",
+                "we have just gone to the market","we've just gone to the market"],
+      solution: "We have just been to the market.",
+      why: "went is the past simple, and just needs the present perfect, so it becomes have just been.",
+      tip: "have been to a place means you went there and you are back. Your teacher also accepts have gone to here." },
+    { n: 6, prompt: "I don't buy bread from the bakery yet.",
+      answers: ["i haven't bought bread from the bakery yet","i have not bought bread from the bakery yet"],
+      solution: "I haven't bought bread from the bakery yet.",
+      why: "don't buy is the present simple, and yet needs the present perfect: haven't bought.",
+      tip: "buy is irregular: buy - bought - bought." },
+    { n: 7, prompt: "We already have had a slice of pizza for lunch.",
+      answers: ["we have already had a slice of pizza for lunch","we've already had a slice of pizza for lunch"],
+      solution: "We have already had a slice of pizza for lunch.",
+      why: "Here the verb is right but already is in the wrong place: it goes after have, not before it.",
+      tip: "The order is always have + already + past participle." }
+  ]
+},
+
+/* ---------- Ejercicio 6 ---------- */
+{
+  key: "t5", icon: "crown",
+  medal: "Henry's text",
+  title: "Henry's Text",
+  sub: "Complete Henry's text with one word in each space. Number 1 is done for you.",
+  type: "cloze",
+  note: {
+    title: "One word only",
+    lines: [
+      "Read the whole text first -> the answer is often in the sentence before or after.",
+      "haven't ... yet -> these two travel together in a negative sentence."
+    ],
+    warning: "Each space takes exactly one word. Do not write two."
+  },
+  text: "My cousin Sally is {1} a birthday party on Saturday and she's invited {2} her classmates and me! I've {3} met most of them so I'm really looking forward to it. It was in fact her birthday last week but she has just got back home today from a school trip to Rome. I {4} bought her a present {5}. I think I {6} go to the new bookshop in town and buy her a book. I always enjoy {7} at all the new books. They've got lots of adventure books, which I know Sally loves. I'm sure I'll find something {8} she'll enjoy reading so I think it will be a nice birthday present.",
+  example: { n: 1, gap: "having" },
+  items: [
+    { n: 2, answers: ["all"], solution: "all",
+      why: "Sally invited the whole class, so the word that goes before her classmates is all.",
+      tip: "all + a plural noun means every single one of them." },
+    { n: 3, answers: ["already"], solution: "already",
+      why: "Henry knows most of them before the party, so the word is already: it happened sooner than you would expect.",
+      tip: "I've already met is the present perfect, and already goes right after I've." },
+    { n: 4, answers: ["haven't","have not"], solution: "haven't",
+      why: "The next space is yet, and yet only works in negatives, so this one has to be haven't.",
+      tip: "Read one line ahead. The word yet tells you the sentence is negative." },
+    { n: 5, answers: ["yet"], solution: "yet",
+      why: "The present has not been bought up to now, and that idea, at the end of a negative sentence, is yet.",
+      tip: "haven't ... yet is a pair. When you find one, look for the other." },
+    { n: 6, answers: ["will","'ll","ll","might","may","should"], solution: "will",
+      why: "Henry is deciding what to do in the future, so the word is will: I think I will go to the new bookshop.",
+      tip: "might and may also work here, because he is not completely sure yet." },
+    { n: 7, answers: ["looking"], solution: "looking",
+      why: "After enjoy the next verb always ends in -ing, and you look at books, so it is looking.",
+      tip: "enjoy + -ing: I enjoy reading, I enjoy looking, I enjoy playing." },
+    { n: 8, answers: ["that","which"], solution: "that",
+      why: "The word joins something to she'll enjoy reading, and for a thing we use that.",
+      tip: "which is also correct here. For people you would use who instead." }
+  ]
+}
+
+],
+
+/* ---------- CODEX ---------- */
+codex: [
+  { name: "Regular", pattern: "The past participle is the same as the regular past simple: -ed.",
+    pairs: [["collect","collected"],["cook","cooked"],["decide","decided"],["invite","invited"],
+            ["look","looked"],["open","opened"],["play","played"],["stop","stopped"]] },
+  { name: "Irregular", pattern: "The past participle does not end in -ed. These ones you learn by heart.",
+    pairs: [["be","been"],["buy","bought"],["choose","chosen"],["do","done"],["eat","eaten"],
+            ["get","got"],["go","gone"],["have","had"],["hear","heard"],["pay","paid"],
+            ["see","seen"],["sell","sold"],["tell","told"]] }
+]
+
+};
+</script>

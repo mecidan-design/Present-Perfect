@@ -1,0 +1,491 @@
+<script id="engine-block">
+(function(){
+"use strict";
+
+/* ===== registry: el DOM guarda SOLO un indice numerico. Serializar JSON en
+   un atributo data-* se rompe con los apostrofes de las contracciones. ===== */
+var REG = [];
+
+var ICONS = {
+  shield: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 2 20.5 5v6.2c0 5.2-3.6 9.2-8.5 10.8C7.1 20.4 3.5 16.4 3.5 11.2V5z"/></svg>',
+  sword:  '<svg class="ic" viewBox="0 0 24 24"><path d="M12 1.5l2.2 3.6v9.4h-4.4V5.1z"/><rect x="6" y="14.6" width="12" height="2.4" rx="1.2"/><rect x="10.8" y="17.2" width="2.4" height="3.6" rx="1.2"/><rect x="9.4" y="20.2" width="5.2" height="2" rx="1"/></svg>',
+  scroll: '<svg class="ic" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 2h11a2.5 2.5 0 0 1 2.5 2.5V18a4 4 0 0 0 4 4H8a4 4 0 0 1-4-4V4.5A2.5 2.5 0 0 1 6 2zm2 5h9v2H8zm0 4h9v2H8zm0 4h6v2H8z"/></svg>',
+  star:   '<svg class="ic" viewBox="0 0 24 24"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg>',
+  crown:  '<svg class="ic" viewBox="0 0 24 24"><path d="M3 7.5l4 3.2L12 4l5 6.7 4-3.2-1.9 11.3H4.9z"/></svg>',
+  bolt:   '<svg class="ic" viewBox="0 0 24 24"><path d="M13 2 4 13.5h6L11 22l9-11.5h-6z"/></svg>',
+  flame:  '<svg class="ic" viewBox="0 0 24 24"><path d="M12 2c3.2 4.2 6.2 5.6 6.2 9.8A6.2 6.2 0 0 1 5.8 12c0-2.2 1.1-3.7 2.3-4.9.3 1.4 1 2.1 1.9 2.4C10.3 7.2 11 4.6 12 2z"/></svg>'
+};
+function icon(name){
+  var s = document.createElement("span");
+  s.innerHTML = ICONS[name] || "";
+  return s.firstChild;
+}
+
+/* ===== comparacion de respuestas ===== */
+function normalize(s){
+  /* normalize("NFD") separa la tilde de la letra y la clase ̀-ͯ la
+     borra, asi "cafe" y "café" comparan igual. */
+  return String(s).toLowerCase()
+    .replace(/[‘’ʼ´]/g, "'")
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9' ]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+/* ADAPTACION A PRIMARIA: a esta edad "havent" sin apostrofe es un error de
+   TIPEO, no de gramatica. Por eso tambien se compara ciego al apostrofe.
+   Esto NO afloja la gramatica: "have drank" sigue estando mal. */
+function loose(s){ return normalize(s).replace(/'/g, ""); }
+function matches(given, list){
+  var g = normalize(given);
+  if(g === "") return false;
+  var gl = loose(given);
+  for(var i = 0; i < list.length; i++){
+    if(normalize(list[i]) === g) return true;
+    if(loose(list[i]) === gl) return true;
+  }
+  return false;
+}
+/* Expande 've y 's para poder buscar have/has en una oracion libre. */
+function expand(s){
+  /* n't primero: asi "hasn't" queda "has not" y las dos partes se pueden
+     buscar por separado. */
+  return normalize(s)
+    .replace(/n't\b/g, " not")
+    .replace(/'ve\b/g, " have")
+    .replace(/'s\b/g, " has")
+    .replace(/\s+/g, " ").trim();
+}
+function hasWord(sentence, word){
+  var t = expand(sentence).split(" "), w = normalize(word);
+  for(var i = 0; i < t.length; i++){ if(t[i] === w) return true; }
+  return false;
+}
+function wordCount(s){
+  var t = normalize(s);
+  return t === "" ? 0 : t.split(" ").length;
+}
+
+function el(tag, cls, txt){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(txt !== undefined && txt !== null) n.textContent = txt;
+  return n;
+}
+function clear(n){ while(n.firstChild) n.removeChild(n.firstChild); }
+function mkInput(cls, ph){
+  var i = document.createElement("input");
+  i.type = "text";
+  if(cls) i.className = cls;
+  i.setAttribute("autocomplete", "off");
+  i.setAttribute("autocapitalize", "off");
+  i.setAttribute("spellcheck", "false");
+  if(ph) i.setAttribute("placeholder", ph);
+  return i;
+}
+
+/* Caja Why + Hero tip. Se muestra SIEMPRE, este bien o mal. */
+function explainBox(ok, answerText, why, tip){
+  var box = el("div", "exp " + (ok ? "right" : "wrong"));
+  if(answerText && answerText.length && typeof answerText !== "string"){
+    /* tres respuestas, una por forma, cada una en su renglon */
+    for(var a = 0; a < answerText.length; a++){
+      var pa = el("p", "solline");
+      pa.appendChild(el("span", "flab " + answerText[a].label, answerText[a].label));
+      pa.appendChild(el("span", "sol", answerText[a].text));
+      box.appendChild(pa);
+    }
+  } else if(answerText){
+    var p0 = el("p");
+    p0.appendChild(el("span", "sol", "Answer: " + answerText));
+    box.appendChild(p0);
+  }
+  var p1 = el("p");
+  p1.appendChild(el("b", "lab why", "Why"));
+  p1.appendChild(document.createTextNode(why));
+  box.appendChild(p1);
+  var p2 = el("p");
+  p2.appendChild(el("b", "lab tip", "Hero tip"));
+  p2.appendChild(document.createTextNode(tip));
+  box.appendChild(p2);
+  return box;
+}
+function noteBox(n){
+  var g = el("div", "gnote");
+  var t = el("div", "gnotetitle");
+  t.appendChild(icon("scroll"));
+  t.appendChild(document.createTextNode(" " + n.title));
+  g.appendChild(t);
+  var ul = document.createElement("ul");
+  for(var i = 0; i < n.lines.length; i++){
+    var parts = n.lines[i].split(" -> ");
+    var li = document.createElement("li");
+    li.appendChild(el("span", "gform", parts[0]));
+    if(parts.length > 1) li.appendChild(document.createTextNode(" " + parts[1]));
+    ul.appendChild(li);
+  }
+  g.appendChild(ul);
+  if(n.warning) g.appendChild(el("p", "gwarn", n.warning));
+  return g;
+}
+
+/* ============================================================
+   CABECERA + MEDALLAS
+   ============================================================ */
+document.title = DATA.meta.title + " - " + DATA.meta.chapter;
+document.getElementById("heroChapter").textContent = DATA.meta.chapter;
+document.getElementById("heroTitle").textContent = DATA.meta.title;
+document.getElementById("heroSub").textContent = DATA.meta.sub;
+document.getElementById("heroVerbs").innerHTML = DATA.meta.verbs;
+
+var questBar = document.getElementById("questBar");
+var questEls = {};
+(function(){
+  for(var i = 0; i < DATA.trials.length; i++){
+    var t = DATA.trials[i];
+    var d = el("div", "medal");
+    var mi = el("div", "mi");
+    mi.appendChild(icon(t.icon));
+    var txt = el("div");
+    txt.appendChild(el("div", "mt", t.medal));
+    var sc = el("div", "ms", "not tried yet");
+    txt.appendChild(sc);
+    d.appendChild(mi); d.appendChild(txt);
+    questBar.appendChild(d);
+    questEls[t.key] = { wrap: d, score: sc };
+  }
+})();
+function setQuest(key, got, total){
+  var q = questEls[key];
+  q.score.textContent = got + " / " + total;
+  if(got === total) q.wrap.classList.add("won");
+  else q.wrap.classList.remove("won");
+}
+function resetQuest(key){
+  questEls[key].score.textContent = "not tried yet";
+  questEls[key].wrap.classList.remove("won");
+}
+
+/* ============================================================
+   CONSTRUCCION DE LOS TRIALS
+     table -> tabla de tres columnas con celdas vacias
+     gap   -> oracion suelta con un hueco adentro
+     free  -> cinco renglones de produccion propia, con checklist
+   En gap la explicacion va PEGADA al item. En table y free va en un
+   panel numerado debajo, porque pegada a cada celda rompe la tabla
+   (regla de layout del SPECS).
+   ============================================================ */
+var ROMAN = ["I","II","III","IV","V","VI","VII","VIII"];
+var trialsHost = document.getElementById("trials");
+var TR = {};
+
+function buildTrials(){
+  for(var i = 0; i < DATA.trials.length; i++){
+    var t = DATA.trials[i];
+    var sec = el("section", "card");
+    sec.appendChild(el("span", "tag", "Trial " + ROMAN[i]));
+    sec.appendChild(el("h2", null, t.title));
+    sec.appendChild(el("p", "sub", t.sub));
+    if(t.note) sec.appendChild(noteBox(t.note));
+
+    var body = el("div", "tbody");
+    sec.appendChild(body);
+
+    var panel = null;
+    if(t.type === "table" || t.type === "free"){
+      panel = el("div", "explist");
+      var h = el("h3");
+      h.appendChild(icon("scroll"));
+      h.appendChild(document.createTextNode(t.type === "free" ? " How your sentences did" : " Why each verb is like that"));
+      panel.appendChild(h);
+      panel.hidden = true;
+      sec.appendChild(panel);
+    }
+
+    var row = el("div", "btnrow");
+    var checkBtn = el("button", "btn", "Check my answers");
+    checkBtn.type = "button";
+    var resetBtn = el("button", "btn ghost", "Try again");
+    resetBtn.type = "button";
+    var score = el("span", "scoreline", "");
+    row.appendChild(checkBtn); row.appendChild(resetBtn); row.appendChild(score);
+    sec.appendChild(row);
+
+    trialsHost.appendChild(sec);
+    TR[t.key] = { data: t, body: body, panel: panel, score: score, entries: [] };
+    (function(key){
+      checkBtn.addEventListener("click", function(){ checkTrial(key); });
+      resetBtn.addEventListener("click", function(){ resetTrial(key); });
+    })(t.key);
+    renderTrial(t.key);
+  }
+}
+
+function renderTrial(key){
+  var st = TR[key], t = st.data;
+  clear(st.body);
+  st.entries = [];
+  if(st.panel){
+    while(st.panel.childNodes.length > 1) st.panel.removeChild(st.panel.lastChild);
+    st.panel.hidden = true;
+  }
+  st.score.textContent = "";
+  if(t.type === "table") renderTable(st, t);
+  if(t.type === "gap")   renderGap(st, t);
+  if(t.type === "free")  renderFree(st, t);
+}
+
+/* ---------- table ---------- */
+var COLS = ["Infinitive", "Simple past", "Past participle"];
+function renderTable(st, t){
+  var wrap = el("div", "tablewrap");
+  var tb = el("table", "vtable");
+  var thead = document.createElement("thead");
+  var htr = document.createElement("tr");
+  htr.appendChild(el("th", "cn", "#"));
+  for(var c = 0; c < 3; c++) htr.appendChild(el("th", null, COLS[c]));
+  thead.appendChild(htr);
+  tb.appendChild(thead);
+  var tbody = document.createElement("tbody");
+
+  for(var i = 0; i < t.rows.length; i++){
+    var r = t.rows[i];
+    var v = DATA.verbs[r.verb];
+    var id = REG.push({ data: r, verb: v }) - 1;
+    var tr = document.createElement("tr");
+    tr.setAttribute("data-id", String(id));
+    tr.appendChild(el("td", "cn", String(r.n)));
+    var inputs = [];
+    for(var c = 0; c < 3; c++){
+      var td = document.createElement("td");
+      if(r.given.indexOf(c) >= 0){
+        td.className = "givencell";
+        td.appendChild(el("span", "giventext", r.show && r.show[c] ? r.show[c] : v.f[c]));
+      }else{
+        var inp = mkInput("cellinput");
+        td.appendChild(inp);
+        inputs.push({ el: inp, answers: v.a[c], col: c });
+      }
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+    st.entries.push({ kind: "input", inputs: inputs, data: r, verb: v, holder: tr, exp: null });
+  }
+  tb.appendChild(tbody);
+  wrap.appendChild(tb);
+  st.body.appendChild(wrap);
+}
+
+/* ---------- gap ---------- */
+function renderGap(st, t){
+  if(t.box){
+    var vb = el("div", "vaultbox");
+    var vt = el("div", "vt");
+    vt.appendChild(icon("scroll"));
+    vt.appendChild(document.createTextNode(" Verb box"));
+    vb.appendChild(vt);
+    var chips = el("div", "vchips");
+    for(var b = 0; b < t.box.length; b++) chips.appendChild(el("span", "vchip", t.box[b]));
+    vb.appendChild(chips);
+    st.body.appendChild(vb);
+  }
+  for(var i = 0; i < t.items.length; i++){
+    var d = t.items[i];
+    var id = REG.push({ data: d }) - 1;
+    var item = el("div", "item");
+    item.setAttribute("data-id", String(id));
+
+    var head = el("div", "formhead");
+    head.appendChild(el("span", "rn", String(d.n)));
+    head.appendChild(el("span", "flab " + d.form, d.form));
+    item.appendChild(head);
+
+    /* la oracion es una lista de trozos: texto fijo y huecos */
+    var line = el("div", "gapline");
+    var fields = [];
+    for(var p = 0; p < d.parts.length; p++){
+      var part = d.parts[p];
+      if(part.t !== undefined){
+        line.appendChild(document.createTextNode(part.t));
+      }else{
+        var inp = mkInput(part.w);
+        line.appendChild(inp);
+        fields.push({ el: inp, answers: part.a });
+      }
+    }
+    line.appendChild(el("span", "hintword", d.verb));
+    if(d.marker) line.appendChild(el("span", "markword", d.marker));
+    item.appendChild(line);
+    st.body.appendChild(item);
+    st.entries.push({ kind: "input", inputs: fields, data: d, holder: item, exp: item });
+  }
+}
+
+/* ---------- free ---------- */
+function renderFree(st, t){
+  var vb = el("div", "vaultbox");
+  var vt = el("div", "vt");
+  vt.appendChild(icon("scroll"));
+  vt.appendChild(document.createTextNode(" Choose from these verbs"));
+  vb.appendChild(vt);
+  var chips = el("div", "vchips");
+  for(var p = 0; p < t.pool.length; p++) chips.appendChild(el("span", "vchip", t.pool[p]));
+  vb.appendChild(chips);
+  st.body.appendChild(vb);
+
+  for(var i = 0; i < t.lines.length; i++){
+    var ln = t.lines[i];
+    var id = REG.push({ data: ln }) - 1;
+    var item = el("div", "item");
+    item.setAttribute("data-id", String(id));
+    var head = el("div", "formhead");
+    head.appendChild(el("span", "rn", String(ln.n)));
+    head.appendChild(el("span", "flab " + ln.form, ln.form));
+    item.appendChild(head);
+    var line = el("div", "gapline");
+    line.appendChild(el("span", "starter", ln.starter));
+    var inp = mkInput("w-l", "Finish the sentence with a verb from the box.");
+    line.appendChild(inp);
+    line.appendChild(document.createTextNode(ln.tail));
+    item.appendChild(line);
+    st.body.appendChild(item);
+    st.entries.push({ kind: "free", inputs: [{ el: inp }], data: ln, holder: item, exp: null });
+  }
+}
+
+/* ============================================================
+   CORRECCION
+   ============================================================ */
+function markInput(node, ok){
+  node.classList.remove("ok", "no");
+  node.classList.add(ok ? "ok" : "no");
+}
+/* Busca en la oracion libre cual de los participios del recuadro se uso. */
+function participleUsed(sentence, pool){
+  for(var i = 0; i < pool.length; i++){
+    var v = DATA.verbs[pool[i].toLowerCase()];
+    /* en mayuscula queda gritado adentro de una oracion, asi que se devuelve
+       en minuscula para el checklist */
+    if(v && hasWord(sentence, v.f[2])) return v.f[2].toLowerCase();
+  }
+  return null;
+}
+function checkTrial(key){
+  var st = TR[key], t = st.data, i, j;
+  var got = 0, total = 0;
+  var usados = [];   /* participios ya usados en la escritura libre */
+
+  var old = st.body.querySelectorAll(".exp");
+  for(i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
+  if(st.panel){ while(st.panel.childNodes.length > 1) st.panel.removeChild(st.panel.lastChild); }
+
+  for(i = 0; i < st.entries.length; i++){
+    var e = st.entries[i], allOk = true;
+
+    if(e.kind === "input"){
+      for(j = 0; j < e.inputs.length; j++){
+        var f = e.inputs[j];
+        var ok = matches(f.el.value, f.answers);
+        markInput(f.el, ok);
+        total++;
+        if(ok) got++; else allOk = false;
+      }
+      if(e.holder.tagName === "TR") e.holder.className = allOk ? "rowok" : "rowno";
+      var answer = e.verb ? (e.verb.f[0] + "  -  " + e.verb.f[1] + "  -  " + e.verb.f[2]) : e.data.solution;
+      if(e.data.form){
+        answer = [{ label: e.data.form, text: e.data.solution }];
+      }
+      var why = e.verb ? e.verb.why : e.data.why;
+      var tip = e.verb ? e.verb.tip : e.data.tip;
+      var boxNode = explainBox(allOk, answer, why, tip);
+      if(e.exp){ e.exp.appendChild(boxNode); }
+      else{
+        var wrapItem = el("div", "expitem");
+        wrapItem.appendChild(el("span", "en", String(e.data.n)));
+        wrapItem.appendChild(boxNode);
+        st.panel.appendChild(wrapItem);
+      }
+    }
+
+    if(e.kind === "free"){
+      var s = e.inputs[0].el.value;
+      var notEmpty = normalize(s) !== "";
+      var part = participleUsed(s, t.pool);
+      var fresh = part !== null && usados.indexOf(part) < 0;
+      if(part) usados.push(part);
+      var longEnough = wordCount(s) >= 3;
+      var lineOk = notEmpty && part !== null && fresh && longEnough;
+      markInput(e.inputs[0].el, lineOk);
+      total++;
+      if(lineOk) got++;
+
+      var cl = el("div", "checklist " + (lineOk ? "right" : "wrong"));
+      cl.appendChild(el("span", "needtitle", "Sentence " + e.data.n + " \u00b7 " + e.data.form));
+      var ul = document.createElement("ul");
+      ul.appendChild(el("li", null, (notEmpty ? "\u2713 " : "\u2717 ") + "You finished the sentence."));
+      ul.appendChild(el("li", null, (part ? "\u2713 " : "\u2717 ") + (part
+        ? "It uses the past participle " + part + "."
+        : "It uses a past participle from the box.")));
+      ul.appendChild(el("li", null, (fresh ? "\u2713 " : "\u2717 ") + "That verb is not repeated from another line."));
+      ul.appendChild(el("li", null, (longEnough ? "\u2713 " : "\u2717 ") + "You wrote at least three words."));
+      cl.appendChild(ul);
+      var wrapItem2 = el("div", "expitem");
+      wrapItem2.appendChild(el("span", "en", String(e.data.n)));
+      wrapItem2.appendChild(cl);
+      st.panel.appendChild(wrapItem2);
+    }
+  }
+
+  if(t.type === "free"){
+    var mb = el("div", "modelbox");
+    mb.appendChild(el("span", "needtitle", "Three possible sentences"));
+    for(var f = 0; f < t.models.length; f++){
+      var mp = el("p");
+      mp.appendChild(el("span", "flab " + t.models[f].form, t.models[f].form));
+      mp.appendChild(document.createTextNode(" " + t.models[f].text));
+      mb.appendChild(mp);
+    }
+    mb.appendChild(el("span", "selfnote", "Your sentences do not have to be these ones. The computer only checks the shape of the sentence and the verb. Your teacher checks the spelling and the rest of the words."));
+    st.panel.appendChild(mb);
+  }
+  if(st.panel) st.panel.hidden = false;
+
+  st.score.textContent = got + " / " + total + " right";
+  setQuest(key, got, total);
+}
+function resetTrial(key){
+  renderTrial(key);
+  resetQuest(key);
+}
+
+/* ============================================================
+   CODEX
+   ============================================================ */
+var codexBody = document.getElementById("codexBody");
+var codexToggle = document.getElementById("codexToggle");
+(function renderCodex(){
+  var b = el("div", "gbox");
+  b.appendChild(el("h4", null, "Every verb in this mini test"));
+  b.appendChild(el("p", "pat", "Infinitive, simple past and past participle, the three columns of the table."));
+  var ps = el("div", "pairs");
+  for(var i = 0; i < DATA.codex.length; i++){
+    var v = DATA.verbs[DATA.codex[i]];
+    var c = el("span", "pchip");
+    c.appendChild(document.createTextNode(v.f[0] + " - " + v.f[1] + " - "));
+    c.appendChild(el("b", null, v.f[2]));
+    ps.appendChild(c);
+  }
+  b.appendChild(ps);
+  codexBody.appendChild(b);
+})();
+codexToggle.addEventListener("click", function(){
+  var open = codexBody.classList.toggle("hidden") === false;
+  codexToggle.textContent = open ? "Close the codex" : "Open the codex";
+});
+
+buildTrials();
+
+})();
+</script>
+</body>
+</html>

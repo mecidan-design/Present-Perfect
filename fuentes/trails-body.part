@@ -1,0 +1,41 @@
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="chapter" id="heroChapter"></span>
+    <h1 id="heroTitle"></h1>
+    <p id="heroSub"></p>
+    <div class="verbline" id="heroVerbs"></div>
+    <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
+  </div>
+
+  <!-- ============ LINEA DE TIEMPO (se lee, no se corrige) ============ -->
+  <section class="card tlcard">
+    <span class="tag">The Timeline</span>
+    <h2 id="tlTitle"></h2>
+    <p class="sub" id="tlSub"></p>
+    <div id="tlBody"></div>
+  </section>
+
+  <div class="quest" id="questBar"></div>
+
+  <div id="trials"></div>
+
+  <!-- ============ CODEX (reference, not an exercise) ============ -->
+  <section class="card codex" id="codexCard">
+    <span class="tag">Codex</span>
+    <h2>The Hero&rsquo;s Codex</h2>
+    <p class="sub">Every past participle that walks these trails. Open it <b>after</b> the six trials, not before.</p>
+    <div class="btnrow" style="margin-top:0">
+      <button class="btn dark" id="codexToggle">Open the codex</button>
+    </div>
+    <div id="codexBody" class="hidden" style="margin-top:18px"></div>
+  </section>
+
+</div>
+
+<nav class="bottomnav">
+  <a class="btnlink" href="index.html">&laquo; Back to Present Perfect Quest</a>
+</nav>
+
+<footer class="site">Copyright Prof Dan M. Mecikovsky</footer>

@@ -1,0 +1,66 @@
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="chapter">Prepare Second Edition Level 3 &middot; Units 13 and 14</span>
+    <h1 class="big">Present Perfect Quest</h1>
+    <p>Four stops, one grammar: <b>have</b> or <b>has</b> plus the past participle. Start with the rules, cross the two Grammar: Plus worksheets, and train the irregular verbs in the vault until they are yours.</p>
+    <div class="verbline">ever &middot; never &middot; just &middot; already &middot; yet</div>
+  </div>
+
+  <p class="maplead"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7.5l4 3.2L12 4l5 6.7 4-3.2-1.9 11.3H4.9z"/></svg> The map of the quest</p>
+
+  <div class="map">
+
+    <section class="stop">
+      <span class="num">Stop I</span>
+      <h2>The Hall of Ever and Never</h2>
+      <p>The grammar of Unit 13 first: the four forms of the present perfect, the seven rules of the book, and then three trials. Write the past participles, build statements with <b>never</b>, and ask questions with <b>ever</b>.</p>
+      <div class="what"><span>Unit 13</span><span>Grammar reference</span><span>3 trials</span></div>
+      <a class="enter" href="present-perfect-ever-never-unit13.html">Enter</a>
+    </section>
+
+    <section class="stop">
+      <span class="num">Stop II</span>
+      <h2>The Trials of Ever and Never</h2>
+      <p>The Grammar: Plus worksheet of Unit 13, with all five written exercises. Choose between <b>ever</b> and <b>never</b>, turn loose words into sentences, use the verb box, hunt the mistakes, and finish the camping conversation.</p>
+      <div class="what"><span>Unit 13</span><span>Grammar Plus</span><span>5 trials</span></div>
+      <a class="enter" href="unit13-grammar-plus.html">Enter</a>
+    </section>
+
+    <section class="stop">
+      <span class="num">Stop III</span>
+      <h2>The Market of Just, Already and Yet</h2>
+      <p>The Grammar: Plus worksheet of Unit 14. Three new words join the present perfect and each one has its own place in the sentence. Rewrite, build, match, correct and complete Henry's text.</p>
+      <div class="what"><span>Unit 14</span><span>Grammar Plus</span><span>5 trials</span></div>
+      <a class="enter" href="unit14-grammar-plus.html">Enter</a>
+    </section>
+
+    <section class="stop">
+      <span class="num">Stop IV</span>
+      <h2>The Vault of Irregular Verbs</h2>
+      <p>A game, not a worksheet. Twenty-nine irregular verbs from these two units, one at a time and against the clock. Choose the past participle, keep your streak alive, and beat your own best run.</p>
+      <div class="what"><span>Units 13 and 14</span><span>Speed run</span><span>29 verbs</span></div>
+      <a class="enter" href="speed-run-irregular-participles.html">Enter</a>
+    </section>
+
+  </div>
+
+  <section class="card codex">
+    <span class="tag">The old shelf</span>
+    <h2>Earlier material</h2>
+    <p class="sub">The irregular past simple chapters and the reading trivia. They belong to another unit, but they live in the same folder, so here are their doors.</p>
+    <div class="shelf">
+      <a href="01-groups-1-2-3.html">Past simple &middot; Groups 1, 2 and 3</a>
+      <a href="02-groups-4-5.html">Past simple &middot; Groups 4 and 5</a>
+      <a href="03-groups-6-7-8.html">Past simple &middot; Groups 6, 7 and 8</a>
+      <a href="04-final-all-groups.html">Past simple &middot; Final test</a>
+      <a href="repaso-boy-bathroom-10-22.html">Trivia &middot; There's a Boy in the Girls' Bathroom</a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site">Copyright Prof Dan M. Mecikovsky</footer>
+</body>
+</html>

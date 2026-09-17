@@ -1,0 +1,52 @@
+
+/* ---------- mapa de la quest ---------- */
+.hero h1.big{font-size:clamp(1.9rem,7vw,3.4rem)}
+.maplead{
+  font-family:var(--head);font-weight:700;font-size:.8rem;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--gold-lt);margin:0 0 16px;display:flex;align-items:center;gap:9px;
+}
+.map{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));margin-bottom:34px}
+.stop{
+  background:
+    radial-gradient(rgba(150,110,40,.075) 1px, transparent 1.6px) 0 0/13px 13px,
+    linear-gradient(180deg,#fdf6e3 0%,#f6e9cd 100%);
+  border:4px solid #2b1c07;border-radius:18px;padding:20px 20px 22px;
+  display:flex;flex-direction:column;gap:11px;position:relative;
+}
+.stop:nth-of-type(4n+1){box-shadow:10px 10px 0 var(--gold-dk);transform:rotate(-.4deg)}
+.stop:nth-of-type(4n+2){box-shadow:10px 10px 0 var(--crimson);transform:rotate(.35deg)}
+.stop:nth-of-type(4n+3){box-shadow:10px 10px 0 var(--teal);transform:rotate(-.3deg)}
+.stop:nth-of-type(4n+4){box-shadow:10px 10px 0 var(--royal);transform:rotate(.3deg)}
+.stop h2{font-family:var(--head);font-weight:900;font-size:1.35rem;margin:0;line-height:1.15;letter-spacing:.6px}
+.stop p{margin:0;font-size:.93rem;line-height:1.55;color:#4a3a1d;flex:1}
+.stop .what{
+  display:flex;flex-wrap:wrap;gap:7px;margin:0;
+}
+.stop .what span{
+  font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1.1px;text-transform:uppercase;
+  background:#fff;border:2px solid #2b1c07;border-radius:999px;padding:2px 10px;
+}
+a.enter{
+  align-self:flex-start;text-decoration:none;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:9px 22px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.enter:hover{filter:brightness(1.07)}
+a.enter:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.stop .num{
+  position:absolute;top:-15px;right:18px;
+  font-family:var(--head);font-weight:900;font-size:.8rem;letter-spacing:1.6px;text-transform:uppercase;
+  background:linear-gradient(180deg,#3b1a5e,#1a0f3d);color:#ffe9b0;
+  border:3px solid var(--gold);border-radius:999px;padding:3px 13px;
+}
+
+/* ---------- estante del profesor ---------- */
+.shelf{margin-top:6px}
+.shelf a{
+  display:inline-block;text-decoration:none;margin:0 7px 9px 0;
+  font-family:var(--head);font-weight:700;font-size:.85rem;letter-spacing:.8px;
+  background:var(--parch);border:2px solid #2b1c07;border-radius:8px;padding:5px 12px;color:var(--ink);
+}
+.shelf a:hover{background:#fff3d0}

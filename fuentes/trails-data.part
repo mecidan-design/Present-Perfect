@@ -1,0 +1,367 @@
+<script id="data-block">
+/* ============================================================
+   SOLO CONTENIDO. Ni una referencia al DOM en este bloque.
+   ============================================================
+   UNIT 15 - PRESENT PERFECT WITH SINCE AND FOR.
+   Insumo: las dos paginas que mando el profesor (el Student's
+   Book p.160 y la hoja con los ejercicios 1 a 7).
+
+   Los TIPOS de ejercicio son los del material:
+     - completar la regla con for o since        (hoja, ej. 1)
+     - la tabla Since / For                      (libro, ej. 1)
+     - completar con for o since                 (hoja, ej. 2)
+     - present perfect + for / since             (libro, ej. 2)
+     - preguntas con How long...?                (libro, ej. 4)
+     - corregir los errores                      (hoja, ej. 4)
+   Las ORACIONES son nuevas, como pidio el profesor.
+
+   Quedan afuera, y por que:
+     - el ejercicio 5 de la hoja es PRONUNCIATION (weak forms):
+       necesita el audio, no se puede autocorregir en pantalla.
+     - los ejercicios 3, 6 y 7 son "true for you" y de a pares:
+       la respuesta correcta depende de la vida de cada chico, asi
+       que no hay nada que corregir. Su tipo (armar la oracion
+       entera con present perfect + for/since) vive igual en los
+       trials IV, V y VI, donde si hay una respuesta exacta.
+
+   Verbos: solo los que aparecen en esas dos paginas.
+   El item 0 viene resuelto, igual que en el libro.
+   ============================================================ */
+var DATA = {
+
+meta: {
+  chapter: "Unit 15 · Stop II",
+  title: "The Trails of For and Since",
+  sub: "Two trails cross this valley and both of them measure the same walk. FOR counts how long you have been walking. SINCE marks the stone where you started. Move the stone on the timeline and watch the two trails say the same thing.",
+  verbs: "for &middot; since &middot; how long &middot; have / has + past participle"
+},
+
+/* ---------- la linea de tiempo interactiva ---------- */
+timeline: {
+  title: "The Timeline of the Two Trails",
+  sub: "One action, one arrow, two ways to talk about it. Move the starting stone and read the two sentences change.",
+  sentence: "I have played the guitar",
+  question: "How long have you played the guitar?",
+  nowLabel: "NOW",
+  startLabel: "I started here",
+  min: 1, max: 10, start: 5,
+  words: ["one","two","three","four","five","six","seven","eight","nine","ten"],
+  hint: "The arrow is always the same arrow. SINCE points at the stone where it begins. FOR measures how long it is.",
+  note: "The action started in the past and it is still true today. That is why we use the present perfect and not the past simple."
+},
+
+trials: [
+
+/* ============================================================
+   TRIAL I - la regla (hoja, ejercicio 1)
+   ============================================================ */
+{
+  key: "t1", icon: "star",
+  medal: "The Rule",
+  title: "The Rule of the Two Trails",
+  sub: "Read the examples in the scroll. Then complete the three rules with for, since or long.",
+  type: "gap",
+  note: {
+    title: "Look at these examples first",
+    lines: [
+      "I have had this bike for three years. -> and also: I have had this bike since 2023.",
+      "My dad has worked in that shop for six months. -> and also: My dad has worked in that shop since March.",
+      "How long have you had your dog? -> I have had it since last year."
+    ],
+    warning: "The two sentences in each pair say exactly the same thing. Only the last words change."
+  },
+  items: [
+    { n: 1, before: "We use", after: "with an amount of time, such as a number of hours, days or years.",
+      answers: ["for"], solution: "for",
+      why: "Hours, days and years measure how long something has lasted, and the word for an amount of time is for.",
+      tip: "If you can answer the question how long?, the word is for." },
+    { n: 2, before: "We use", after: "with the time when the action started, such as a day, a date or an age.",
+      answers: ["since"], solution: "since",
+      why: "A day, a date and an age are single points in time: they tell you when the action began, and that is since.",
+      tip: "Monday, 2019 and I was six are all points. They all take since." },
+    { n: 3, before: "To ask about the length of an action we start the question with How", after: "...?",
+      answers: ["long"], solution: "long",
+      why: "How long...? is the question that asks for the length of something, and it goes with the present perfect.",
+      tip: "How long have you...? for people and how long has he...? for one person." }
+  ]
+},
+
+/* ============================================================
+   TRIAL II - la tabla (libro, ejercicio 1)
+   ============================================================ */
+{
+  key: "t2", icon: "scroll",
+  medal: "The Table",
+  title: "The Table of the Two Columns",
+  sub: "Every stone belongs on one trail. Click a stone, then click the column where it goes. Click a stone again to send it back.",
+  type: "sort",
+  note: {
+    title: "How to read a time expression",
+    lines: [
+      "Does it say WHEN it started? -> then the word is since: since Monday, since 2019, since I was six.",
+      "Does it say HOW LONG it lasted? -> then the word is for: for ten minutes, for a week, for years."
+    ],
+    warning: "A number on its own does not decide it. 2019 is a date, so it takes since. Two years is a length, so it takes for."
+  },
+  columns: [
+    { key: "since", label: "Since", hint: "when it started" },
+    { key: "for",   label: "For",   hint: "how long it lasted" }
+  ],
+  examples: [
+    { text: "9 o'clock", col: "since" },
+    { text: "ten minutes", col: "for" }
+  ],
+  items: [
+    { n: 1, text: "last Friday", col: "since", solution: "since last Friday",
+      why: "Last Friday names the day the action began, so it is a point in time.",
+      tip: "last Friday, last summer and last year all take since." },
+    { n: 2, text: "two hours", col: "for", solution: "for two hours",
+      why: "Two hours measures how long something has lasted, so it is an amount of time.",
+      tip: "Any number plus hours, days, weeks or years takes for." },
+    { n: 3, text: "March", col: "since", solution: "since March",
+      why: "March is a month on the calendar, so it says when the action started.",
+      tip: "Months work like years: since March, since 2019." },
+    { n: 4, text: "three days", col: "for", solution: "for three days",
+      why: "Three days answers the question how long?, so it is a length of time.",
+      tip: "You can count it, so the word is for." },
+    { n: 5, text: "2019", col: "since", solution: "since 2019",
+      why: "A year is a point on the calendar: it tells you the moment the action began.",
+      tip: "Careful: 2019 takes since, but two years takes for." },
+    { n: 6, text: "a week", col: "for", solution: "for a week",
+      why: "A week is a length of time, even without a number in front of it.",
+      tip: "a week, a month and a year are all amounts: for a week." },
+    { n: 7, text: "my birthday", col: "since", solution: "since my birthday",
+      why: "Your birthday is one day of the year, so it marks the moment the action started.",
+      tip: "since my birthday means from that day until today." },
+    { n: 8, text: "six months", col: "for", solution: "for six months",
+      why: "Six months counts how long the action has lasted.",
+      tip: "Six months is a length. June is a point. They take different words." },
+    { n: 9, text: "I was six", col: "since", solution: "since I was six",
+      why: "I was six is an age, and an age tells you when the action began.",
+      tip: "A whole little sentence about the past also takes since: since I was six." },
+    { n: 10, text: "five years", col: "for", solution: "for five years",
+      why: "Five years measures the length of the action, not its beginning.",
+      tip: "Numbers of years take for. Single years like 2019 take since." },
+    { n: 11, text: "breakfast", col: "since", solution: "since breakfast",
+      why: "Breakfast is a moment of the day, so it works like a point in time.",
+      tip: "since breakfast, since lunch, since the bell rang." },
+    { n: 12, text: "a long time", col: "for", solution: "for a long time",
+      why: "A long time has no number, but it still says how long, so it takes for.",
+      tip: "for a long time and for ages both work the same way." }
+  ]
+},
+
+/* ============================================================
+   TRIAL III - for o since (hoja, ejercicio 2)
+   ============================================================ */
+{
+  key: "t3", icon: "sword",
+  medal: "For / Since",
+  title: "For or Since",
+  sub: "Complete the sentences with for or since. Number 0 is done for you.",
+  type: "gap",
+  example: { n: 0, before: "We have had our dog", gap: "for", after: "three weeks." },
+  items: [
+    { n: 1, before: "Tom has lived in this town", after: "he was four years old.",
+      answers: ["since"], solution: "since",
+      why: "He was four years old is an age, and an age says when the action started.",
+      tip: "since + I was..., he was..., she was... is very common." },
+    { n: 2, before: "I have been in this class", after: "March.",
+      answers: ["since"], solution: "since",
+      why: "March is a month, so it is the point in time when the action began.",
+      tip: "since March means from March until today." },
+    { n: 3, before: "My sister has had her new phone", after: "five days.",
+      answers: ["for"], solution: "for",
+      why: "Five days measures how long she has had the phone.",
+      tip: "Count the days and you get a length: for five days." },
+    { n: 4, before: "We have known our neighbours", after: "a long time.",
+      answers: ["for"], solution: "for",
+      why: "A long time is an amount of time, even though there is no number in it.",
+      tip: "for a long time is one of the most useful phrases in this unit." },
+    { n: 5, before: "They have been at this school", after: "2023.",
+      answers: ["since"], solution: "since",
+      why: "2023 is a year on the calendar, so it is the moment they started.",
+      tip: "A single year always takes since." },
+    { n: 6, before: "My brother has had a cold", after: "Sunday.",
+      answers: ["since"], solution: "since",
+      why: "Sunday is a day, so it tells you when the cold started.",
+      tip: "Days of the week are points in time: since Sunday, since Monday." },
+    { n: 7, before: "The students have worked together", after: "six months.",
+      answers: ["for"], solution: "for",
+      why: "Six months answers how long?, so it is a length of time.",
+      tip: "six months takes for, but June would take since." },
+    { n: 8, before: "Grandma has been asleep", after: "two hours.",
+      answers: ["for"], solution: "for",
+      why: "Two hours measures how long she has been asleep.",
+      tip: "Hours, minutes and seconds are all lengths: for two hours." }
+  ]
+},
+
+/* ============================================================
+   TRIAL IV - present perfect + for / since (libro, ejercicio 2)
+   ============================================================ */
+{
+  key: "t4", icon: "bolt",
+  medal: "Two Gaps",
+  title: "The Verb and the Word",
+  sub: "Complete the sentences with the present perfect form of the verb in brackets and for or since. Number 0 is done for you.",
+  type: "duo",
+  w1: "w-m", w2: "w-xs",
+  note: {
+    title: "Two things to decide in every sentence",
+    lines: [
+      "The verb -> have or has + the past participle: have lived, has had, has worked.",
+      "The word -> for if the time is a length, since if it is the moment it started."
+    ],
+    warning: "One person takes has. Two or more people take have. I and you always take have."
+  },
+  example: { n: 0, before: "My cousins", gap1: "have lived", verb: "live", mid: "in Chile", gap2: "for", after: "six years." },
+  items: [
+    { n: 1, before: "My aunt", verb: "have", mid: "her cat", after: "2020.",
+      answers1: ["has had","'s had","she has had"], answers2: ["since"],
+      solution: "My aunt has had her cat since 2020.",
+      why: "My aunt is one person, so the auxiliary is has, and the past participle of have is had. 2020 is a year, so the word is since.",
+      tip: "has had looks strange but it is right: the first word is the auxiliary, the second one is the verb." },
+    { n: 2, before: "My sister", verb: "not eat", mid: "chocolate", after: "January.",
+      answers1: ["hasn't eaten","has not eaten","hasnt eaten"], answers2: ["since"],
+      solution: "My sister hasn't eaten chocolate since January.",
+      why: "My sister is one person and the sentence is negative, so it is hasn't, and the past participle of eat is eaten. January is a month, so it takes since.",
+      tip: "hasn't eaten and has not eaten are both correct." },
+    { n: 3, before: "I", verb: "like", mid: "swimming", after: "I was little.",
+      answers1: ["have liked","'ve liked","i have liked"], answers2: ["since"],
+      solution: "I have liked swimming since I was little.",
+      why: "I always takes have, and like is regular, so the past participle is liked. I was little is an age, so the word is since.",
+      tip: "Do not touch swimming. Only the verb in the gap changes." },
+    { n: 4, before: "We", verb: "not see", mid: "our grandparents", after: "three weeks.",
+      answers1: ["haven't seen","have not seen","havent seen"], answers2: ["for"],
+      solution: "We haven't seen our grandparents for three weeks.",
+      why: "We is plural, so it takes haven't, and see is irregular: see - saw - seen. Three weeks is a length of time, so the word is for.",
+      tip: "saw can never follow have or haven't. The third form is seen." },
+    { n: 5, before: "My mum and dad", verb: "be", mid: "married", after: "1998.",
+      answers1: ["have been","'ve been"], answers2: ["since"],
+      solution: "My mum and dad have been married since 1998.",
+      why: "My mum and dad are two people, so they take have, and the past participle of be is been. 1998 is a year, so it takes since.",
+      tip: "been is the third form of be. being is something else." },
+    { n: 6, before: "Our teacher", verb: "work", mid: "in this school", after: "ten years.",
+      answers1: ["has worked","'s worked"], answers2: ["for"],
+      solution: "Our teacher has worked in this school for ten years.",
+      why: "Our teacher is one person, so the auxiliary is has, and work is regular: worked. Ten years is a length, so the word is for.",
+      tip: "Ten years takes for. The year 2016 would take since." }
+  ]
+},
+
+/* ============================================================
+   TRIAL V - How long...? (libro, ejercicio 4)
+   ============================================================ */
+{
+  key: "t5", icon: "shield",
+  medal: "How Long",
+  title: "How Long Have You...?",
+  sub: "Complete the questions with How long...? and the present perfect. The verb is in brackets. Number 0 is done for you.",
+  type: "duo",
+  w1: "w-xs", w2: "w-s", hintAfter: 2,
+  note: {
+    title: "The order of a How long question",
+    lines: [
+      "How long + have / has + person + past participle + the rest? -> How long have you had that bike?",
+      "The answer uses the same present perfect -> I have had it for three years."
+    ],
+    warning: "The auxiliary goes before the person, not after it. How long you have had...? is wrong."
+  },
+  example: { n: 0, before: "How long", gap1: "have", mid: "you", gap2: "had", verb: "have", after: "that bike?" },
+  items: [
+    { n: 1, before: "How long", mid: "your parents", verb: "live", after: "in this city?",
+      answers1: ["have"], answers2: ["lived"],
+      solution: "How long have your parents lived in this city?",
+      why: "Your parents are two people, so the question starts with have, and live is regular: lived.",
+      tip: "Plural people always take have, never has." },
+    { n: 2, before: "How long", mid: "your best friend", verb: "have", after: "that school bag?",
+      answers1: ["has"], answers2: ["had"],
+      solution: "How long has your best friend had that school bag?",
+      why: "Your best friend is one person, so the question starts with has, and the past participle of have is had.",
+      tip: "has ... had is correct: the first is the auxiliary, the second is the verb." },
+    { n: 3, before: "How long", mid: "you", verb: "study", after: "in this school?",
+      answers1: ["have"], answers2: ["studied"],
+      solution: "How long have you studied in this school?",
+      why: "You always takes have, and study is regular, but the y becomes ied: studied.",
+      tip: "study - studied, like try - tried. There is a consonant before the y." },
+    { n: 4, before: "How long", mid: "the shop", verb: "be", after: "open?",
+      answers1: ["has"], answers2: ["been"],
+      solution: "How long has the shop been open?",
+      why: "The shop is one thing, so the question starts with has, and the past participle of be is been.",
+      tip: "For one thing or one person the word is has, exactly like for he and she." },
+    { n: 5, before: "How long", mid: "your English teacher", verb: "work", after: "here?",
+      answers1: ["has"], answers2: ["worked"],
+      solution: "How long has your English teacher worked here?",
+      why: "Your English teacher is one person, so it takes has, and work is regular: worked.",
+      tip: "Nothing changes in work: you only add -ed." }
+  ]
+},
+
+/* ============================================================
+   TRIAL VI - corregir los errores (hoja, ejercicio 4)
+   ============================================================ */
+{
+  key: "t6", icon: "crown",
+  medal: "Mistakes",
+  title: "Hunt the Mistake",
+  sub: "Every sentence has one mistake. Write the whole sentence again, correctly. Number 0 is done for you.",
+  type: "write",
+  note: {
+    title: "Where the mistake usually is",
+    lines: [
+      "from instead of since -> from I was ten becomes since I was ten.",
+      "since with a length of time -> since a month becomes for a month.",
+      "for with a point in time -> for 2018 becomes since 2018.",
+      "the verb is not the past participle -> has play becomes has played."
+    ],
+    warning: "Copy the rest of the sentence exactly as it is. Only the mistake changes."
+  },
+  example: { n: 0, prompt: "It has been my hobby from I was ten years old.", gap: "It has been my hobby since I was ten years old." },
+  items: [
+    { n: 1, prompt: "I have needed a new bag since a month.",
+      answers: ["i have needed a new bag for a month","i've needed a new bag for a month"],
+      solution: "I have needed a new bag for a month.",
+      why: "A month is an amount of time, not the moment it started, so the word has to be for.",
+      tip: "a month, a week, a year: all of them are lengths, so all of them take for." },
+    { n: 2, prompt: "My family have lived here for 2018.",
+      answers: ["my family have lived here since 2018","my family has lived here since 2018","my family've lived here since 2018"],
+      solution: "My family have lived here since 2018.",
+      why: "2018 is a year, so it is the point in time when they started living here, and points take since.",
+      tip: "Careful with years: since 2018, but for eight years." },
+    { n: 3, prompt: "I have wanted that T-shirt since several weeks.",
+      answers: ["i have wanted that t shirt for several weeks","i've wanted that t shirt for several weeks","i have wanted that tshirt for several weeks","i've wanted that tshirt for several weeks"],
+      solution: "I have wanted that T-shirt for several weeks.",
+      why: "Several weeks measures how long, so the sentence needs for and not since.",
+      tip: "If the time expression has a number or a word like several, it is a length: for." },
+    { n: 4, prompt: "She has play the piano for six years.",
+      answers: ["she has played the piano for six years","she's played the piano for six years"],
+      solution: "She has played the piano for six years.",
+      why: "After has the verb must be the past participle, and play is regular: played.",
+      tip: "After has the verb always changes: play becomes played." },
+    { n: 5, prompt: "We know each other since we were five.",
+      answers: ["we have known each other since we were five","we've known each other since we were five"],
+      solution: "We have known each other since we were five.",
+      why: "The action started in the past and it is still true, so the sentence needs the present perfect: have known.",
+      tip: "know - knew - known. After have you need known, with an n." },
+    { n: 6, prompt: "How long you have had that watch?",
+      answers: ["how long have you had that watch"],
+      solution: "How long have you had that watch?",
+      why: "In a question the auxiliary goes before the person: How long have you...?",
+      tip: "Statement: You have had it. Question: Have you had it? The first two words change places." }
+  ]
+}
+
+],
+
+/* ---------- CODEX ---------- */
+codex: [
+  { name: "Regular", pattern: "The past participle is the same as the regular past simple: -ed.",
+    pairs: [["like","liked"],["live","lived"],["need","needed"],["play","played"],
+            ["study","studied"],["want","wanted"],["work","worked"]] },
+  { name: "Irregular", pattern: "The past participle does not end in -ed. These ones you learn by heart.",
+    pairs: [["be","been"],["eat","eaten"],["have","had"],["know","known"],["see","seen"]] }
+]
+
+};
+</script>

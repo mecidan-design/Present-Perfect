@@ -1,0 +1,63 @@
+
+/* =========================================================
+   LA TARJETA DEL INFORME
+   Se estila sola: no depende de ninguna clase de la pagina,
+   solo de las variables de color, que estan en las catorce.
+   ========================================================= */
+.rpcard{
+  background:var(--parch);
+  border:4px solid #2b1c07;
+  border-radius:18px;
+  padding:26px;
+  margin:0 0 26px;
+  color:var(--ink);
+  box-shadow:10px 10px 0 var(--royal);
+  transform:rotate(.25deg);
+  position:relative;
+}
+.rpcard h2{
+  font-family:var(--head);font-weight:900;font-size:1.5rem;line-height:1.15;
+  letter-spacing:.6px;margin:.1rem 0 .3rem;color:var(--ink);
+}
+.rpcard .sub{font-size:.92rem;color:#5c4a2c;margin:0 0 16px;line-height:1.5}
+.rpcard .tag{
+  display:inline-block;font-family:var(--head);font-weight:900;font-size:.72rem;
+  letter-spacing:2px;text-transform:uppercase;background:var(--gold-lt);
+  border:3px solid #2b1c07;border-radius:999px;padding:2px 14px;margin-bottom:10px;
+}
+.rprow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.rprow label{
+  flex:1 1 180px;display:flex;flex-direction:column;gap:5px;
+  font-family:var(--head);font-weight:700;font-size:.76rem;letter-spacing:1.4px;
+  text-transform:uppercase;color:#8a6a2a;
+}
+.rprow input,.rprow select{
+  font-family:var(--body);font-size:1rem;font-weight:600;color:var(--ink);
+  background:#fffdf4;border:3px solid #2b1c07;border-radius:10px;padding:8px 11px;width:100%;
+}
+.rprow select{cursor:pointer;height:46px}
+/* el placeholder tiene que verse como pista, no como dato ya cargado */
+.rprow input::placeholder{color:#a8977a;font-weight:500}
+.rprow input:focus,.rprow select:focus{outline:0;background:#fff;box-shadow:0 0 0 4px var(--gold)}
+.rpmsg{
+  margin:12px 0 0;font-family:var(--head);font-weight:700;font-size:.95rem;
+  letter-spacing:.4px;min-height:1.2em;
+}
+.rpmsg.ok{color:#14663a}
+.rpmsg.no{color:#8f1230}
+.rpfine{margin:10px 0 0;font-size:.78rem;color:#7a6647;line-height:1.5}
+
+/* el home no tiene .btn propio: la tarjeta trae los suyos */
+.rpcard .btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.rpcard .btn{
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;
+  color:#2b1c07;background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;cursor:pointer;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+.rpcard .btn:hover{filter:brightness(1.07)}
+.rpcard .btn:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+.rpcard .btn:disabled{opacity:.6;cursor:default}
+.rpcard .btn.ghost{background:#fffdf4}
+/* el boton de copiar nace escondido y aparece si falla un envio */
+.rpcard [hidden]{display:none!important}

@@ -1,0 +1,43 @@
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="chapter" id="heroChapter"></span>
+    <h1 id="heroTitle"></h1>
+    <p id="heroSub"></p>
+    <div class="verbline" id="heroVerbs"></div>
+    <a class="homelink" href="index.html">&laquo; Present Perfect Quest</a>
+  </div>
+
+  <div class="quest" id="questBar"></div>
+
+  <!-- ============ THE RUN ============ -->
+  <section class="card arena" id="srCard">
+    <span class="tag">Speed run</span>
+    <h2>Irregular Past Participles</h2>
+    <p class="sub">One verb at a time, against the clock. Choose the form that goes after <b>have</b> or <b>has</b>. Answer fast to score more: if the bar runs out, that verb is gone.</p>
+    <div class="hud">
+      <span class="chip" id="srScore"></span>
+      <span class="chip streak" id="srStreak"></span>
+      <span class="chip combo" id="srCombo"></span>
+      <span class="chip clock" id="srClock"></span>
+    </div>
+    <div class="dots" id="srDots"></div>
+    <div class="timer" id="srTimer"><span id="srTimerBar"></span></div>
+    <div id="srStage"></div>
+  </section>
+
+  <!-- ============ CODEX ============ -->
+  <section class="card codex" id="codexCard">
+    <span class="tag">Codex</span>
+    <h2>The Hero&rsquo;s Codex</h2>
+    <p class="sub">The twenty-nine irregular verbs of this vault, sorted by the shape of their third form. Open it <b>after</b> your run, not before.</p>
+    <div class="btnrow" style="margin-top:0">
+      <button class="btn dark" id="codexToggle">Open the codex</button>
+    </div>
+    <div id="codexBody" class="hidden" style="margin-top:18px"></div>
+  </section>
+
+</div>
+
+<footer class="site">Copyright Prof Dan M. Mecikovsky</footer>

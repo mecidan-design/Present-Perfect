@@ -1,0 +1,7 @@
+# lo que se regenera solo
+__pycache__/
+*.pyc
+gen/
+
+# copias de lo publicado, bajadas para verificar
+live-*.html

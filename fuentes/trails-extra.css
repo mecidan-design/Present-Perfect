@@ -1,0 +1,142 @@
+
+/* =========================================================
+   LO PROPIO DE ESTA PARADA: la linea de tiempo, la tabla de
+   dos columnas y las oraciones con dos huecos.
+   ========================================================= */
+
+/* ---------- vuelta al home (igual que en el resto del sitio) ---------- */
+.bottomnav{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:4px 0 32px}
+a.btnlink{
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5em;
+  font-family:var(--head);font-weight:700;font-size:.95rem;letter-spacing:.7px;color:#2b1c07;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+  border:3px solid #2b1c07;border-radius:999px;padding:10px 24px;
+  box-shadow:5px 5px 0 #2b1c07;transition:transform .07s, box-shadow .07s;
+}
+a.btnlink:hover{filter:brightness(1.07)}
+a.btnlink:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
+
+/* ---------- inputs de dos huecos ---------- */
+input.w-m{width:190px}
+input.w-xs{width:92px}
+
+/* =========================================================
+   LINEA DE TIEMPO
+   La misma flecha contada de dos maneras: SINCE apunta a la
+   piedra donde empieza, FOR mide cuanto mide.
+   ========================================================= */
+.tlcard{box-shadow:10px 10px 0 var(--royal); transform:rotate(-.3deg)}
+.tlwrap{border:3px solid #2b1c07;border-radius:15px;background:#fffdf4;padding:16px 15px 14px}
+.tltrack{position:relative;padding:50px 0 28px}
+.tlline{
+  position:relative;height:12px;margin:0 24px;border-radius:999px;
+  border:3px solid #2b1c07;background:#efe2c4;
+}
+.tlfill{
+  position:absolute;top:0;bottom:0;right:0;border-radius:999px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));
+}
+/* las marcas van ADENTRO de la barra: afuera chocaban con los carteles */
+.tltick{position:absolute;top:0;bottom:0;width:2px;background:rgba(43,28,7,.22);transform:translateX(-50%)}
+.tlstone{
+  position:absolute;top:50%;width:26px;height:26px;transform:translate(-50%,-50%) rotate(45deg);
+  background:linear-gradient(180deg,#8f56e0,var(--royal));border:3px solid #2b1c07;border-radius:6px;
+  box-shadow:3px 3px 0 rgba(43,28,7,.35);
+}
+.tlyear{
+  position:absolute;bottom:calc(100% + 20px);transform:translateX(-50%);
+  font-family:var(--head);font-weight:900;font-size:.95rem;letter-spacing:.6px;color:#3d1470;
+  background:#e7e2f5;border:2px solid #2b1c07;border-radius:8px;padding:1px 9px;white-space:nowrap;
+}
+.tlend{
+  position:absolute;top:calc(100% + 10px);
+  font-family:var(--head);font-weight:900;font-size:.74rem;letter-spacing:1.6px;color:#8a6a2a;
+}
+.tlend.l{left:0}
+.tlend.r{right:0;color:#2b1c07}
+/* el corchete de arriba mide el tramo: es el FOR dibujado */
+.tlspan{
+  position:absolute;bottom:calc(100% + 4px);right:0;height:9px;
+  border:3px solid var(--gold-dk);border-bottom:0;border-radius:8px 8px 0 0;
+}
+
+/* ---------- el control ---------- */
+.tlctrl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px}
+.tlctrl label{font-family:var(--head);font-weight:700;font-size:.8rem;letter-spacing:1.2px;text-transform:uppercase;color:#8a6a2a}
+.tlctrl input[type=range]{flex:1 1 220px;min-width:180px;accent-color:#5b2ea8;height:26px}
+
+/* ---------- las dos fichas ---------- */
+.tlchips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.tlchip{
+  flex:1 1 200px;border:3px solid #2b1c07;border-radius:12px;padding:9px 12px;
+  box-shadow:5px 5px 0 rgba(43,28,7,.3);
+}
+.tlchip .k{font-family:var(--head);font-weight:900;font-size:.76rem;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:2px}
+.tlchip .v{font-family:var(--head);font-weight:900;font-size:1.18rem;letter-spacing:.5px;color:#241605}
+.tlchip.since{background:#e7e2f5}
+.tlchip.since .k{color:#4a2394}
+.tlchip.forr{background:#d6f0f3}
+.tlchip.forr .k{color:#0b5e68}
+
+/* ---------- las dos oraciones ---------- */
+.tlsents{margin-top:14px}
+.tlsent{
+  font-size:1.05rem;font-weight:500;line-height:1.7;margin:0 0 6px;
+  padding-left:14px;border-left:5px solid var(--gold);
+}
+.tlsent b.since{color:#4a2394}
+.tlsent b.forr{color:#0b5e68}
+.tlask{
+  margin:12px 0 0;font-family:var(--head);font-weight:700;font-size:1rem;color:#3d1470;letter-spacing:.3px;
+}
+.tlhint{margin:12px 0 0;font-size:.9rem;color:#5c4a2c;line-height:1.55}
+.tlnote{
+  margin:10px 0 0;background:#fff3d0;border:2px solid #2b1c07;border-radius:10px;
+  padding:8px 11px;font-size:.9rem;font-weight:500;line-height:1.5;
+}
+
+/* =========================================================
+   LA TABLA DE DOS COLUMNAS
+   Se elige la piedra y despues la columna: sin arrastrar, asi
+   funciona igual con el dedo que con el mouse.
+   ========================================================= */
+.sortbank{
+  border:3px dashed #2b1c07;border-radius:15px;background:#fffdf4;
+  padding:12px 13px;margin-bottom:14px;
+}
+.sortbank .bt{
+  font-family:var(--head);font-weight:900;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;
+  color:#8a6a2a;display:flex;align-items:center;gap:7px;margin-bottom:9px;
+}
+.schips{display:flex;flex-wrap:wrap;gap:8px;min-height:40px}
+.schip{
+  font-family:var(--body);font-weight:600;font-size:.95rem;cursor:pointer;
+  background:var(--parch);border:3px solid #2b1c07;border-radius:10px;padding:5px 12px;
+  box-shadow:3px 3px 0 var(--gold-dk);display:inline-flex;align-items:center;gap:8px;
+  transition:transform .07s, box-shadow .07s;
+}
+.schip:hover{background:#fff3d0}
+.schip .sn{
+  font-family:var(--head);font-weight:900;font-size:.72rem;background:#2b1c07;color:var(--gold-lt);
+  border-radius:999px;min-width:19px;height:19px;display:inline-flex;align-items:center;justify-content:center;
+}
+.schip.sel{background:var(--gold-lt);transform:translate(3px,3px);box-shadow:0 0 0 #2b1c07}
+.schip.ok{background:#e3f7e0;box-shadow:3px 3px 0 var(--emerald)}
+.schip.no{background:#fde5e9;box-shadow:3px 3px 0 var(--crimson)}
+.scols{display:flex;gap:12px;flex-wrap:wrap}
+.scol{
+  flex:1 1 240px;border:3px solid #2b1c07;border-radius:15px;background:#fffdf4;padding:12px 13px;
+}
+.scol .sh{font-family:var(--head);font-weight:900;font-size:1.15rem;letter-spacing:1px;margin:0}
+.scol .shint{font-size:.82rem;color:#5c4a2c;margin:0 0 9px}
+.scol.since{background:#f4f0ff}
+.scol.since .sh{color:#4a2394}
+.scol.forr{background:#eefafb}
+.scol.forr .sh{color:#0b5e68}
+.scol.armed{border-style:dashed;background:#fff7dd}
+.slist{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;align-content:flex-start}
+.sdone{
+  font-family:var(--body);font-weight:600;font-size:.95rem;
+  background:#e7e2f5;border:3px solid #2b1c07;border-radius:10px;padding:5px 12px;
+  box-shadow:3px 3px 0 var(--royal);opacity:.72;
+}

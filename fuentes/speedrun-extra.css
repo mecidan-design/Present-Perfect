@@ -1,0 +1,62 @@
+
+/* ---------- SPEED RUN ---------- */
+.card.arena{
+  background:
+    radial-gradient(rgba(255,255,255,.2) 1px, transparent 1.4px) 0 0/28px 28px,
+    linear-gradient(165deg,#180d38 0%,#2c1352 55%,#0e3446 100%);
+  border-color:var(--gold); box-shadow:0 0 0 4px #140b2e, 11px 11px 0 rgba(0,0,0,.45);
+  transform:rotate(-.35deg);
+}
+.arena h2{color:#fff9e8}
+.arena .sub{color:#c9bbe8}
+.arena .scoreline{color:#ffe9b0}
+.hud{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+.chip{
+  font-family:var(--head);font-weight:700;font-size:.82rem;letter-spacing:.8px;
+  border:3px solid #2b1c07;border-radius:999px;padding:3px 14px;
+  background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:#2b1c07;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.chip.streak{background:linear-gradient(180deg,#ff9db0,var(--crimson));color:#fff;border-color:#2b1c07}
+.chip.clock{background:linear-gradient(180deg,#9fe6ef,var(--teal));color:#04262b}
+.chip.combo{background:linear-gradient(180deg,#d7b6ff,var(--royal));color:#fff}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 14px}
+.dot{width:14px;height:14px;border-radius:50%;border:3px solid #7a6aa8;background:transparent}
+.dot.y{background:var(--gold);border-color:var(--gold)}
+.dot.n{background:var(--crimson);border-color:var(--crimson)}
+.dot.now{box-shadow:0 0 0 3px #a8e4ec}
+.timer{height:13px;border:3px solid var(--gold);border-radius:999px;overflow:hidden;background:rgba(0,0,0,.35);margin-bottom:14px}
+.timer span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--gold-lt),var(--gold));transition:width .08s linear}
+.timer.low span{background:linear-gradient(90deg,#ff9db0,var(--crimson))}
+.qbox{background:var(--parch);border:4px solid var(--gold);border-radius:16px;padding:16px}
+.vword{
+  font-family:var(--head);font-weight:900;font-size:clamp(2rem,9vw,3.1rem);letter-spacing:3px;
+  text-align:center;margin:4px 0 4px;color:#3d1470;line-height:1.1;
+}
+.vhint{font-family:var(--head);font-weight:700;font-size:.75rem;letter-spacing:2px;text-align:center;color:#8a6a2a;text-transform:uppercase;margin-bottom:12px}
+.qsent{font-size:1.08rem;font-weight:500;line-height:1.6;margin:2px 0 14px}
+.opts{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+.opt{
+  font-family:var(--body);font-size:1rem;font-weight:600;cursor:pointer;background:#fff;
+  border:3px solid #2b1c07;border-radius:999px;padding:8px 20px;box-shadow:3px 3px 0 #2b1c07;
+  transition:transform .07s,box-shadow .07s;color:var(--ink);
+}
+.opt:hover{background:#fff3d0}
+.opt.good{background:#bdf0b0;border-color:var(--emerald)}
+.opt.bad{background:#ffc7d1;text-decoration:line-through;border-color:var(--crimson)}
+.opt[disabled]{cursor:default}
+.flash{font-family:var(--head);font-weight:900;font-size:1.15rem;letter-spacing:1px;text-align:center;margin:14px 0 2px}
+.flash.y{color:var(--emerald)}
+.flash.n{color:var(--crimson)}
+.pair{font-family:var(--head);font-weight:900;font-size:1.5rem;letter-spacing:2px;text-align:center;color:#3d1470;margin:2px 0 8px}
+.final{text-align:center;padding:12px 6px}
+.final .big{font-family:var(--head);font-weight:900;font-size:3.2rem;color:var(--gold);line-height:1;margin:6px 0;text-shadow:0 3px 0 #6a3a00}
+.final .msg{font-family:var(--head);font-weight:700;color:#fff9e8;font-size:1.15rem;margin-bottom:8px;letter-spacing:.6px}
+.final .stats{color:#c9bbe8;font-size:.95rem;margin-bottom:14px;line-height:1.7}
+.review{margin-top:22px;text-align:left}
+.review h3{font-family:var(--head);font-weight:900;color:var(--gold-lt);font-size:1.05rem;letter-spacing:1px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.ritem{background:var(--parch);border:3px solid #2b1c07;border-radius:13px;padding:11px 13px;margin-bottom:11px}
+.rtop{font-family:var(--head);font-weight:900;font-size:1rem;letter-spacing:.8px;margin-bottom:5px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.mark{font-family:var(--head);font-weight:700;font-size:.72rem;letter-spacing:1px;border:2px solid #2b1c07;border-radius:999px;padding:1px 10px}
+.mark.y{background:#bdf0b0}
+.mark.n{background:#ffc7d1}

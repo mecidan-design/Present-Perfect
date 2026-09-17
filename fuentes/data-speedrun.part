@@ -1,0 +1,167 @@
+<script id="data-block">
+/* ============================================================
+   SOLO CONTENIDO. Ni una referencia al DOM en este bloque.
+   ============================================================
+   MEMORY SPEED RUN - SOLO VERBOS IRREGULARES.
+
+   Los 29 verbos salen EXCLUSIVAMENTE de las tres hojas que mando
+   el profesor para esta unidad:
+     - Prepare L3, pag. 159 (Unit 13, Grammar reference and practice)
+     - Prepare L3, Unit 13 Grammar: Plus
+     - Prepare L3, Unit 14 Grammar: Plus
+   No hay ni un verbo irregular que el chico no haya visto ya en el
+   material de la unidad. Los regulares quedan afuera a proposito:
+   este juego entrena la tercera columna que hay que memorizar.
+
+   Las opciones incorrectas son SIEMPRE del mismo verbo: o el past
+   simple (la trampa real: "I have broke") o una forma regularizada
+   que no existe ("breaked"). Nunca aparece un verbo distinto.
+   ============================================================ */
+var DATA = {
+
+meta: {
+  chapter: "Training Ground",
+  title: "The Vault of Irregular Verbs",
+  sub: "Twenty-nine irregular verbs from Unit 13 and Unit 14. One verb at a time, against the clock: choose the past participle, the form that goes after have or has.",
+  verbs: "have / has + past participle &middot; third form only"
+},
+
+/* segundos por pregunta y largo de la carrera corta */
+seconds: 10,
+shortRun: 12,
+
+verbs: [
+  { q: "BE", options: ["been","was","being"], correct: 0,
+    why: "be is irregular: be - was/were - been. The past participle is been.",
+    tip: "I have been is the present perfect. was is the past simple and never follows have." },
+
+  { q: "BREAK", options: ["breaked","broke","broken"], correct: 2,
+    why: "break is irregular: break - broke - broken. The third form is broken.",
+    tip: "broke is the past simple. After have or has you always need broken." },
+
+  { q: "BUY", options: ["bought","buyed","boughted"], correct: 0,
+    why: "buy is irregular: buy - bought - bought. The second and the third form are the same word.",
+    tip: "bought is already past, so you never add -ed on top of it." },
+
+  { q: "CHOOSE", options: ["chose","chosen","choosed"], correct: 1,
+    why: "choose is irregular: choose - chose - chosen. The past participle is chosen.",
+    tip: "chose and chosen both have one o. The one that follows have is chosen." },
+
+  { q: "DO", options: ["did","done","doed"], correct: 1,
+    why: "do is irregular: do - did - done. The past participle is done.",
+    tip: "I have did is always wrong. After have or has, write done." },
+
+  { q: "EAT", options: ["eaten","ate","eated"], correct: 0,
+    why: "eat is irregular: eat - ate - eaten. The third form ends in -en.",
+    tip: "ate is the past simple: I ate. With have you need I have eaten." },
+
+  { q: "FALL", options: ["fell","fallen","falled"], correct: 1,
+    why: "fall is irregular: fall - fell - fallen. The past participle is fallen.",
+    tip: "fell is the past simple. I have fell is wrong; I have fallen is right." },
+
+  { q: "FLY", options: ["flied","flown","flew"], correct: 1,
+    why: "fly is irregular: fly - flew - flown. The third form is flown.",
+    tip: "flew is the past simple. The word you need after have is flown." },
+
+  { q: "FORGET", options: ["forgot","forgetted","forgotten"], correct: 2,
+    why: "forget is irregular: forget - forgot - forgotten. The third form has two t.",
+    tip: "forgot is the past simple. Has she ever forgotten your name? needs forgotten." },
+
+  { q: "GET", options: ["got","getted","geted"], correct: 0,
+    why: "get is irregular: get - got - got. The second and the third form are the same.",
+    tip: "She has just got back home. One word, no -ed anywhere." },
+
+  { q: "GO", options: ["went","goed","gone"], correct: 2,
+    why: "go is irregular: go - went - gone. The past participle is gone.",
+    tip: "went is the past simple: I went. With have it is I have gone." },
+
+  { q: "GROW", options: ["grown","grew","growed"], correct: 0,
+    why: "grow is irregular: grow - grew - grown. The third form ends in -n.",
+    tip: "grew is the past simple. Have they ever grown vegetables? needs grown." },
+
+  { q: "HAVE", options: ["haved","had","has"], correct: 1,
+    why: "have is irregular: have - had - had. The past participle is had.",
+    tip: "Have you had a good day? The first have is the auxiliary and the second one is had." },
+
+  { q: "HEAR", options: ["heard","heared","hearded"], correct: 0,
+    why: "hear is irregular: hear - heard - heard. It is written with -ear-, like hear itself.",
+    tip: "heard sounds like the word herd, but you write it with the same letters as hear." },
+
+  { q: "LEND", options: ["lended","lent","lendt"], correct: 1,
+    why: "lend is irregular: lend - lent - lent. The d turns into a t.",
+    tip: "A short verb that ends in -t in the past is almost always irregular." },
+
+  { q: "MAKE", options: ["made","maked","maden"], correct: 0,
+    why: "make is irregular: make - made - made. The k turns into a d and the word gets shorter.",
+    tip: "made already carries its d. Has he ever made you angry? needs made." },
+
+  { q: "MEET", options: ["meeted","met","meet"], correct: 1,
+    why: "meet is irregular: meet - met - met. The past participle has one e.",
+    tip: "We have never met a movie star. meeted is not a word." },
+
+  { q: "PAY", options: ["payed","paid","pay"], correct: 1,
+    why: "pay is irregular: pay - paid - paid. The y turns into an i.",
+    tip: "Sam has just paid for our snacks. payed with a y does not exist." },
+
+  { q: "RIDE", options: ["rode","rided","ridden"], correct: 2,
+    why: "ride is irregular: ride - rode - ridden. The third form has two d.",
+    tip: "rode is the past simple. Have you ever ridden a scooter? needs ridden." },
+
+  { q: "SEE", options: ["saw","seen","seed"], correct: 1,
+    why: "see is irregular: see - saw - seen. The past participle is seen.",
+    tip: "I have saw is wrong. I have seen the advertisement is right." },
+
+  { q: "SELL", options: ["selled","sold","sell"], correct: 1,
+    why: "sell is irregular: sell - sold - sold. The second and the third form are the same.",
+    tip: "They have already sold all the tickets. sold rhymes with told." },
+
+  { q: "SLEEP", options: ["slept","sleeped","sleept"], correct: 0,
+    why: "sleep is irregular: sleep - slept - slept. The double e becomes a single e.",
+    tip: "My sister hasn't slept in a tent. slept goes with felt and kept." },
+
+  { q: "SPEAK", options: ["spoke","spoken","speaked"], correct: 1,
+    why: "speak is irregular: speak - spoke - spoken. The third form ends in -en.",
+    tip: "spoke is the past simple. I have spoken to a film star needs spoken." },
+
+  { q: "SWIM", options: ["swam","swimmed","swum"], correct: 2,
+    why: "swim is irregular: swim - swam - swum. The past participle is swum, with a u.",
+    tip: "swam is the past simple. Have you ever swum in a cold lake? needs swum." },
+
+  { q: "TAKE", options: ["taken","took","taked"], correct: 0,
+    why: "take is irregular: take - took - taken. The third form ends in -en.",
+    tip: "took is the past simple. He hasn't taken it needs taken." },
+
+  { q: "TELL", options: ["telled","told","tell"], correct: 1,
+    why: "tell is irregular: tell - told - told. The second and the third form are the same.",
+    tip: "I've just told him how to get there. told rhymes with sold." },
+
+  { q: "WEAR", options: ["wore","weared","worn"], correct: 2,
+    why: "wear is irregular: wear - wore - worn. The past participle is worn.",
+    tip: "wore is the past simple. After have or has the word is worn." },
+
+  { q: "WIN", options: ["won","winned","win"], correct: 0,
+    why: "win is irregular: win - won - won. The second and the third form are the same.",
+    tip: "Have you and your friends ever won a competition? needs won." },
+
+  { q: "WRITE", options: ["wrote","writed","written"], correct: 2,
+    why: "write is irregular: write - wrote - written. The third form has two t.",
+    tip: "wrote is the past simple. Has your brother ever written a blog? needs written." }
+],
+
+/* ---------- CODEX ---------- */
+codex: [
+  { name: "Same second and third form", pattern: "The past simple and the past participle are the same word.",
+    pairs: [["buy","bought"],["get","got"],["have","had"],["hear","heard"],["lend","lent"],
+            ["make","made"],["meet","met"],["pay","paid"],["sell","sold"],["sleep","slept"],
+            ["tell","told"],["win","won"]] },
+  { name: "Third form ends in -n or -en", pattern: "The past participle is different from the past simple, and ends in -n.",
+    pairs: [["be","been"],["break","broken"],["choose","chosen"],["do","done"],["eat","eaten"],
+            ["fall","fallen"],["fly","flown"],["forget","forgotten"],["go","gone"],["grow","grown"],
+            ["ride","ridden"],["see","seen"],["speak","spoken"],["take","taken"],["wear","worn"],
+            ["write","written"]] },
+  { name: "The odd one", pattern: "Its three forms are all different, and none of them ends in -n.",
+    pairs: [["swim","swum"]] }
+]
+
+};
+</script>
