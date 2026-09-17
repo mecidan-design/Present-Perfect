@@ -935,7 +935,7 @@ buildTrials();
   letter-spacing:2px;text-transform:uppercase;background:var(--gold-lt);
   border:3px solid #2b1c07;border-radius:999px;padding:2px 14px;margin-bottom:10px;
 }
-.rprow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.rprow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px}
 .rprow label{
   flex:1 1 180px;display:flex;flex-direction:column;gap:5px;
   font-family:var(--head);font-weight:700;font-size:.76rem;letter-spacing:1.4px;
@@ -946,14 +946,9 @@ buildTrials();
   background:#fffdf4;border:3px solid #2b1c07;border-radius:10px;padding:8px 11px;width:100%;
 }
 .rprow select{cursor:pointer;height:46px}
+/* el placeholder tiene que verse como pista, no como dato ya cargado */
+.rprow input::placeholder{color:#a8977a;font-weight:500}
 .rprow input:focus,.rprow select:focus{outline:0;background:#fff;box-shadow:0 0 0 4px var(--gold)}
-.rppre{
-  font-family:ui-monospace,"Consolas","Courier New",monospace;
-  font-size:.8rem;line-height:1.55;white-space:pre-wrap;word-break:break-word;
-  background:#fffdf4;border:3px solid #2b1c07;border-radius:12px;
-  padding:12px 13px;margin:0;max-height:260px;overflow:auto;
-}
-.rppre.empty{color:#8a7a5c;font-style:italic;font-family:var(--body);font-size:.9rem}
 .rpmsg{
   margin:12px 0 0;font-family:var(--head);font-weight:700;font-size:.95rem;
   letter-spacing:.4px;min-height:1.2em;
@@ -972,7 +967,6 @@ buildTrials();
 }
 .rpcard .btn:hover{filter:brightness(1.07)}
 .rpcard .btn:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
-.rpcard .btn.ghost{background:#fffdf4}
 .rpcard .btn:disabled{opacity:.6;cursor:default}
 </style>
 <script id="report-block">
@@ -1257,10 +1251,10 @@ card.innerHTML =
       '<option value="">Choose your teacher</option>' + opciones +
     '</select></label>' : "") +
   '</div>' +
-  '<pre class="rppre" id="rpPre"></pre>' +
+  /* El informe NO se le muestra al alumno: la tarjeta es nombre, curso,
+     docente y el boton. Lo que se manda sigue siendo lo mismo. */
   '<div class="btnrow">' +
     (PUEDE_ENVIAR ? '<button class="btn" id="rpSend" type="button">Send to my teacher</button>' : "") +
-    '<button class="btn ghost" id="rpCopy" type="button">Copy my report</button>' +
   '</div>' +
   '<p class="rpmsg" id="rpMsg"></p>' +
   '<p class="rpfine">Only your name, your class and your answers go to the teacher you choose. Nothing else.</p>';
@@ -1278,9 +1272,7 @@ else wrap.appendChild(card);
 var elName = document.getElementById("rpName");
 var elClass = document.getElementById("rpClass");
 var elTeacher = document.getElementById("rpTeacher");
-var elPre = document.getElementById("rpPre");
 var elMsg = document.getElementById("rpMsg");
-var elCopy = document.getElementById("rpCopy");
 var elSend = document.getElementById("rpSend");
 
 elName.value = o0.name || "";
@@ -1330,10 +1322,6 @@ var enviado = null;   /* el texto del ultimo informe que salio */
 
 function pintar(){
   var r = informe();
-  elPre.textContent = r ? r.texto : (ES_HOME
-    ? "Nothing yet. Walk into a stop, check your answers and come back here."
-    : "Nothing yet. Answer the exercises and press Check my answers.");
-  elPre.className = r ? "rppre" : "rppre empty";
   ponerAtajos();
   /* Si el alumno siguio trabajando despues de enviar, el boton vuelve.
      Lo que se evita es mandar dos veces LO MISMO, no que entregue el trial
@@ -1352,44 +1340,10 @@ document.addEventListener("click", function(){
 }, true);
 window.addEventListener("pagehide", function(){ anotar(); });
 
-function cabecera(){
-  return "PRESENT PERFECT QUEST\n" +
-         "Student: " + (elName.value.trim() || "(no name)") +
-         "   Class: " + (elClass.value.trim() || "-") +
-         "   Date: " + new Date().toISOString().slice(0, 10);
-}
 function aviso(t, bien){
   elMsg.textContent = t;
   elMsg.className = "rpmsg " + (bien ? "ok" : "no");
 }
-
-/* ---------- copiar: funciona siempre, hasta sin internet ---------- */
-elCopy.addEventListener("click", function(){
-  var r = informe();
-  if(!r){ aviso("There is nothing to send yet.", false); return; }
-  var t = cabecera() + "\n" + r.texto;
-  var ok = false;
-  try{
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(t);
-      ok = true;
-    }
-  }catch(e){}
-  if(!ok){
-    try{
-      var ta = document.createElement("textarea");
-      ta.value = t;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      ok = document.execCommand("copy");
-      document.body.removeChild(ta);
-    }catch(e2){ ok = false; }
-  }
-  aviso(ok ? "Copied. Now paste it wherever your teacher asks you to."
-           : "Select the text above and copy it by hand.", ok);
-});
 
 /* ============================================================
    ENVIAR AL WEB APP
