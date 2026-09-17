@@ -1468,6 +1468,9 @@ document.getElementById("codeBtn").addEventListener("click", function(){
 .rpcard .btn:hover{filter:brightness(1.07)}
 .rpcard .btn:active{transform:translate(5px,5px);box-shadow:0 0 0 #2b1c07}
 .rpcard .btn:disabled{opacity:.6;cursor:default}
+.rpcard .btn.ghost{background:#fffdf4}
+/* el boton de copiar nace escondido y aparece si falla un envio */
+.rpcard [hidden]{display:none!important}
 </style>
 <script id="report-block">
 /* ============================================================
@@ -1506,6 +1509,10 @@ var DOCENTES = [
   { nombre: "Pao",  mail: "paolafreiberg@buber.edu.ar" },
   { nombre: "Mari", mail: "marisaolivero@buber.edu.ar" }
 ];
+
+/* Los tres cursos. Tambien es una lista cerrada: asi en la planilla el curso
+   se puede filtrar y ordenar, en vez de tener "6-1", "6 1", "sexto 1"... */
+var CURSOS = ["6-1", "6-2", "6-3"];
 
 var KEY = "ppq.report.v1";
 var wrap = document.querySelector(".wrap");
@@ -1728,6 +1735,10 @@ var opciones = "";
 for(var di = 0; di < DOCENTES.length; di++){
   opciones += '<option value="' + DOCENTES[di].mail + '">' + DOCENTES[di].nombre + '</option>';
 }
+var cursos = "";
+for(var ci = 0; ci < CURSOS.length; ci++){
+  cursos += '<option value="' + CURSOS[ci] + '">' + CURSOS[ci] + '</option>';
+}
 
 var card = document.createElement("section");
 card.className = "card rpcard";
@@ -1738,23 +1749,28 @@ card.innerHTML =
     : (ES_HOME ? "Your quest so far" : "Your report")) + '</h2>' +
   '<p class="sub">' + (PUEDE_ENVIAR
     ? (ES_HOME
-       ? "This is everything you have done in the quest on this computer. Write your name, choose your teacher and press the button."
-       : "Check your answers first. Then write your name, choose your teacher and press the button: she gets your score and the words to look at again.")
+       ? "This is everything you have done in the quest on this computer. Write your name, choose your class &amp; your teacher and then press the button."
+       : "Check your answers first. Then write your name, choose your class &amp; your teacher and then press the button.")
     : (ES_HOME
        ? "This is everything you have done in the quest on this computer. Write your name and copy it to give it to your teacher."
        : "Check your answers first, then write your name and copy your report. It says how many you got right and which ones to look at again.")) +
   '</p>' +
   '<div class="rprow">' +
     '<label>Name<input type="text" id="rpName" autocomplete="off" placeholder="Your name"></label>' +
-    '<label>Class<input type="text" id="rpClass" autocomplete="off" placeholder="6th"></label>' +
+    '<label>Class<select id="rpClass">' +
+      '<option value="">Choose your class</option>' + cursos +
+    '</select></label>' +
     (PUEDE_ENVIAR ? '<label>Teacher<select id="rpTeacher">' +
       '<option value="">Choose your teacher</option>' + opciones +
     '</select></label>' : "") +
   '</div>' +
   /* El informe NO se le muestra al alumno: la tarjeta es nombre, curso,
-     docente y el boton. Lo que se manda sigue siendo lo mismo. */
+     docente y el boton. Lo que se manda sigue siendo lo mismo.
+     El boton de copiar nace escondido: aparece solo si un envio falla, para
+     que el chico tenga como pasarle el resultado a la docente igual. */
   '<div class="btnrow">' +
     (PUEDE_ENVIAR ? '<button class="btn" id="rpSend" type="button">Send to my teacher</button>' : "") +
+    '<button class="btn ghost" id="rpCopy" type="button"' + (PUEDE_ENVIAR ? ' hidden' : '') + '>Copy my report</button>' +
   '</div>' +
   '<p class="rpmsg" id="rpMsg"></p>' +
   '<p class="rpfine">Only your name, your class and your answers go to the teacher you choose. Nothing else.</p>';
@@ -1774,19 +1790,22 @@ var elClass = document.getElementById("rpClass");
 var elTeacher = document.getElementById("rpTeacher");
 var elMsg = document.getElementById("rpMsg");
 var elSend = document.getElementById("rpSend");
+var elCopy = document.getElementById("rpCopy");
 
 elName.value = o0.name || "";
-elClass.value = o0.klass || "";
+/* el curso guardado de antes puede ser texto libre: si no es uno de los tres
+   de la lista, el desplegable queda sin elegir y el chico lo elige */
+if(o0.klass) elClass.value = o0.klass;
 if(elTeacher && o0.teacher) elTeacher.value = o0.teacher;
 function recordar(){
   var o = leer();
   o.name = elName.value.trim();
-  o.klass = elClass.value.trim();
+  o.klass = elClass.value;
   if(elTeacher) o.teacher = elTeacher.value;
   guardar(o);
 }
 elName.addEventListener("input", recordar);
-elClass.addEventListener("input", recordar);
+elClass.addEventListener("change", recordar);
 if(elTeacher) elTeacher.addEventListener("change", recordar);
 
 /* ---------- el boton que baja hasta la tarjeta ----------
@@ -1844,6 +1863,40 @@ function aviso(t, bien){
   elMsg.textContent = t;
   elMsg.className = "rpmsg " + (bien ? "ok" : "no");
 }
+function cabecera(){
+  return "PRESENT PERFECT QUEST\n" +
+         "Student: " + (elName.value.trim() || "(no name)") +
+         "   Class: " + (elClass.value || "-") +
+         "   Date: " + new Date().toISOString().slice(0, 10);
+}
+
+/* ---------- copiar: el plan B, escondido hasta que algo falle ---------- */
+elCopy.addEventListener("click", function(){
+  var r = informe();
+  if(!r){ aviso("There is nothing to send yet.", false); return; }
+  var t = cabecera() + "\n" + r.texto;
+  var ok = false;
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t);
+      ok = true;
+    }
+  }catch(e){}
+  if(!ok){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = t;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+    }catch(e2){ ok = false; }
+  }
+  aviso(ok ? "Copied. Now give it to your teacher the way she asks you to."
+           : "Your report could not be copied. Tell your teacher.", ok);
+});
 
 /* ============================================================
    ENVIAR AL WEB APP
@@ -1852,13 +1905,14 @@ if(elSend){
   elSend.addEventListener("click", function(){
     var r = informe();
     if(!elName.value.trim()){ aviso("Write your name first.", false); elName.focus(); return; }
+    if(!elClass.value){ aviso("Choose your class first.", false); elClass.focus(); return; }
     if(!elTeacher.value){ aviso("Choose your teacher first.", false); elTeacher.focus(); return; }
     if(!r){ aviso("There is nothing to send yet. Check your answers first.", false); return; }
     recordar();
 
     var datos = {
       nombre_alumno: elName.value.trim(),
-      curso: elClass.value.trim(),
+      curso: elClass.value,
       docente: elTeacher.value,
       docente_nombre: elTeacher.options[elTeacher.selectedIndex].textContent,
       pagina: r.stop,
@@ -1879,15 +1933,20 @@ if(elSend){
     var bien = function(txt){
       enviado = r.texto;
       elSend.textContent = "Sent";
+      elCopy.hidden = true;
       aviso("Sent to " + datos.docente_nombre + (txt ? ". " + txt : ".")
             + " If you do more, the button comes back.", true);
     };
-    var mal = function(txt){
+    var mal = function(txt, conCopia){
       elSend.disabled = false;
       /* el cartel del boton vuelve a invitar: si quedaba "Sent" el alumno
          piensa que ya esta entregado */
       elSend.textContent = (enviado === null) ? "Send to my teacher" : "Send my new result";
-      aviso(txt || "It did not go. Check the internet and press the button again, or copy your report.", false);
+      /* recien ahora aparece el plan B: el chico puede copiar su informe y
+         darselo a la docente por otro camino. No cuando el problema es que ya
+         lo mando hace un momento: ahi no falta nada. */
+      if(conCopia !== false) elCopy.hidden = false;
+      aviso(txt || "It did not go. Press the button again, or copy your report and give it to your teacher.", false);
     };
 
     /* ================== LEER ESTO ==================
@@ -1919,7 +1978,7 @@ if(elSend){
           try{ o = JSON.parse(txt); }catch(e3){ o = null; }
           if(o && o.status === "ok"){ bien(""); }
           else if(o && o.message === "ya enviado, espera un momento"){
-            mal("You just sent this one. Wait a moment before sending it again.");
+            mal("You just sent this one. Wait a moment before sending it again.", false);
           }
           else if(o){ mal("The teacher's list did not take it. Tell your teacher."); }
           else { aCiegas(); }
