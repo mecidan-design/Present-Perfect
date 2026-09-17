@@ -1062,8 +1062,9 @@ srReady();
 
    El envio va a un Web App de Apps Script pegado a la planilla de
    resultados: escribe la fila y le manda el mail a la docente que
-   el alumno elige. Como el pedido es no-cors la respuesta no se
-   puede leer, asi que ademas siempre esta el boton de copiar.
+   el alumno elige. Se intenta leyendo la respuesta del servidor, y
+   si eso se cae, a ciegas. Igual siempre queda el boton de copiar,
+   que funciona aunque no haya internet.
    ============================================================ */
 (function(){
 "use strict";
@@ -1073,7 +1074,7 @@ srReady();
    Resultados": escribe la fila y le manda el mail a la docente elegida.
    Mientras esta vacio, la tarjeta solo deja copiar el informe. */
 var APPS = {
-  url: ""
+  url: "https://script.google.com/macros/s/AKfycbz4mC6wlKjs_tQHfEjCxDOfbYjYAzDui3pZFttOfFgpxhd4WpLmaE-2WRsJ_edVPz3-ow/exec"
 };
 var PUEDE_ENVIAR = !!APPS.url;
 
@@ -1488,35 +1489,61 @@ if(elSend){
     elSend.disabled = true;
     aviso("Sending...", true);
 
-    /* ================== LEER ESTO ==================
-       El pedido va en modo no-cors, asi que la respuesta es OPACA: el
-       navegador no nos deja ver ni el codigo de estado ni el cuerpo. Que el
-       fetch no tire excepcion significa solamente que el pedido SALIO del
-       navegador. NO prueba que el servidor lo haya recibido, ni que la fila
-       se haya escrito, ni que el mail se haya mandado.
-       O sea: el "Sent" que ve el alumno es optimista. La unica prueba de
-       verdad esta en la planilla.
-       =============================================== */
-    var bien = function(){
+    var cuerpo = JSON.stringify(datos);
+    /* El Content-Type va como texto plano a proposito: en no-cors el navegador
+       solo acepta unos pocos, y con application/json ni sale el pedido. Del
+       otro lado Apps Script lo lee igual con JSON.parse. */
+    var cabeceras = { "Content-Type": "text/plain;charset=utf-8" };
+
+    var bien = function(txt){
       enviado = r.texto;
       elSend.textContent = "Sent";
-      aviso("Sent to " + datos.docente_nombre + ". If you do more, the button comes back.", true);
+      aviso("Sent to " + datos.docente_nombre + (txt ? ". " + txt : ".")
+            + " If you do more, the button comes back.", true);
     };
-    var mal = function(){
+    var mal = function(txt){
       elSend.disabled = false;
-      aviso("It did not go. Check the internet and press the button again, or copy your report.", false);
+      /* el cartel del boton vuelve a invitar: si quedaba "Sent" el alumno
+         piensa que ya esta entregado */
+      elSend.textContent = (enviado === null) ? "Send to my teacher" : "Send my new result";
+      aviso(txt || "It did not go. Check the internet and press the button again, or copy your report.", false);
     };
+
+    /* ================== LEER ESTO ==================
+       Primero se intenta en modo CORS, que es el bueno: Apps Script devuelve
+       las cabeceras necesarias, asi que se puede LEER la respuesta y saber de
+       verdad si el servidor escribio la fila ({"status":"ok"}) o si la
+       rechazo. Ese "Sent" no es optimista: es lo que contesto el servidor.
+
+       Si ese camino falla -sin internet, o un filtro de la escuela que corta
+       la lectura de la respuesta- se reintenta en no-cors. AHI SI la respuesta
+       es OPACA: el navegador no deja ver ni el codigo de estado ni el cuerpo,
+       asi que "el pedido salio" es todo lo que sabemos. NO prueba que el
+       servidor lo haya recibido, ni que se haya escrito la fila, ni que el
+       mail haya salido. Por eso en ese caso el cartel lo dice distinto, y la
+       unica prueba de verdad sigue estando en la planilla.
+       =============================================== */
+    var aCiegas = function(){
+      try{
+        window.fetch(APPS.url, { method: "POST", mode: "no-cors", headers: cabeceras, body: cuerpo })
+          .then(function(){ bien("It could not be confirmed, so check with your teacher."); }, function(){ mal(); });
+      }catch(e2){ mal(); }
+    };
+
     try{
-      window.fetch(APPS.url, {
-        method: "POST",
-        mode: "no-cors",
-        /* En no-cors el navegador solo acepta unos pocos Content-Type: con
-           application/json ni sale el pedido. Va como texto plano y del otro
-           lado Apps Script lo lee igual con JSON.parse. */
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(datos)
-      }).then(bien, mal);
-    }catch(e){ mal(); }
+      window.fetch(APPS.url, { method: "POST", headers: cabeceras, body: cuerpo })
+        .then(function(resp){ return resp.text(); })
+        .then(function(txt){
+          var o;
+          try{ o = JSON.parse(txt); }catch(e3){ o = null; }
+          if(o && o.status === "ok"){ bien(""); }
+          else if(o && o.message === "ya enviado, espera un momento"){
+            mal("You just sent this one. Wait a moment before sending it again.");
+          }
+          else if(o){ mal("The teacher's list did not take it. Tell your teacher."); }
+          else { aCiegas(); }
+        }, aCiegas);
+    }catch(e){ aCiegas(); }
   });
 }
 
